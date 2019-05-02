@@ -1,66 +1,133 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-const Block = styled.form`
+const Block = styled.div`
+  display: flex;
+  height: 100%;
+`;
+
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 0 auto;
-  max-width: 600px;
+  height: 100%;
 `;
 
 const Section = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10px 10px;
-  max-width: 80%;
+  align-items: center;
+  padding: 10px 5px;
 `;
 
 const Label = styled.label`
   color: #311e1e;
   font-size: 16px;
+  padding-bottom: 6px;
 `;
 
 const Input = styled.input`
 `;
 
+const Checkbox = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const ButtonWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 270px;
+  margin: auto;
+`;
+
 const Button = styled.button`
-  background-color: gray;
-  color: darkgray;
+  background-color: #00CED1;
+  color: #ffffff;
   border-radius: 5px;
+  border: none;
+  padding: 7px 25px;
+  max-width: 100px;
+  font-size: 20px;
 `;
 
 class LoginForm extends Component {
 
   state = {
-    value: ''
+    event: {
+      email: '',
+      password: '',
+      user: '',
+      rememberMe: false
+    } 
   };
 
-  handleChange = event => {
-    this.setState({value: event.target.value});
+  handleChange = evt => {
+    const newEvent = this.state.event;
+    newEvent[evt.target.name] = evt.target.value
+    this.setState({
+      event: newEvent
+    })
   }
+  
 
   handleSubmit = event => {
-    console.log('Text field value is: ' + this.state.value);
+    console.log(this.state.event);
+    localStorage.setItem("user");
+    event.preventDefault()
   }
 
   render() {
+    const { event } = this.state;
     return (
       <Block>
-        <Section>
-          <Label>Email:</Label>
-          <Input
-            type="text"
-            placeholder="email"
-            value={this.state.value}
-            onChange={this.handleChange}
-          />
-        </Section>
-        <Section>
-          <Label>Password:</Label>
-          <Input></Input>
-        </Section>
-        <Button onClick={this.handleSubmit}>Login</Button>
+        <form onSubmit={this.handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column'}}>
+          <Container>
+            <Section>
+              <Label>Name:</Label>
+              <Input
+                name="user"
+                type="text"
+                placeholder="Your Name"
+                value={event.name}
+                onChange={this.handleChange}
+                required
+              />
+            </Section> 
+            <Section>
+              <Label>Email:</Label>
+              <Input
+                name="email"
+                type="email"
+                placeholder="Your Email"
+                value={event.email}
+                onChange={this.handleChange}
+                required
+              />
+            </Section>
+            <Section>
+              <Label>Password:</Label>
+              <Input
+                name="password"
+                type="password"
+                placeholder="Your Password"
+                value={event.password}
+                onChange={this.handleChange}
+                required
+              />
+            </Section>
+            <Checkbox>
+              <Label>Remember me</Label>
+              {/* <Input name="rememberMe" checked={rememberMe} onChange={this.handleChange} type="checkbox" style={{ minHeight: "18px", width: "10%"}}/>  */}
+              <Input  onChange={this.handleChange} type="checkbox" style={{ minHeight: "18px", width: "10%"}}/>
+            </Checkbox>
+            <ButtonWrap>
+              <Button type="submit">Login</Button>
+            </ButtonWrap>  
+          </Container>
+        </form> 
       </Block>
     )
   }

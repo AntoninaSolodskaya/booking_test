@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const Header = styled.div`
   display: flex;
   flex-wrap: wrap;
-  background: gray;
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(27,134,200,1) 35%, rgba(0,212,255,1) 100%);
   min-height: 100px;
   padding: 0 20px;
 `;
@@ -25,7 +25,7 @@ const Container = styled.div`
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  color: darkgray;
+  color: #ffffff;
   font: normal 20px/2 "varela-round", Helvetica, sans-serif;
   text-align: center;
   text-overflow: ellipsis;
@@ -42,7 +42,7 @@ const Logo = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  color: darkgray;
+  color: #ffffff;
   font-family: 'Niconne', cursive;
   font-weight: 400; 
   font-size: 40px;
@@ -80,7 +80,7 @@ const Span = styled.span`
   width: 25px;
   top: -2px;
   right: -13px;
-  background-color: #fff;
+  background-color: #ffffff;
   display: block;
   margin: 6px 0;
   transition: .5s;
@@ -161,12 +161,6 @@ class NavBar extends Component {
             <NavList>
               <List>
                 <StyledLink to="/">Home</StyledLink>
-              </List>
-              <List>
-                <StyledLink to="/">Members</StyledLink>
-              </List>
-              <List>
-                <StyledLink to="/">Blog</StyledLink>
               </List>
               {/* {authenticated &&
               <List>
