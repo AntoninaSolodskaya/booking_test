@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import Card from '../components/Card';
 import Calendar from './Calendar';
+import data from '../data';
 
 const Wrapper = styled.div`
   max-width: 950px;
@@ -16,23 +17,29 @@ const Wrapper = styled.div`
 const Section = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
 
 class Main extends Component {
   render() {
+
+    const { user } = this.props;
+
     return (
-      <Wrapper>
-        <Section>
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-        </Section>
-        <Section>
-          <Calendar />
-        </Section>
-      </Wrapper>
+      <Fragment>
+        {user &&
+          <Wrapper>
+            <Section>
+              {data && data.map((room, index) => (
+                <Card key={index} room={room}/>
+              ))}  
+            </Section>
+            <Section>
+              <Calendar />
+            </Section>
+          </Wrapper>}
+      </Fragment>
+      
     )
   }
 }

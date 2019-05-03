@@ -1,19 +1,19 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const CardBlock = styled.div`
+const CardBlock = styled(Link)`
   margin: 20px 8px 20px 8px;
-  min-height: 100px;
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: space-between;
   text-align: center;
+  justify-content: center;
   box-shadow: rgba(0, 0, 0, 0.1) 0 0 9px 0.3px;
   border-radius: 5px;
   background: #FCFCFC;
   overflow: hidden;
   transition: all 0.5s ease-in-out;
+  outline: none;
+  text-decoration: none;
   @media(max-width: 850px) {
     width: calc(50% - 16px);
     }
@@ -22,30 +22,20 @@ const CardBlock = styled.div`
   }
 `;
 
-const Image = styled.img`
-
-`;
-
 const Title = styled.p`
   display: flex;
   justify-content: center;
   font-size: 20px;
-  color: gray;
-`;
-
-const Content = styled.p`
-  display: flex;
-  justify-content: center;
-  padding: 0 20px;
+  padding: 20px 20px;
+  color: #ffffff;
 `;
 
 class Card extends Component {
   render() {
+    const { room } = this.props;
     return (
-      <CardBlock>
-        <Image></Image>
-        <Title>Card Title</Title>
-        <Content>Room to five person</Content>
+      <CardBlock to={`/card/${room.id}`} style={{backgroundColor: `${room.color}`}}>
+        <Title>{room.title}</Title>
       </CardBlock>
     )
   }

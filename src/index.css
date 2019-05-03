@@ -52,4 +52,7 @@ input{
     width: 100%;
     min-height: 500px ;
   }
-  
+
+  .rbc-btn-group {
+    padding-bottom: 15px;
+  }

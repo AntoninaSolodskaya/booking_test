@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import firebase from '../firebase';
 import styled from 'styled-components';
 
 const Header = styled.div`
@@ -144,9 +145,14 @@ const List = styled.li`
   width: 100%;
 `;
 
+const Button = StyledLink.withComponent('div');
+
 
 class NavBar extends Component {
   render() {
+
+    const { user } = this.props;
+
     return (
       <Header>
         <Container>
@@ -162,13 +168,21 @@ class NavBar extends Component {
               <List>
                 <StyledLink to="/">Home</StyledLink>
               </List>
-              {/* {authenticated &&
-              <List>
-                <StyledLink to="/manage">Submit</StyledLink>
-              </List>} */}
-              <List>
-                <StyledLink to="/login">Sign In</StyledLink>
-              </List>
+              {user ? (
+                <Button
+                  style={{ marginLeft: "20px"}}
+                  onClick={() => {
+                    firebase.auth().signOut();
+                    localStorage.removeItem('user');
+                  }}
+                >
+                  Sign Up
+                </Button>
+              ) : (
+                <List>
+                  <StyledLink to="/login">Sign In</StyledLink>
+                </List>   
+              )}
             </NavList>
           </Nav>
         </Container>

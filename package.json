@@ -3,12 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "firebase": "^5.11.1",
+    "firebase-admin": "^7.3.0",
     "moment": "^2.24.0",
     "react": "^16.8.4",
     "react-big-calendar": "^0.20.4",
     "react-dom": "^16.8.4",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",
+    "react-with-firebase-auth": "^1.0.2",
     "styled-components": "^4.2.0"
   },
   "scripts": {

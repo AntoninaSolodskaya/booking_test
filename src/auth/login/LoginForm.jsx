@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { withRouter } from "react-router";
+import firebase from '../../firebase';
 import styled from 'styled-components';
 
 const Block = styled.div`
@@ -29,11 +31,6 @@ const Label = styled.label`
 const Input = styled.input`
 `;
 
-const Checkbox = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-
 const ButtonWrap = styled.div`
   display: flex;
   flex-direction: column;
@@ -53,59 +50,74 @@ const Button = styled.button`
   font-size: 20px;
 `;
 
+
 class LoginForm extends Component {
 
   state = {
-    event: {
-      email: '',
-      password: '',
-      user: '',
-      rememberMe: false
-    } 
+    email: '',
+    password: '',
+    emailError: '',
+    passwordError: ''
   };
 
-  handleChange = evt => {
-    const newEvent = this.state.event;
-    newEvent[evt.target.name] = evt.target.value
+  validateEmail = () => {
+    const { email } = this.state;
     this.setState({
-      event: newEvent
-    })
+      emailError:
+        email.length > 3 ? null : 'Email must be longer than 3 characters'
+    });
+  }
+
+  validatePassword = () => {
+    const { password } = this.state;
+    this.setState({
+      passwordError:
+        password.length > 3 ? null : 'Password must be longer than 3 characters' 
+    });
   }
   
 
-  handleSubmit = event => {
-    console.log(this.state.event);
-    localStorage.setItem("user");
-    event.preventDefault()
+  handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const { email, password } = this.state;
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        this.props.history.push('/');
+        console.log('login user');
+      })
+      
+      .catch((error) => {
+        console.log('Must be authenticated');
+        this.setState({ error: error });
+      });
+  };
+
   render() {
-    const { event } = this.state;
+    const { email, password, emailError, passwordError } = this.state;
+    
     return (
       <Block>
         <form onSubmit={this.handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column'}}>
           <Container>
-            <Section>
-              <Label>Name:</Label>
-              <Input
-                name="user"
-                type="text"
-                placeholder="Your Name"
-                value={event.name}
-                onChange={this.handleChange}
-                required
-              />
-            </Section> 
-            <Section>
+            <Section className="form-group">
               <Label>Email:</Label>
               <Input
                 name="email"
                 type="email"
                 placeholder="Your Email"
-                value={event.email}
+                value={email}
                 onChange={this.handleChange}
-                required
+                className={`form-control ${emailError ? 'is-invalid' : ''}`}
+                onBlur={this.validateEmail}
               />
+               <div className='invalid-feedback' style={{ color: "#FF0000" }}>{emailError}</div>
+       
             </Section>
             <Section>
               <Label>Password:</Label>
@@ -113,16 +125,13 @@ class LoginForm extends Component {
                 name="password"
                 type="password"
                 placeholder="Your Password"
-                value={event.password}
+                value={password}
                 onChange={this.handleChange}
-                required
+                className={`form-control ${passwordError ? 'is-invalid' : ''}`}
+                onBlur={this.validatePassword}
               />
+              <div className='invalid-feedback' style={{ color: "#FF0000" }}>{passwordError}</div>
             </Section>
-            <Checkbox>
-              <Label>Remember me</Label>
-              {/* <Input name="rememberMe" checked={rememberMe} onChange={this.handleChange} type="checkbox" style={{ minHeight: "18px", width: "10%"}}/>  */}
-              <Input  onChange={this.handleChange} type="checkbox" style={{ minHeight: "18px", width: "10%"}}/>
-            </Checkbox>
             <ButtonWrap>
               <Button type="submit">Login</Button>
             </ButtonWrap>  
@@ -133,4 +142,4 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+export default withRouter(LoginForm);
