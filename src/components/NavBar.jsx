@@ -168,21 +168,23 @@ class NavBar extends Component {
               <List>
                 <StyledLink to="/">Home</StyledLink>
               </List>
-              {user ? (
-                <Button
-                  style={{ marginLeft: "20px"}}
-                  onClick={() => {
-                    firebase.auth().signOut();
-                    localStorage.removeItem('user');
-                  }}
-                >
-                  Sign Up
-                </Button>
-              ) : (
+              {/* {user ? ( */}
+                 <List>
+                  <StyledLink 
+                    to="/register"
+                    style={{ marginLeft: "20px"}}
+                    onClick={() => {
+                      firebase.auth().signOut();
+                      localStorage.removeItem('user');
+                    }}
+                  >
+                  Sign Up</StyledLink>
+                </List>   
+              {/* ) : ( */}
                 <List>
                   <StyledLink to="/login">Sign In</StyledLink>
                 </List>   
-              )}
+              {/* )} */}
             </NavList>
           </Nav>
         </Container>

@@ -56,3 +56,8 @@ input{
   .rbc-btn-group {
     padding-bottom: 15px;
   }
+
+  .btn-active {
+    background-color: #2f70e1;
+    color: #fff;
+  }

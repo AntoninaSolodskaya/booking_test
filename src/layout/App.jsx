@@ -7,7 +7,8 @@ import Main from '../components/Main';
 import Card from '../components/Card';
 import CardPage from '../components/CardPage';
 import LoginModal from '../auth/login/LoginModal';
-import SignUp from '../auth/login/SignUp';
+import RegisterModal from '../auth/register/RegisterModal';
+import data from '../data';
 
 const Container = styled.div`
   flex: 1 0 auto;
@@ -19,7 +20,8 @@ class App extends Component {
 
   state = {
     authenticated: false,
-    user: null
+    user: null,
+    data
   };
  
   componentDidMount() {
@@ -43,6 +45,7 @@ class App extends Component {
   };
 
   render() {
+    const {data} = this.state;
     return (
       <BrowserRouter>
         <Fragment>
@@ -54,9 +57,9 @@ class App extends Component {
                 component={() => <Main authenticated={this.state.authenticated} user={this.state.user} />}
               />
               <Route exact path="/login" component={LoginModal} />
-              <Route exact path="/signup" component={SignUp} />
+              <Route exact path="/register" component={RegisterModal} />
               <Route exact path="/card" component={Card} />
-              <Route exact path="/card/:id" component={CardPage} />
+              <Route exact path="/card/:id" component={CardPage} data={data} />
             </Switch>
           </Container>
         </Fragment>

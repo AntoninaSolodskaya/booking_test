@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const CardBlock = styled(Link)`
+const CardBlock = styled.button`
   margin: 20px 8px 20px 8px;
   display: flex;
   text-align: center;
@@ -31,10 +31,26 @@ const Title = styled.p`
 `;
 
 class Card extends Component {
+
+  // state = {
+  //   event: this.props.room.id
+  // };
+
+
+  // changeEvent = (event) => {
+  //   this.setState({
+  //     event: this.props.room.id
+  //   })
+  //   console.log(this.props.room.id);
+  //   console.log(this.state.event);
+  // };
+
   render() {
-    const { room } = this.props;
+    
+    const { room, changeCalendar } = this.props;
     return (
-      <CardBlock to={`/card/${room.id}`} style={{backgroundColor: `${room.color}`}}>
+      // <CardBlock to={`/card/${room.id}`} style={{backgroundColor: `${room.color}`}}>
+      <CardBlock onClick={changeCalendar} style={{backgroundColor: `${room.color}`}} className="btn">
         <Title>{room.title}</Title>
       </CardBlock>
     )

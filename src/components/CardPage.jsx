@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Calendar from './Calendar';
-import data from '../data';
+
 
 const Container = styled.div`
   max-width: 950px;
@@ -35,20 +35,15 @@ const Button = styled.button`
 
 class CardPage extends Component {
 
-  state = {
-    data: data
-  };
-
   closeCard = () => {
     this.props.history.goBack()
   };
 
   render() {
-    
     return (
-      <Container>
-       <Calendar />
-       <ButtonWrap>
+      <Container>  
+        <Calendar />
+        <ButtonWrap>
           <Button onClick={this.closeCard}>Back</Button>
         </ButtonWrap>
      </Container>

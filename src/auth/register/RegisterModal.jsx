@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import LoginForm from './LoginForm';
+import RegisterForm from './RegisterForm';
 
 const ModalWrap = styled.div`
   position: fixed;
@@ -45,7 +45,7 @@ const Title = styled.h1`
   align-items: center;
 `;
 
-class LoginModal extends React.Component {
+class RegisterModal extends React.Component {
 
   state = {
     isOpen: true
@@ -62,12 +62,12 @@ class LoginModal extends React.Component {
           <Wrap>
             <Button onClick={this.closeModal}>X</Button>
           </Wrap>
-          <Title style={{ margin: "0" }}>Login</Title>
-          <LoginForm />
+          <Title style={{ margin: "0" }}>Register</Title>
+          <RegisterForm />
         </Modal>
       </ModalWrap>
     );
   }
 }
 
-export default LoginModal;
+export default RegisterModal;

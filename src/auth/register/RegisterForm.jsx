@@ -47,12 +47,12 @@ const Button = styled.button`
   border-radius: 5px;
   border: none;
   padding: 7px 25px;
-  max-width: 100px;
+  max-width: 125px;
   font-size: 20px;
 `;
 
 
-class LoginForm extends Component {
+class RegisterForm extends Component {
 
   state = {
     email: '',
@@ -82,33 +82,33 @@ class LoginForm extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-
   handleSubmit = (event) => {
-    
     event.preventDefault();
-    const { email, password } = this.state;
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((user) => {
-        this.props.history.push('/');
-        console.log('login user');
-        const userId = {
-          email: this.state.email
-        };
-       
-        axios.post(`http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/sign`, { userId })
-          .then(res => {
-            console.log(res);
-            console.log(res.data);
-          })
+    const logindata={
+      email:this.state.email,
+      password:this.state.password
+     }
+     console.log(logindata);
+     axios.post('http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/signUp', logindata )
+     .then(function (response) {
+      console.log(response);
       })
-      
-      .catch((error) => {
-        console.log('Must be authenticated');
-        this.setState({ error: error });
+      .catch(function (error) {
+        console.log(error);
       });
-  };
+    }
+  
+
+    // const user = {
+    //   email: this.state.email
+    // };
+   
+    // axios.post(`http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/signUp`, { user })
+    //   .then(res => {
+    //     console.log(res);
+    //     console.log(res.data);
+    //   })
+    // }
 
   render() {
     const { email, password, emailError, passwordError } = this.state;
@@ -145,7 +145,7 @@ class LoginForm extends Component {
               <div className='invalid-feedback' style={{ color: "#FF0000" }}>{passwordError}</div>
             </Section>
             <ButtonWrap>
-              <Button type="submit">Login</Button>
+              <Button type="submit">Register</Button>
             </ButtonWrap>  
           </Container>
         </form> 
@@ -154,4 +154,4 @@ class LoginForm extends Component {
   }
 }
 
-export default withRouter(LoginForm);
+export default withRouter(RegisterForm);
