@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router";
-import axios from 'axios';
-import firebase from '../../firebase';
+import fetch from 'isomorphic-fetch';
 import styled from 'styled-components';
 
 const Block = styled.div`
@@ -57,101 +56,86 @@ class LoginForm extends Component {
   state = {
     email: '',
     password: '',
-    emailError: '',
-    passwordError: ''
+    submitted: false,
+    error: ''
   };
 
-  validateEmail = () => {
-    const { email } = this.state;
-    this.setState({
-      emailError:
-        email.length > 3 ? null : 'Email must be longer than 3 characters'
-    });
-  }
-
-  validatePassword = () => {
-    const { password } = this.state;
-    this.setState({
-      passwordError:
-        password.length > 3 ? null : 'Password must be longer than 3 characters' 
-    });
-  }
-  
-
   handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  }
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
+  };
 
+  login = (email, password) => {
+    fetch(`http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/signIn`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    })
+    .then(response => response.json())
+    .then(user => {
+      if (user) {
+        localStorage.setItem('user', JSON.stringify(user));
+        this.props.history.goBack();
+      }
+      return user;
+    })
+    .catch(reason => console.error(reason)) 
+  };
 
-  handleSubmit = (event) => {
-    
+  handleSubmit = (event) => { 
     event.preventDefault();
+    this.setState({ submitted: true });
     const { email, password } = this.state;
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then((user) => {
-        this.props.history.push('/');
-        console.log('login user');
-        const userId = {
-          email: this.state.email
-        };
-       
-        axios.post(`http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/sign`, { userId })
-          .then(res => {
-            console.log(res);
-            console.log(res.data);
-          })
-      })
-      
-      .catch((error) => {
-        console.log('Must be authenticated');
-        this.setState({ error: error });
-      });
+  
+    if (!(email && password)) {
+      return;
+    }
+    
+    this.login(email, password)
   };
 
   render() {
-    const { email, password, emailError, passwordError } = this.state;
-    
+    const { email, password, submitted, error } = this.state; 
     return (
       <Block>
         <form onSubmit={this.handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column'}}>
           <Container>
-            <Section className="form-group">
+            <Section className={'form-group' + (submitted && !email ? ' has-error' : '')}>
               <Label>Email:</Label>
               <Input
                 name="email"
                 type="email"
                 placeholder="Your Email"
+                className="form-control"
                 value={email}
                 onChange={this.handleChange}
-                className={`form-control ${emailError ? 'is-invalid' : ''}`}
-                onBlur={this.validateEmail}
               />
-               <div className='invalid-feedback' style={{ color: "#FF0000" }}>{emailError}</div>
-       
+              {submitted && !email &&
+                <div className='invalid-feedback' style={{ color: "#FF0000" }}>{error}</div>
+              }
             </Section>
-            <Section>
+            <Section className={'form-group' + (submitted && !password ? ' has-error' : '')}>
               <Label>Password:</Label>
               <Input
                 name="password"
                 type="password"
                 placeholder="Your Password"
+                className="form-control"
                 value={password}
                 onChange={this.handleChange}
-                className={`form-control ${passwordError ? 'is-invalid' : ''}`}
-                onBlur={this.validatePassword}
               />
-              <div className='invalid-feedback' style={{ color: "#FF0000" }}>{passwordError}</div>
+              {submitted && !password &&
+                <div className='invalid-feedback' style={{ color: "#FF0000" }}>{error}</div>
+              }   
             </Section>
             <ButtonWrap>
               <Button type="submit">Login</Button>
-            </ButtonWrap>  
+            </ButtonWrap> 
           </Container>
         </form> 
       </Block>
-    )
+    );
   }
-}
+};
 
 export default withRouter(LoginForm);

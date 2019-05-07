@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import firebase from '../firebase';
 import styled from 'styled-components';
 
 const Header = styled.div`
@@ -145,14 +144,19 @@ const List = styled.li`
   width: 100%;
 `;
 
-const Button = StyledLink.withComponent('div');
+const SpanName = StyledLink.withComponent('span');
+
+const SignSection = Nav.withComponent('div');
 
 
 class NavBar extends Component {
+
+  logOut = () => {
+    localStorage.removeItem('user');
+  }
+
   render() {
-
     const { user } = this.props;
-
     return (
       <Header>
         <Container>
@@ -167,24 +171,23 @@ class NavBar extends Component {
             <NavList>
               <List>
                 <StyledLink to="/">Home</StyledLink>
-              </List>
-              {/* {user ? ( */}
-                 <List>
-                  <StyledLink 
-                    to="/register"
-                    style={{ marginLeft: "20px"}}
-                    onClick={() => {
-                      firebase.auth().signOut();
-                      localStorage.removeItem('user');
-                    }}
-                  >
-                  Sign Up</StyledLink>
-                </List>   
-              {/* ) : ( */}
-                <List>
-                  <StyledLink to="/login">Sign In</StyledLink>
-                </List>   
-              {/* )} */}
+              </List> 
+              {user &&
+                <SignSection>
+                  <SpanName>{user._id}</SpanName>
+                  <List>
+                    <StyledLink to="/" onClick={this.logOut}>Sign Out</StyledLink>
+                  </List>  
+                </SignSection>}
+              {!user &&
+                <SignSection>
+                  <List>
+                    <StyledLink to="/register">Sign Up</StyledLink>
+                  </List>   
+                  <List>
+                    <StyledLink to="/login">Sign In</StyledLink>
+                  </List>  
+                </SignSection>}
             </NavList>
           </Nav>
         </Container>

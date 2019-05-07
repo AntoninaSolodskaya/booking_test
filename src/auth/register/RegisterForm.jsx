@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router";
-import axios from 'axios';
-import firebase from '../../firebase';
+import fetch from 'isomorphic-fetch';
 import styled from 'styled-components';
 
 const Block = styled.div`
@@ -55,63 +54,52 @@ const Button = styled.button`
 class RegisterForm extends Component {
 
   state = {
-    email: '',
-    password: '',
-    emailError: '',
-    passwordError: ''
+    email: {
+      value: ''
+    },
+    password: {
+      value: ''
+    }
   };
 
-  validateEmail = () => {
-    const { email } = this.state;
-    this.setState({
-      emailError:
-        email.length > 3 ? null : 'Email must be longer than 3 characters'
-    });
-  }
-
-  validatePassword = () => {
-    const { password } = this.state;
-    this.setState({
-      passwordError:
-        password.length > 3 ? null : 'Password must be longer than 3 characters' 
-    });
-  }
-  
-
   handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
+    event.persist();
+    const { name, value } = event.target;
+    this.setState(prevState => ({
+      [name]: {
+        ...prevState,
+        value
+      },
+    }));
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const logindata={
-      email:this.state.email,
-      password:this.state.password
-     }
-     console.log(logindata);
-     axios.post('http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/signUp', logindata )
-     .then(function (response) {
-      console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    }
+    const { email, password } = this.state;
+    console.log('Login:', email.value, password.value);
+    localStorage.setItem('email', JSON.stringify(email.value));
+    localStorage.setItem('password', JSON.stringify(password.value));
+  
+    fetch('http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/signUp', {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value
+      }),
+    })
+    .then(response => response.json(),
+      this.props.history.push('/'))
+    .then(json => console.log(json))
+    .catch(reason => console.error(reason));
+  };
   
 
-    // const user = {
-    //   email: this.state.email
-    // };
-   
-    // axios.post(`http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/signUp`, { user })
-    //   .then(res => {
-    //     console.log(res);
-    //     console.log(res.data);
-    //   })
-    // }
 
   render() {
-    const { email, password, emailError, passwordError } = this.state;
+    const { email, password } = this.state;
     
     return (
       <Block>
@@ -123,13 +111,10 @@ class RegisterForm extends Component {
                 name="email"
                 type="email"
                 placeholder="Your Email"
-                value={email}
+                value={email.value}
                 onChange={this.handleChange}
-                className={`form-control ${emailError ? 'is-invalid' : ''}`}
-                onBlur={this.validateEmail}
+                required
               />
-               <div className='invalid-feedback' style={{ color: "#FF0000" }}>{emailError}</div>
-       
             </Section>
             <Section>
               <Label>Password:</Label>
@@ -137,12 +122,10 @@ class RegisterForm extends Component {
                 name="password"
                 type="password"
                 placeholder="Your Password"
-                value={password}
+                value={password.value}
                 onChange={this.handleChange}
-                className={`form-control ${passwordError ? 'is-invalid' : ''}`}
-                onBlur={this.validatePassword}
+                required
               />
-              <div className='invalid-feedback' style={{ color: "#FF0000" }}>{passwordError}</div>
             </Section>
             <ButtonWrap>
               <Button type="submit">Register</Button>

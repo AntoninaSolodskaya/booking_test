@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import firebase from '../firebase';
 import styled from 'styled-components';
 import NavBar from '../components/NavBar';
 import Main from '../components/Main';
@@ -8,7 +7,6 @@ import Card from '../components/Card';
 import CardPage from '../components/CardPage';
 import LoginModal from '../auth/login/LoginModal';
 import RegisterModal from '../auth/register/RegisterModal';
-import data from '../data';
 
 const Container = styled.div`
   flex: 1 0 auto;
@@ -19,47 +17,57 @@ const Container = styled.div`
 class App extends Component {
 
   state = {
-    authenticated: false,
-    user: null,
-    data
-  };
- 
-  componentDidMount() {
-    this.authListener();
+    user: {},
+    rooms: [],
+    isLoading: false
   };
 
-  authListener = () => {
-    firebase.auth().onAuthStateChanged((user) => {
-      console.log(user);
-      this.setState({
-        authenticated: true
+
+  loadData = () => {
+    fetch('http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/halls', {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then(response => response.json())
+      .then(result => {
+        console.log(result);
+        this.setState({
+          rooms: result.halls,
+          isLoading: true
+        });
       })
-      if (user) {
-        this.setState({ user });
-        localStorage.setItem('user', user.uid);
-      } else {
-        this.setState({ user: null });
-        localStorage.removeItem('user');
-      }
+      .catch(reason => console.error(reason))  
+  }
+
+  componentDidMount() {
+    this.loadData();
+    this.setState({ 
+      user: JSON.parse(localStorage.getItem('user')),  
     });
   };
 
+  componentWillUnmount() {
+    this.setState({
+      isLoading: false
+    })
+  }
+
   render() {
-    const {data} = this.state;
+    const {user, rooms} = this.state;
     return (
       <BrowserRouter>
         <Fragment>
-          <NavBar authenticated={this.state.authenticated} user={this.state.user} />
+          <NavBar user={user} />
           <Container className="main">
             <Switch>
               <Route 
                 exact path="/" 
-                component={() => <Main authenticated={this.state.authenticated} user={this.state.user} />}
+                component={() => <Main user={user} rooms={rooms} />}
               />
               <Route exact path="/login" component={LoginModal} />
               <Route exact path="/register" component={RegisterModal} />
               <Route exact path="/card" component={Card} />
-              <Route exact path="/card/:id" component={CardPage} data={data} />
+              <Route exact path="/card/:id" component={CardPage} />
             </Switch>
           </Container>
         </Fragment>

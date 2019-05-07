@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Calendar from './Calendar';
-import data from '../data';
 
 const Wrapper = styled.div`
   max-width: 950px;
@@ -17,50 +16,60 @@ const Wrapper = styled.div`
 const Section = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
 `;
 
 const CardBlock = styled(Link)`
-  margin: 20px 8px 20px 8px;
+  width: calc(30% - 16px);
+  margin: 0 8px 10px 8px;
+  min-height: 180px;
   display: flex;
-  text-align: center;
+  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
-  box-shadow: rgba(0, 0, 0, 0.1) 0 0 9px 0.3px;
+  text-align: center;
+  box-shadow: rgba(0,0,0,0.1) 0 0 9px 0.3px;
   border-radius: 5px;
   background: #FCFCFC;
   overflow: hidden;
   transition: all 0.5s ease-in-out;
-  outline: none;
   text-decoration: none;
   @media(max-width: 850px) {
     width: calc(50% - 16px);
     }
   @media(max-width: 450px) {
     width: calc(100% - 16px);
-  }
+
 `;
 
 const Title = styled.p`
   display: flex;
   justify-content: center;
-  font-size: 20px;
-  padding: 20px 20px;
+  padding: 5px 20px;
   color: #ffffff;
+  tex-shadow: rgba(0,0,0,0.1) 0 0 9px 0.3px;
+  font-size: 19px;
+  line-height: 25px;
 `;
-
 
 class Main extends Component {
 
+  state = {
+    halls: this.props.rooms
+  }
+
   render() {
     const { user } = this.props; 
+    const { halls } = this.state;
     return (
       <Fragment>
         {user &&
           <Wrapper>
             <Section>
-              {data && data.map((room, index) => (
-                <CardBlock to={`/card/${room.id}`} key={index} room={room} style={{backgroundColor: `${room.color}`}}>
+              {halls && halls.map((room, index) => (
+                <CardBlock to={`/card/${room._id}`} key={index} room={room} style={{background: "lightblue"}}>
                   <Title>{room.title}</Title>
+                  <Title>{room.description}</Title>
                 </CardBlock>
               ))}  
             </Section>

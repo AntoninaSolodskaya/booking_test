@@ -17,7 +17,7 @@ const ModalWrap = styled.div`
 
 const Modal = styled.div`
   max-width: 430px;
-  max-height: 430px;
+  max-height: 380px;
   height: 100%;
   width: 100%;
   background: #ffffff;
@@ -62,7 +62,7 @@ class RegisterModal extends React.Component {
           <Wrap>
             <Button onClick={this.closeModal}>X</Button>
           </Wrap>
-          <Title style={{ margin: "0" }}>Register</Title>
+          <Title style={{ margin: "20px" }}>Register</Title>
           <RegisterForm />
         </Modal>
       </ModalWrap>

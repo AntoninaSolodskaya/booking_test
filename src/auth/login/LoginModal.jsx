@@ -17,13 +17,12 @@ const ModalWrap = styled.div`
 
 const Modal = styled.div`
   max-width: 430px;
-  max-height: 430px;
+  max-height: 380px;
   height: 100%;
   width: 100%;
   background: #ffffff;
   display: flex;
   flex-direction: column;
-  margin: 0 20px;
 `;
 
 const Wrap = styled.div`
@@ -62,7 +61,7 @@ class LoginModal extends React.Component {
           <Wrap>
             <Button onClick={this.closeModal}>X</Button>
           </Wrap>
-          <Title style={{ margin: "0" }}>Login</Title>
+          <Title style={{ margin: "20px" }}>Login</Title>
           <LoginForm />
         </Modal>
       </ModalWrap>
