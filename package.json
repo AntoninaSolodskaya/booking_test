@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "cuid": "^2.1.6",
     "firebase": "^5.11.1",
     "firebase-admin": "^7.3.0",
     "isomorphic-fetch": "^2.2.1",

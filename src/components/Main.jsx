@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Calendar from './Calendar';
+import CardPage from './CardPage';
 
 const Wrapper = styled.div`
   max-width: 950px;
@@ -26,7 +26,7 @@ const CardBlock = styled(Link)`
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
   box-shadow: rgba(0,0,0,0.1) 0 0 9px 0.3px;
   border-radius: 5px;
@@ -48,33 +48,42 @@ const Title = styled.p`
   padding: 5px 20px;
   color: #ffffff;
   tex-shadow: rgba(0,0,0,0.1) 0 0 9px 0.3px;
-  font-size: 19px;
+  font-size: 10px;
   line-height: 25px;
 `;
 
 class Main extends Component {
 
   state = {
-    halls: this.props.rooms
-  }
+    halls: this.props.rooms,
+    isOpen: false,
+    isLoading: false,
+    tickets: []
+  };
+
+  changeEvent = (event) => {
+    this.setState({
+      isOpen: true
+    });
+  };
 
   render() {
     const { user } = this.props; 
-    const { halls } = this.state;
+    const { halls, isOpen } = this.state;
     return (
       <Fragment>
         {user &&
           <Wrapper>
+            <Title style={{color: "lightblue", fontSize: "40px"}}>Please click on the room</Title>
             <Section>
               {halls && halls.map((room, index) => (
                 <CardBlock to={`/card/${room._id}`} key={index} room={room} style={{background: "lightblue"}}>
-                  <Title>{room.title}</Title>
-                  <Title>{room.description}</Title>
+                  <Title style={{fontSize: "18px"}}>{room.title}</Title>
+                  <Title>{room.description}</Title> 
                 </CardBlock>
-              ))}  
-            </Section>
-            <Section>
-              <Calendar />
+              ))} 
+              {isOpen &&
+                <CardPage />}
             </Section>
           </Wrapper>}
       </Fragment> 

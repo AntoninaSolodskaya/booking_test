@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 import NavBar from '../components/NavBar';
 import Main from '../components/Main';
-import Card from '../components/Card';
 import CardPage from '../components/CardPage';
 import LoginModal from '../auth/login/LoginModal';
 import RegisterModal from '../auth/register/RegisterModal';
@@ -66,8 +65,11 @@ class App extends Component {
               />
               <Route exact path="/login" component={LoginModal} />
               <Route exact path="/register" component={RegisterModal} />
-              <Route exact path="/card" component={Card} />
-              <Route exact path="/card/:id" component={CardPage} />
+             
+              <Route
+                path='/card/:id'
+                render={(props) => <CardPage {...props} user={user} room={rooms} />}
+              />
             </Switch>
           </Container>
         </Fragment>
