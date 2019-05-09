@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import CardPage from './CardPage';
@@ -52,14 +53,53 @@ const Title = styled.p`
   line-height: 25px;
 `;
 
+const Text = styled.p`
+  color: #000000;
+  font-size: 20px;
+  text-align: center;
+`;
+
 class Main extends Component {
 
   state = {
-    halls: this.props.rooms,
+    rooms: [],
     isOpen: false,
     isLoading: false,
+    isError: false,
     tickets: []
   };
+
+  loadData = () => {
+    // const mockHalls = [
+    //   { 
+    //     _id: "fghh",
+    //     title: "ghfvhjgjk",
+    //     description: "fghfhjguiyhihuujjm"
+    //   }
+    // ];
+    // this.setState({
+    //   rooms: mockHalls, //result.halls,
+    //   isLoading: true
+    // });
+
+    axios
+      .get('http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/halls')
+      .then(response => response.data)
+      .then(result => {
+        console.log(result);
+        
+        this.setState({
+          rooms: result.halls,
+          isLoading: true
+        });
+      })
+      .catch(reason => console.error(reason));
+  }
+
+  componentDidMount() {
+    this.loadData();
+  };
+  
 
   changeEvent = (event) => {
     this.setState({
@@ -69,14 +109,14 @@ class Main extends Component {
 
   render() {
     const { user } = this.props; 
-    const { halls, isOpen } = this.state;
+    const { isOpen, isError, rooms } = this.state;
     return (
       <Fragment>
-        {user &&
+        {user && !isError &&
           <Wrapper>
             <Title style={{color: "lightblue", fontSize: "40px"}}>Please click on the room</Title>
             <Section>
-              {halls && halls.map((room, index) => (
+              {rooms && rooms.map((room, index) => (
                 <CardBlock to={`/card/${room._id}`} key={index} room={room} style={{background: "lightblue"}}>
                   <Title style={{fontSize: "18px"}}>{room.title}</Title>
                   <Title>{room.description}</Title> 
@@ -86,6 +126,7 @@ class Main extends Component {
                 <CardPage />}
             </Section>
           </Wrapper>}
+          {isError && (<Text>Error!!!</Text>)}
       </Fragment> 
     );
   }

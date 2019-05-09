@@ -26,7 +26,7 @@ input{
   background-color: transparent;
   border: 1px solid hsl(0, 14%, 11%);
   font: normal 16px/2 "varela-round", Helvetica, sans-serif;
-  color: rgba(255,247,247,1);
+  color:#311e1e;
 }
   ::-webkit-input-placeholder {
     color: #311e1e;
@@ -55,9 +55,4 @@ input{
 
   .rbc-btn-group {
     padding-bottom: 15px;
-  }
-
-  .btn-active {
-    background-color: #2f70e1;
-    color: #fff;
   }

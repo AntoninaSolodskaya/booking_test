@@ -150,11 +150,7 @@ const SignSection = Nav.withComponent('div');
 
 
 class NavBar extends Component {
-
-  logOut = () => {
-    localStorage.removeItem('user');
-  }
-
+  
   render() {
     const { user } = this.props;
     return (
@@ -176,7 +172,7 @@ class NavBar extends Component {
                 <SignSection>
                   <SpanName>{user._id}</SpanName>
                   <List>
-                    <StyledLink to="/" onClick={this.logOut}>Sign Out</StyledLink>
+                    <StyledLink to="/" onClick={this.props.deleteUser}>Sign Out</StyledLink>
                   </List>  
                 </SignSection>}
               {!user &&

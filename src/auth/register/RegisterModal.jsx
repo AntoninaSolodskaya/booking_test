@@ -44,16 +44,23 @@ const Title = styled.h1`
   justify-content: center;
   align-items: center;
 `;
+const Text = styled.p`
+  text-align: center;
+  font-size: 20px;
+`;
 
 class RegisterModal extends React.Component {
 
   state = {
-    isOpen: true
+    isOpen: true,
+    isRegister: false
   };
 
   closeModal = () => {
     this.props.history.goBack()
   };
+
+  setRegistered = () => this.setState({ isRegister: true });
 
   render() {
     return (
@@ -63,7 +70,11 @@ class RegisterModal extends React.Component {
             <Button onClick={this.closeModal}>X</Button>
           </Wrap>
           <Title style={{ margin: "20px" }}>Register</Title>
-          <RegisterForm />
+          {this.state.isRegister ? (
+            <Text>you are registered! Please Log in.</Text>
+          ) : (
+            <RegisterForm setRegistered={this.setRegistered} />
+          )}
         </Modal>
       </ModalWrap>
     );

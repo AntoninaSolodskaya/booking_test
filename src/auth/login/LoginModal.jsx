@@ -62,7 +62,7 @@ class LoginModal extends React.Component {
             <Button onClick={this.closeModal}>X</Button>
           </Wrap>
           <Title style={{ margin: "20px" }}>Login</Title>
-          <LoginForm />
+          <LoginForm updateUser={this.props.updateUser} />
         </Modal>
       </ModalWrap>
     );

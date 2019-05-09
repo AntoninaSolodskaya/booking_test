@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router";
-import fetch from 'isomorphic-fetch';
+import axios from 'axios';
 import styled from 'styled-components';
 
 const Block = styled.div`
@@ -57,37 +57,40 @@ class LoginForm extends Component {
     email: '',
     password: '',
     submitted: false,
-    error: ''
+    isError: false
   };
 
   handleChange = event => {
     const { name, value } = event.target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, isError: false, submitted: false });
   };
 
-  login = (email, password) => {
-    fetch(`http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/signIn`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    })
-    .then(response => response.json())
-    .then(user => {
-      if (user) {
-        localStorage.setItem('user', JSON.stringify(user));
-        this.props.history.goBack();
-      }
-      return user;
-    })
-    .catch(reason => console.error(reason)) 
-  };
+login = (email, password) => {
+  console.log(email, password);
+  console.log(email, password);
+  axios.post(`http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/signIn`, 
+    { email, password })
+  .then(response => response.data)
+  .then(user => {
+    if (user) {
+      this.props.updateUser(user, () => this.props.history.push('/'));
+    }
+    return user;   
+  })
+  .catch(reason => {
+    console.error(reason.response);
+    if (reason.response.data.message === "Incorrect password or email") {
+      this.setState({ isError: true });
+    }
+  }) 
+};
 
   handleSubmit = (event) => { 
     event.preventDefault();
     this.setState({ submitted: true });
-    const { email, password } = this.state;
+    const { email, password, isError } = this.state;
   
-    if (!(email && password)) {
+    if (!(email && password) || isError) {
       return;
     }
     
@@ -95,7 +98,7 @@ class LoginForm extends Component {
   };
 
   render() {
-    const { email, password, submitted, error } = this.state; 
+    const { email, password, submitted, isError } = this.state; 
     return (
       <Block>
         <form onSubmit={this.handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column'}}>
@@ -111,7 +114,7 @@ class LoginForm extends Component {
                 onChange={this.handleChange}
               />
               {submitted && !email &&
-                <div className='invalid-feedback' style={{ color: "#FF0000" }}>{error}</div>
+                <div style={{ color: "#FF0000" }}>Please enter your email</div>
               }
             </Section>
             <Section className={'form-group' + (submitted && !password ? ' has-error' : '')}>
@@ -125,8 +128,11 @@ class LoginForm extends Component {
                 onChange={this.handleChange}
               />
               {submitted && !password &&
-                <div className='invalid-feedback' style={{ color: "#FF0000" }}>{error}</div>
+                <div style={{ color: "#FF0000" }}>Please enter your password</div>
               }   
+              {isError &&
+                <div style={{ color: "#FF0000" }}>Wrong password or email</div>
+              }  
             </Section>
             <ButtonWrap>
               <Button type="submit">Login</Button>

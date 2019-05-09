@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router";
-import fetch from 'isomorphic-fetch';
+import axios from 'axios';
 import styled from 'styled-components';
 
 const Block = styled.div`
@@ -80,19 +80,13 @@ class RegisterForm extends Component {
     localStorage.setItem('email', JSON.stringify(email.value));
     localStorage.setItem('password', JSON.stringify(password.value));
   
-    fetch('http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/signUp', {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+    axios.post('http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/signUp',
+     {
         email: email.value,
         password: password.value
-      }),
-    })
-    .then(response => response.json(),
-      this.props.history.push('/'))
-    .then(json => console.log(json))
+      })
+    .then(response => response.data,
+      this.props.setRegistered())
     .catch(reason => console.error(reason));
   };
   

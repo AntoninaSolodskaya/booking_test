@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
-import BigCalendar from 'react-big-calendar'
+import BigCalendar from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
@@ -48,18 +49,36 @@ const Button = styled.button`
   font-size: 20px;
 `;
 
+const Text = styled.p`
+  color: #000000;
+  font-size: 20px;
+  text-align: center;
+`;
+
 class CardPage extends Component {
   
   state = {
     tickets: [],
-    isLoading: false
+    isLoading: false,
+    isError: false,
   };
 
   closeCard = () => {
     this.props.history.goBack()
   };
+  
+  isCanEdit = (ticket) => {
+    if (ticket.event.user_id !== this.props.user._id) {
+      console.log("Not this user");
+      return false;
+    }
+    return true;
+  };
 
   onEventResize = (ticket, start, end) => {
+    if (!this.isCanEdit(ticket)) {
+      return;
+    }
     const { tickets } = this.state;
     const nextTicket = tickets.map(existingTicket => {
       return existingTicket._id === ticket._id
@@ -71,10 +90,15 @@ class CardPage extends Component {
       events: nextTicket,
     })
     localStorage.setItem('days', JSON.stringify(nextTicket));
+    localStorage.getItem('days', JSON.stringify(nextTicket));
     console.log(nextTicket);
   }
 
   onEventDrop = (newTicket, start, end) => {
+    console.log(newTicket, this.props.user);
+    if (!this.isCanEdit(newTicket)) {
+      return;
+    }
     const { tickets } = this.state;
     const idx = tickets.indexOf(newTicket);
     const updatedTicket = { ...newTicket, start, end };
@@ -85,19 +109,21 @@ class CardPage extends Component {
     });
    
     localStorage.setItem('weeks', JSON.stringify(newTicket));
+    localStorage.getItem('weeks', JSON.stringify(newTicket));
     console.log(`${newTicket.start} to ${newTicket.end}`);
   };
 
-  handleCreateTicket = (ticket, start, end) => {
+  handleCreateTicket = (ticket) => {
     const {user} = this.props;
     const ticketId = this.props.match.params.id;
     ticket.hall_id = ticketId;
     ticket.user_id = user._id;
+
     const newTicket = {
       ...ticket,
       hall_id: ticketId,
       user_id: user._id,
-      title: `${ticket.title}` && "room is ordered",
+      title: `${ticket.title}` || "room is ordered",
       // from: ticket.start,
       // to: ticket.end
     }
@@ -105,61 +131,91 @@ class CardPage extends Component {
     this.setState({
       tickets: updatedTicket,
     });
-    localStorage.setItem('ticket', JSON.stringify(ticket));
-    localStorage.getItem('ticket');
+    localStorage.setItem('ticket', JSON.stringify(newTicket));
+    localStorage.getItem('ticket', JSON.stringify(newTicket));
     console.log(newTicket);
   };
 
   loadData = () => {
-    fetch(' http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/tickets ', {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    })
-      .then(response => response.json())
+    // const mockTickets = [
+    //   {
+    //     hall_id: 'vhvbhjb',
+    //     user_id: 'fghmghj',
+    //     title: "room is ordered",
+    //     start: '1557405846229',
+    //     end: '1559406846229'
+    //   }
+    // ];
+    // this.setState({
+    //   tickets: mockTickets, //result.filter(ticket => ticket.hall_id === this.props.match.params.id),
+    //   isLoading: true
+    // });
+
+    axios
+      .get(' http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/tickets ')
+      .then(response => response.data)
       .then(result => {
         console.log(result);
         this.setState({
-          tickets: result,
+          tickets: result
+            .filter(ticket => ticket.hall_id === this.props.match.params.id)
+            .map(event => {
+              let editedEvent = event;
+              editedEvent.start = moment(event.from).toDate();
+              editedEvent.end = moment(event.to).toDate();
+              console.log(editedEvent);
+              return editedEvent;
+            }),
           isLoading: true
         });
       })
-      .catch(reason => console.error(reason))  
+      .catch(reason => console.error(reason));
   }
 
   componentDidMount() {
     this.loadData();
+    if (localStorage.getItem('ticket') && localStorage.getItem('weeks') && localStorage.getItem('days')) {
+      this.setState({ 
+        tickets: JSON.parse(localStorage.getItem('ticket') && localStorage.getItem('weeks') && localStorage.getItem('days')),  
+      });
+    }  
   };
-    
+
+
   render() {
-    const { tickets } = this.state;
-    
+    const { tickets, isError } = this.state; 
     return (
-      <Container>  
-        <DraggableCalendar
-          eventPropGetter={(this.eventStyleGetter)}
-          localizer={localizer}
-          events={tickets}
-          defaultDate={new Date()}
-          defaultView="month"
-          startAccessor="start"
-          endAccessor="end"
-          titleAccessor="title"
-          onEventResize={this.onEventResize}
-          onEventDrop={this.onEventDrop}
-          onSelecting={event => this.handleCreateTicket(event)}
-          onSelectSlot={(ticket) => ticket.resourceId }
-          onSelectEvent={(event) => event.title}
-          selectable
-          // components={{
-          //   event: this.customElement,
-          // }}
-        />
-        <ButtonWrap>
-          <Button onClick={this.closeCard}>Back</Button>
-        </ButtonWrap>
+      <Container>
+        {!isError &&  
+          <Fragment>
+            <Title>Choose Your Date</Title>
+            <DraggableCalendar
+              eventPropGetter={(this.eventStyleGetter)}
+              localizer={localizer}
+              events={tickets}
+              defaultDate={new Date()}
+              defaultView="month"
+              startAccessor="start"
+              endAccessor="end"
+              titleAccessor="title"
+              onEventResize={this.onEventResize}
+              onEventDrop={event => this.onEventDrop(event)}
+              onSelecting={event => this.handleCreateTicket(event)}
+              onSelectSlot={(ticket) => ticket.resourceId }
+              onSelectEvent={(event) => console.log(event.title)}
+              selectable
+              components={{
+                event: this.customElement,
+              }}
+            />
+            <ButtonWrap>
+              <Button onClick={this.closeCard}>Back</Button>
+            </ButtonWrap>
+          </Fragment>}
+        {isError && (<Text>Error!!!</Text>)}
      </Container>
-    )
+    );
   }
-}
+};
 
 export default CardPage;
