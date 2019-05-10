@@ -31,13 +31,18 @@ class App extends Component {
 
   updateUser = (user, afterUpdate) => {
     this.setState({ user });
+    debugger
     localStorage.setItem('user', JSON.stringify(user));
     afterUpdate();
     console.log(user)
+    localStorage.setItem("token", user.token)
+    localStorage.setItem("userId", user._id)
+    console.log(user.token)
+    console.log(user._id)
   };
 
   deleteUser = () => {
-    localStorage.removeItem('user');
+    // localStorage.removeItem('user');
     this.setState({ user: null });
   };
 

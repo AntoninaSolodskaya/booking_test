@@ -57,7 +57,7 @@ class LoginForm extends Component {
     email: '',
     password: '',
     submitted: false,
-    isError: false
+    isError: false,
   };
 
   handleChange = event => {
@@ -65,35 +65,35 @@ class LoginForm extends Component {
     this.setState({ [name]: value, isError: false, submitted: false });
   };
 
-login = (email, password) => {
-  console.log(email, password);
-  console.log(email, password);
-  axios.post(`http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/signIn`, 
-    { email, password })
-  .then(response => response.data)
-  .then(user => {
-    if (user) {
-      this.props.updateUser(user, () => this.props.history.push('/'));
-    }
-    return user;   
-  })
-  .catch(reason => {
-    console.error(reason.response);
-    if (reason.response.data.message === "Incorrect password or email") {
-      this.setState({ isError: true });
-    }
-  }) 
-};
+  login = (email, password) => {
+    console.log(email, password);
+    console.log(email, password);
+    
+    axios.post(`http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/signIn`, 
+      { email, password })
+    .then(response => response.data)
+    .then(user => {
+      if (user) {
+        this.props.updateUser(user, () => this.props.history.push('/'));
+      }
+      return user;   
+    })
+    .catch(reason => {
+      console.error(reason.response);
+      if (reason.response.data.message === "Incorrect password or email") {
+        this.setState({ isError: true });
+      }
+    }) 
+  };
 
   handleSubmit = (event) => { 
     event.preventDefault();
     this.setState({ submitted: true });
-    const { email, password, isError } = this.state;
+    const { email, password, isError, } = this.state;
   
     if (!(email && password) || isError) {
       return;
     }
-    
     this.login(email, password)
   };
 

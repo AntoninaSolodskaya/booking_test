@@ -70,18 +70,6 @@ class Main extends Component {
   };
 
   loadData = () => {
-    // const mockHalls = [
-    //   { 
-    //     _id: "fghh",
-    //     title: "ghfvhjgjk",
-    //     description: "fghfhjguiyhihuujjm"
-    //   }
-    // ];
-    // this.setState({
-    //   rooms: mockHalls, //result.halls,
-    //   isLoading: true
-    // });
-
     axios
       .get('http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/halls')
       .then(response => response.data)
@@ -125,7 +113,7 @@ class Main extends Component {
               {isOpen &&
                 <CardPage />}
             </Section>
-          </Wrapper>}
+          </Wrapper>} 
           {isError && (<Text>Error!!!</Text>)}
       </Fragment> 
     );
