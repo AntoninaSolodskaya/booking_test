@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Header = styled.div`
+export const Header = styled.div`
   display: flex;
   flex-wrap: wrap;
   background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(27,134,200,1) 35%, rgba(0,212,255,1) 100%);
@@ -10,7 +9,7 @@ const Header = styled.div`
   padding: 0 20px;
 `;
 
-const Container = styled.div`
+export const Container = styled.div`
   min-width: 350px;
   width: 100%;
   display: flex;
@@ -23,7 +22,7 @@ const Container = styled.div`
   }
 `;
 
-const StyledLink = styled(Link)`
+export const StyledLink = styled(Link)`
   text-decoration: none;
   color: #ffffff;
   font: normal 20px/2 "varela-round", Helvetica, sans-serif;
@@ -38,7 +37,7 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const Logo = styled.div`
+export const Logo = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -48,7 +47,7 @@ const Logo = styled.div`
   font-size: 40px;
 `;
 
-const NavList = styled.ul`
+export const NavList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -62,7 +61,7 @@ const NavList = styled.ul`
   }
 `;
 
-const Nav = styled.div`
+export const Nav = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -74,7 +73,7 @@ const Nav = styled.div`
   }
 `;
 
-const Span = styled.span`
+export const Span = styled.span`
   position: relative;
   height: 4px;
   width: 25px;
@@ -87,7 +86,7 @@ const Span = styled.span`
   transform: translate(-50%,-50%);
 `;
 
-const Label = styled.label`
+export const Label = styled.label`
   display: none; 
   cursor: pointer;
   @media (max-width: 414px){
@@ -107,7 +106,7 @@ const Label = styled.label`
   }
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   display: none;
   @media (max-width: 414px) {
     &:checked ~ ${Label} + ${NavList}{
@@ -131,7 +130,7 @@ const Input = styled.input`
   }
 `;
 
-const List = styled.li`
+export const List = styled.li`
   display: flex;
   align-items: center;
   padding: 0 10px;
@@ -144,52 +143,6 @@ const List = styled.li`
   width: 100%;
 `;
 
-const SpanName = StyledLink.withComponent('span');
+export const SpanName = StyledLink.withComponent('span');
 
-const SignSection = Nav.withComponent('div');
-
-
-class NavBar extends Component {
-  
-  render() {
-    const { user } = this.props;
-    return (
-      <Header>
-        <Container>
-          <Logo>Rooms</Logo>
-          <Nav>
-            <Input type="checkbox" name="menu" id="btn-menu" />
-            <Label htmlFor="btn-menu">
-              <Span></Span>
-              <Span></Span>
-              <Span></Span>
-            </Label>
-            <NavList>
-              <List>
-                <StyledLink to="/">Home</StyledLink>
-              </List> 
-              {user &&
-                <SignSection>
-                  <SpanName>{user._id}</SpanName>
-                  <List>
-                    <StyledLink to="/" onClick={this.props.deleteUser}>Sign Out</StyledLink>
-                  </List>  
-                </SignSection>}
-              {!user &&
-                <SignSection>
-                  <List>
-                    <StyledLink to="/register">Sign Up</StyledLink>
-                  </List>   
-                  <List>
-                    <StyledLink to="/login">Sign In</StyledLink>
-                  </List>  
-                </SignSection>}
-            </NavList>
-          </Nav>
-        </Container>
-      </Header>
-    );
-  }
-};
-
-export default NavBar;
+export const SignSection = Nav.withComponent('div');
