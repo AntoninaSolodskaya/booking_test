@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
-import { Block, Form, Container, Section, Label, Input, Text, ButtonWrap, Button } from './styled';
+import { 
+  Block, 
+  Form, 
+  Container, 
+  Section, 
+  Label, 
+  Input, 
+  Text, 
+  ButtonWrap, 
+  Button 
+} from './styled';
 
 class LoginFormView extends Component {
   render() {
@@ -8,12 +18,13 @@ class LoginFormView extends Component {
       <Block>
         <Form onSubmit={handleSubmit}>
           <Container>
-            <Section>
+            <Section className={'form-group' + (submitted && !email ? ' has-error' : '')}>
               <Label>Email:</Label>
               <Input
                 name="email"
                 type="email"
                 placeholder="Your Email"
+                className="form-control"
                 value={email}
                 onChange={handleChange}
               />
@@ -21,12 +32,13 @@ class LoginFormView extends Component {
                  <Text>Please enter your email</Text>
               }
             </Section>
-            <Section>
+            <Section  className={'form-group' + (submitted && !password ? ' has-error' : '')}>
               <Label>Password:</Label>
               <Input
                 name="password"
                 type="password"
                 placeholder="Your Password"
+                className="form-control"
                 value={password}
                 onChange={handleChange}
               />

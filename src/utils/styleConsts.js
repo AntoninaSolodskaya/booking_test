@@ -1,5 +1,5 @@
 const styleConsts = {
-  bgColor: '#FCFCFC',
+  bgColor: '#ADD8E6',
 };
 
 export default styleConsts;

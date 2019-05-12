@@ -1,5 +1,6 @@
 import React from 'react';
-import RegisterModalView from './RegisterFormView';
+import RegisterModalView from './RegisterModalView';
+
 class RegisterModal extends React.Component {
 
   state = {
@@ -17,10 +18,10 @@ class RegisterModal extends React.Component {
     const { isOpen, isRegister } = this.state;
     return (
       <RegisterModalView 
-        isOpen={isOpen} 
         isRegister={isRegister} 
         closeModal={this.closeModal} 
         setRegistered={this.setRegistered} 
+        isOpen={isOpen}
       />
     );
   }

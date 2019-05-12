@@ -1,5 +1,4 @@
-import React, { Component, Fragment } from 'react';
-import { Text } from './styled';
+import React, { Component } from 'react';
 import CalendarView from './CalendarView';
 import moment from 'moment';
 
@@ -9,7 +8,7 @@ class CardPage extends Component {
 
   state = {
     tickets: [],
-    isLoading: false,
+    isLoading: true,
     isError: false,
   };
 
@@ -116,24 +115,22 @@ class CardPage extends Component {
 
   componentDidMount() {
     this.loadData();
+    this.setState({ isLoading: false })
   };
-
+  
   render() {
     const { tickets, isError } = this.state;
     const { user } = this.props;
     return (
-      <Fragment>
-        {!isError &&  
-          <CalendarView 
-            tickets={tickets} 
-            user={user}  
-            deleteTicket={this.deleteTicket} 
-            handleCreateTicket={this.handleCreateTicket}
-            onEventResize={this.onEventResize}
-            closeCalendar={this.closeCalendar}
-        />}
-         {isError && (<Text>Error!!!</Text>)}
-      </Fragment>
+      <CalendarView 
+        tickets={tickets} 
+        user={user}  
+        deleteTicket={this.deleteTicket} 
+        handleCreateTicket={this.handleCreateTicket}
+        onEventResize={this.onEventResize}
+        closeCalendar={this.closeCalendar}
+        isError={isError}
+      /> 
     );
   }
 };

@@ -1,5 +1,18 @@
 import React, { Component } from 'react';
-import { Header, Container, StyledLink, Logo, NavList, Nav, Span, Label, Input, List, SpanName, SignSection } from './styled';
+import { 
+  Header,
+  Container, 
+  StyledLink, 
+  Logo, 
+  NavList, 
+  Nav, 
+  Span, 
+  Label, 
+  Input, 
+  List, 
+  SpanName, 
+  SignSection 
+} from './styled';
 
 class NavBarView extends Component {
   render() {

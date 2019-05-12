@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Text } from './styled';
 import MainView from './mainView';
-import LoadingComponent from '../../layout/loader/LoadingComponent';
+import LoadingComponent from '../../loader/LoadingComponent';
 
 import api from '../../utils/api';
 
@@ -26,6 +26,7 @@ class Main extends Component {
 
   componentDidMount() {
     this.loadData();
+    this.setState({ isLoading: false})
   };
 
   render() {
@@ -36,7 +37,7 @@ class Main extends Component {
     return (
       <Fragment>
         {user && !isError && 
-          <MainView rooms={rooms}/>} 
+        <MainView rooms={rooms}/>}
           {isError && (<Text>Error!!!</Text>)}
       </Fragment> 
     );

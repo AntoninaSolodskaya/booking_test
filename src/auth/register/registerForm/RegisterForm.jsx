@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router";
 import RegisterFormView from './RegisterFormView';
-import api from '../../../utils/api';
+import axios from 'axios';
 
 class RegisterForm extends Component {
 
@@ -32,11 +32,14 @@ class RegisterForm extends Component {
     localStorage.setItem('email', JSON.stringify(email.value));
     localStorage.setItem('password', JSON.stringify(password.value));
   
-    api.signUp({
+    axios.post('http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/signUp',
+      {
         email: email.value,
         password: password.value
       })
-    .then(this.props.setRegistered())
+    .then(response => response.data,
+      this.props.setRegistered())
+    .catch(reason => console.error(reason));
   };
   
   render() {
@@ -49,8 +52,8 @@ class RegisterForm extends Component {
         handleSubmit={this.handleSubmit} 
         handleChange={this.handleChange}
       />
-    )
+    );
   }
-}
+};
 
 export default withRouter(RegisterForm);

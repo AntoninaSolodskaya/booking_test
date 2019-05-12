@@ -41,18 +41,24 @@ export const CardBlock = styled(Link)`
   }
 `;
 
+export const Item = styled.h1`
+  display: flex;
+  justify-content: center;
+  color: #ADD8E6;
+`;
+
 export const Title = styled.p`
   display: flex;
   justify-content: center;
   padding: 5px 20px;
   color: #ffffff;
-  tex-shadow: rgba(0,0,0,0.1) 0 0 9px 0.3px;
   font-size: 10px;
   line-height: 25px;
 `;
 
 export const Text = styled.p`
-  color: #000000;
+  color: #ffffff;
   font-size: 20px;
   text-align: center;
 `;
+

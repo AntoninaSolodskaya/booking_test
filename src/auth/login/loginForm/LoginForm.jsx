@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import LoginFormView from './LoginFormView';
-
-import api from '../../../utils/api.js';
+import api from '../../../utils/api';
 
 class LoginForm extends Component {
 
@@ -10,7 +9,7 @@ class LoginForm extends Component {
     email: '',
     password: '',
     submitted: false,
-    isError: false,
+    isError: false
   };
 
   handleChange = event => {
@@ -19,29 +18,24 @@ class LoginForm extends Component {
   };
 
   login = (email, password) => {
-    
-    api.signIn({ 
-      email, password 
-    })
-    .then(user => {
+    api.signIn(email, password)
+    .then((user) => {
       if (user) {
         this.props.updateUser(user, () => this.props.history.push('/'));
-      }
-      return user;   
+      }  
     })
     .catch(reason => {
-      console.error(reason.response);
-      if (reason.response.data.message === "Incorrect password or email") {
+      if (reason.data.message === "Incorrect password or email") {
         this.setState({ isError: true });
       }
     }) 
   };
-
+ 
   handleSubmit = (event) => { 
     event.preventDefault();
     this.setState({ submitted: true });
-    const { email, password, isError, } = this.state;
-  
+    const { email, password, isError } = this.state;
+
     if (!(email && password) || isError) {
       return;
     }

@@ -15,7 +15,7 @@ class RegisterFormView extends Component {
           {isRegister ? (
             <Text>you are registered! Please Log in.</Text>
           ) : (
-            <RegisterForm setRegistered={setRegistered} />
+            <RegisterForm setRegistered={setRegistered} isRegister={isRegister} />
           )}
         </Modal>
       </ModalWrap>

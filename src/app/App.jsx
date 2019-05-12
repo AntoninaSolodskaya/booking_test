@@ -11,11 +11,14 @@ class App extends Component {
 
   updateUser = (user, afterUpdate) => {
     this.setState({ user });
+    console.log(user)
     localStorage.setItem('user', JSON.stringify(user));
     afterUpdate();
     console.log(user);
     localStorage.setItem("token", user.token);
     localStorage.setItem("userId", user._id);
+    console.log(user.token)
+    console.log(user._id)
   };
 
   deleteUser = () => {
@@ -30,13 +33,18 @@ class App extends Component {
       this.setState({ 
         user: JSON.parse(user),  
       });
-    }  
+    } 
   };
 
   render() {
     const { user, isError } = this.state;
     return (
-      <AppView user={user} deleteUser={this.deleteUser} updateUser={this.updateUser} /> 
+      <AppView 
+        user={user} 
+        deleteUser={this.deleteUser} 
+        updateUser={this.updateUser} 
+        isError={isError} 
+      /> 
     );
   }
 };

@@ -17,10 +17,8 @@ axios.interceptors.response.use((response) => {
 const endpoint = 'http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/';
 
 const api = {
-   
-  signUp: () => axios.post(`${endpoint}signUp`),
-
-  signIn: () => axios.post(`${endpoint}signIn`),
+  
+  signIn: (email, password) => axios.post(`http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/signIn`, { email, password }),
 
   getHalls: () => axios.get(`${endpoint}halls`),
 
