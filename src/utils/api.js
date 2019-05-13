@@ -20,11 +20,19 @@ const api = {
   
   signIn: (email, password) => axios.post(`http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/signIn`, { email, password }),
 
+  signUp: (email, password) => axios.post(`http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/signUp`, 
+  {
+    email: email.value,
+    password: password.value
+  }),
+
   getHalls: () => axios.get(`${endpoint}halls`),
 
   getTickets: () => axios.get(`${endpoint}tickets`),
 
   addTicket: (newTicket) => axios.post(`${endpoint}tickets`, newTicket),
+
+  changeTicket: (ticketId) => axios.put(`${endpoint}ticket/${ticketId}`),
 
   deleteTicket: (ticketId) => axios.delete(`${endpoint}tickets/${ticketId}`)
 };

@@ -12,21 +12,6 @@ class CardPage extends Component {
     isError: false,
   };
 
-
-//  eventStyleGetter = (event, start, end, isSelected) => {
-//     let style = {
-//       backgroundColor: `${event.color}`,
-//       borderRadius: '0px',
-//       opacity: 0.8,
-//       color: '#ffffff',
-//       border: '0px',
-//       display: 'block',
-//       padding: '17px 5px'
-//     };
-//     return {
-//       style: style
-//     };
-//   };
   closeCalendar = () => {
     this.props.history.goBack()
   };
@@ -39,35 +24,47 @@ class CardPage extends Component {
     return true;
   };
 
+  moveTicket = ({ event, start, end }) => {
+    const { tickets } = this.state
+    const nextTicket = tickets.map(existingTicket => {
+      
+      return existingTicket._id === event._id
+        ? { ...event }
+        : event
+      })
+
+    this.setState({
+      tickets: nextTicket 
+    })
+    console.log(event._id)
+    console.log(event)
+    console.log(nextTicket)
+    this.changedTicket(event._id)
+  };
+
+
   onEventResize = (ticket) => {
     if (!this.isCanEdit(ticket)) {
       return;
     }
-  }
+    this.moveTicket(ticket);
+    console.log(ticket)
+  };
 
-  // onEventDrop = (newTicket, start, end) => {
-  //   console.log(newTicket, this.props.user);
-  //   if (!this.isCanEdit(newTicket)) {
-  //     return;
-  //   }
-  //   const { tickets } = this.state;
-  //   const idx = tickets.indexOf(newTicket);
-  //   const updatedTicket = { ...newTicket, start, end };
-  //   const nextTicket = [...tickets];
-  //   nextTicket.splice(idx, 1, updatedTicket);
-  //   this.setState({
-  //     tickets: nextTicket, 
-  //   });
-   
-  //   // this.loadNewTicket();
-  // };
+  changedTicket = (ticketId) => {
+    api.changeTicket(ticketId)
+      .then(
+        this.setState({ tickets: [...this.state.tickets] })
+      )
+    this.state.tickets.filter(tick => tick._id !== ticketId)
+    console.log(ticketId)
+  };
 
   formatTicketDate = (ticket) => {
     const editedTicket = ticket;
 
     editedTicket.start = moment(ticket.from).toDate();
     editedTicket.end = moment(ticket.to).toDate();
-    console.log(editedTicket);
     return editedTicket;
   };
 
@@ -103,7 +100,7 @@ class CardPage extends Component {
         });
       })
   }
-  
+
   deleteTicket = (ticketId) => {
     api.deleteTicket(ticketId)
       .then(() => {
@@ -111,6 +108,7 @@ class CardPage extends Component {
             tickets: this.state.tickets.filter(ticket => ticket._id !== ticketId)
           });
       })
+      console.log(ticketId)
   }
 
   componentDidMount() {
@@ -130,6 +128,7 @@ class CardPage extends Component {
         onEventResize={this.onEventResize}
         closeCalendar={this.closeCalendar}
         isError={isError}
+        moveTicket={this.moveTicket}
       /> 
     );
   }

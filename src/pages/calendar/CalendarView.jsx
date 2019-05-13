@@ -18,6 +18,7 @@ class CardPageView extends Component {
       handleCreateTicket,
       onEventResize,
       closeCalendar,
+      moveTicket,
       isError
     } = this.props; 
     console.log("CardPageView", tickets);
@@ -27,20 +28,18 @@ class CardPageView extends Component {
         <Container>
           <Title>Choose Your Date</Title>     
           <DraggableCalendar
-            // eventPropGetter={(this.eventStyleGetter)}
             localizer={localizer}
             events={tickets}
-            defaultDate={new Date()}
+            // defaultDate={new Date()}
             defaultView="month"
             startAccessor="start"
             endAccessor="end"
             titleAccessor="title"
-            onEventResize={ticket => onEventResize(ticket)}
+            onEventResize={ticket => moveTicket(ticket)}
             onEventDrop={event => handleCreateTicket(event)}
             //onSelecting={event => this.handleCreateTicket(event)}
             onSelectSlot={(ticket) => handleCreateTicket(ticket)}
-            // onSelectEvent={(event) => console.log(event.title)}
-            // resizable
+            resizable
             selectable
           />
           <ButtonWrap>
@@ -50,8 +49,8 @@ class CardPageView extends Component {
                 && tickets.filter(tick => tick.user_id === user._id).map((ticket, id) => (
                   <Block key={id} >
                     <Time>
-                      {moment(ticket.from).format("DD/MM/YY hh:mm")} - 
-                      {moment(ticket.to).format("DD/MM/YY hh:mm")}
+                      {moment(ticket.start).format("DD/MM/YY hh:mm")} - 
+                      {moment(ticket.end).format("DD/MM/YY hh:mm")}
                     </Time>
                     <Button onClick={() => deleteTicket(ticket._id)}>Delete</Button> 
                   </Block> 
