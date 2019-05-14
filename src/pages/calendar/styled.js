@@ -4,9 +4,8 @@ export const Title = styled.p`
   display: flex;
   justify-content: center;
   padding: 5px 20px;
-  color: lightblue;
-  font-size: 19px;
-  line-height: 25px;
+  color:  #ADD8E6;
+  font-size: 30px;
 `;
 
 export const Container = styled.div`
@@ -24,8 +23,15 @@ export const ButtonWrap = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  min-width: 270px;
   margin: 20px;
+  @media(max-width: 850px) {
+    flex-direction: column;
+    justify-content: center;
+  }
+  @media(max-width: 450px) {
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 
 export const Button = styled.button`
@@ -37,28 +43,41 @@ export const Button = styled.button`
   border: none;
   padding: 7px 25px;
   max-width: 100px;
+  max-height: 35px;
   font-size: 20px;
 `;
 
 export const Text = styled.p`
   color: #000000;
-  font-size: 20px;
+  font-size: 15px;
   text-align: center;
 `;
 
 export const Wrap = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
 `;
 
 export const Time = styled.p`
   font-size: 16px;
   padding: 10px 20px;
+  color: #00CED1;
 `;
 
 export const Block = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center; 
   padding: 10px 20px;
+  @media(max-width: 850px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  @media(max-width: 450px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;

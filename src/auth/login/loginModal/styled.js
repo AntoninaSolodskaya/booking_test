@@ -15,7 +15,7 @@ export const ModalWrap = styled.div`
 
 export const Modal = styled.div`
   max-width: 430px;
-  max-height: 380px;
+  max-height: 425px;
   height: 100%;
   width: 100%;
   background: #ffffff;
@@ -40,5 +40,5 @@ export const Title = styled.h1`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px;
+  margin: 3px;
 `;

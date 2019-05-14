@@ -32,7 +32,7 @@ const api = {
 
   addTicket: (newTicket) => axios.post(`${endpoint}tickets`, newTicket),
 
-  changeTicket: (ticketId) => axios.put(`${endpoint}ticket/${ticketId}`),
+  changeTicket: (ticketId, orderTicket) => axios.put(`${endpoint}ticket/${ticketId}`, orderTicket),
 
   deleteTicket: (ticketId) => axios.delete(`${endpoint}tickets/${ticketId}`)
 };

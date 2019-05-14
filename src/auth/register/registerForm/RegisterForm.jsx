@@ -32,7 +32,7 @@ class RegisterForm extends Component {
     localStorage.setItem('email', JSON.stringify(email.value));
     localStorage.setItem('password', JSON.stringify(password.value));
   
-    api.signUp()
+    api.signUp(email, password)
     .then(this.props.setRegistered())
   };
   

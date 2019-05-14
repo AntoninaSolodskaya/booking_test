@@ -16,9 +16,8 @@ class CardPageView extends Component {
       user,
       deleteTicket,
       handleCreateTicket,
-      onEventResize,
       closeCalendar,
-      moveTicket,
+      resizeEvent,
       isError
     } = this.props; 
     console.log("CardPageView", tickets);
@@ -30,14 +29,13 @@ class CardPageView extends Component {
           <DraggableCalendar
             localizer={localizer}
             events={tickets}
-            // defaultDate={new Date()}
             defaultView="month"
             startAccessor="start"
             endAccessor="end"
             titleAccessor="title"
-            onEventResize={ticket => moveTicket(ticket)}
-            onEventDrop={event => handleCreateTicket(event)}
-            //onSelecting={event => this.handleCreateTicket(event)}
+            defaultDate={new Date(2019, 4, 14)}
+            onEventResize={event => resizeEvent(event)}
+            onEventDrop={event => resizeEvent(event)}
             onSelectSlot={(ticket) => handleCreateTicket(ticket)}
             resizable
             selectable

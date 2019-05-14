@@ -47,4 +47,5 @@ export const Title = styled.h1`
 export const Text = styled.p`
   text-align: center;
   font-size: 20px;
+  color: #00CED1;
 `;

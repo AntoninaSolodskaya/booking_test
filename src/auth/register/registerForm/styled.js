@@ -32,6 +32,14 @@ export const Label = styled.label`
 `;
 
 export const Input = styled.input`
+  min-height: 35px;
+  width: 65%;
+  padding: 0 15px;
+  border-radius: 4px;
+  background-color: transparent;
+  border: 1px solid hsl(0, 14%, 11%);
+  font: normal 16px/2 "varela-round", Helvetica, sans-serif;
+  color:#311e1e;
 `;
 
 export const ButtonWrap = styled.div`

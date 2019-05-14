@@ -44,10 +44,20 @@ export const CardBlock = styled(Link)`
 export const Item = styled.h1`
   display: flex;
   justify-content: center;
+  text-align: center;
   color: #ADD8E6;
+  font-size: 40px;
 `;
 
 export const Title = styled.p`
+  display: flex;
+  justify-content: center;
+  padding: 5px 20px;
+  color: #ffffff;
+  font-size: 20px;
+`;
+
+export const Content = styled.p`
   display: flex;
   justify-content: center;
   padding: 5px 20px;

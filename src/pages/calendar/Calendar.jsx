@@ -16,49 +16,40 @@ class CardPage extends Component {
     this.props.history.goBack()
   };
   
-  isCanEdit = (ticket) => {
-    if (ticket.event.user_id !== this.props.user._id) {
+  isCanEdit = (event) => {
+    if (event.user_id !== this.props.user._id) {
       console.log("Not this user");
       return false;
     }
     return true;
   };
 
-  moveTicket = ({ event, start, end }) => {
-    const { tickets } = this.state
-    const nextTicket = tickets.map(existingTicket => {
-      
-      return existingTicket._id === event._id
-        ? { ...event }
-        : event
-      })
+  resizeEvent = ({ event, start, end }) => {
 
-    this.setState({
-      tickets: nextTicket 
-    })
-    console.log(event._id)
-    console.log(event)
-    console.log(nextTicket)
-    this.changedTicket(event._id)
-  };
-
-
-  onEventResize = (ticket) => {
-    if (!this.isCanEdit(ticket)) {
+    if (!this.isCanEdit(event)) {
       return;
     }
-    this.moveTicket(ticket);
-    console.log(ticket)
+
+    const { tickets } = this.state
+
+    const nextEvents = tickets.map(existingEvent => {
+      return existingEvent._id === event._id
+        ? { ...existingEvent, start, end }
+        : existingEvent
+    });
+
+    const orderTicket = {
+      from: new Date(event.start).getTime(),
+      to: new Date(event.end).getTime(),
+      title: "room is ordered"
+    };
+
+    api.changeTicket(event._id, orderTicket)
+    this.setState({
+      tickets: nextEvents,
+    })
   };
 
-  changedTicket = (ticketId) => {
-    api.changeTicket(ticketId)
-      .then(
-        this.setState({ tickets: [...this.state.tickets] })
-      )
-    this.state.tickets.filter(tick => tick._id !== ticketId)
-    console.log(ticketId)
-  };
 
   formatTicketDate = (ticket) => {
     const editedTicket = ticket;
@@ -76,11 +67,11 @@ class CardPage extends Component {
       hall_id: hallId,
       title: ticket.title || "room is ordered",
       // from: moment(ticket.start).unix(),
-      // to: moment(ticket.end).subtract(1, 'seconds').unix(),
+      // to: moment(ticket.end).subtract(-1, 'seconds').unix(),
       from: new Date(ticket.start).getTime(),
       to: new Date(ticket.end).getTime(),
       user_id: user._id
-    }
+    };
 
     api.addTicket(newTicket)
       .then(response => {
@@ -99,7 +90,7 @@ class CardPage extends Component {
           isLoading: true
         });
       })
-  }
+  };;
 
   deleteTicket = (ticketId) => {
     api.deleteTicket(ticketId)
@@ -109,7 +100,7 @@ class CardPage extends Component {
           });
       })
       console.log(ticketId)
-  }
+  };
 
   componentDidMount() {
     this.loadData();
@@ -128,7 +119,7 @@ class CardPage extends Component {
         onEventResize={this.onEventResize}
         closeCalendar={this.closeCalendar}
         isError={isError}
-        moveTicket={this.moveTicket}
+        resizeEvent={this.resizeEvent}
       /> 
     );
   }
