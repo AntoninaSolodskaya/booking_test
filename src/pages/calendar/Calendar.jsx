@@ -19,6 +19,7 @@ class CardPage extends Component {
   isCanEdit = (event) => {
     if (event.user_id !== this.props.user._id) {
       console.log("Not this user");
+      this.props.history.push('/modal');
       return false;
     }
     return true;
@@ -27,7 +28,7 @@ class CardPage extends Component {
   resizeEvent = ({ event, start, end }) => {
 
     if (!this.isCanEdit(event)) {
-      return;
+      return 
     }
 
     const { tickets } = this.state
@@ -60,6 +61,11 @@ class CardPage extends Component {
   };
 
   handleCreateTicket = (ticket) => {
+    if (ticket.user_id !== this.props.user._id) {
+      console.log("Not this user");
+      this.props.history.push('/modal');
+    };
+    
     const {user} = this.props;
     const hallId = this.props.match.params.id;
     

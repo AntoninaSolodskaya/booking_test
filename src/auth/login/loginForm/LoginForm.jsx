@@ -21,7 +21,7 @@ class LoginForm extends Component {
     api.signIn(email, password)
     .then((user) => {
       if (user) {
-        this.props.updateUser(user, () => this.props.history.push('/'));
+        this.props.updateUser(user, () => this.props.history.goBack());
       }  
     })
     .catch(reason => {
@@ -33,17 +33,23 @@ class LoginForm extends Component {
  
   handleSubmit = (event) => { 
     event.preventDefault();
-    this.setState({ submitted: true });
+
     const { email, password, isError } = this.state;
+
+    this.setState({ submitted: true, email, password });
+    localStorage.setItem('email', email)
 
     if (!(email && password) || isError) {
       return;
     }
-    this.login(email, password)
+
+    this.login(email, password);
   };
 
   render() {
+
     const { email, password, submitted, isError } = this.state; 
+
     return (
       <LoginFormView 
         email={email} 

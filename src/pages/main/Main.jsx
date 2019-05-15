@@ -34,10 +34,11 @@ class Main extends Component {
     const { isError, rooms, isLoading } = this.state;
 
     if (isLoading) return <LoadingComponent />
+  
     return (
       <Fragment>
-        {user && !isError && 
-        <MainView rooms={rooms}/>}
+        {user && !isError &&  
+        <MainView rooms={rooms} />}
           {isError && (<Text>Error!!!</Text>)}
       </Fragment> 
     );

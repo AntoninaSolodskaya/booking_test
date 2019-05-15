@@ -31,7 +31,6 @@ class RegisterForm extends Component {
     console.log('Login:', email.value, password.value);
     localStorage.setItem('email', JSON.stringify(email.value));
     localStorage.setItem('password', JSON.stringify(password.value));
-  
     api.signUp(email, password)
     .then(this.props.setRegistered())
   };

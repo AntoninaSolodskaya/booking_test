@@ -140,9 +140,14 @@ export const List = styled.li`
     height: 100%;
   }
   @media (max-width: 414px) {
-  width: 100%;
+    width: 100%;
+  }
 `;
 
-export const SpanName = StyledLink.withComponent('span');
+export const SpanName = StyledLink.withComponent('span')
 
-export const SignSection = Nav.withComponent('div');
+export const SignSection = styled(Nav)`
+  @media (max-width: 414px) {
+    width: 100%;
+  }
+`;

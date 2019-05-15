@@ -11,6 +11,7 @@ const localizer = BigCalendar.momentLocalizer(moment);
 
 class CardPageView extends Component {
   render() {
+
     const { 
       tickets,
       user,
@@ -20,7 +21,7 @@ class CardPageView extends Component {
       resizeEvent,
       isError
     } = this.props; 
-    console.log("CardPageView", tickets);
+
     return (
       <Fragment>
         {!isError &&
@@ -30,8 +31,8 @@ class CardPageView extends Component {
             localizer={localizer}
             events={tickets}
             defaultView="month"
-            startAccessor="start"
-            endAccessor="end"
+            // startAccessor="start"
+            // endAccessor="end"
             titleAccessor="title"
             defaultDate={new Date(2019, 4, 14)}
             onEventResize={event => resizeEvent(event)}
@@ -39,6 +40,7 @@ class CardPageView extends Component {
             onSelectSlot={(ticket) => handleCreateTicket(ticket)}
             resizable
             selectable
+            popup
           />
           <ButtonWrap>
             <Button onClick={closeCalendar}>Back</Button>
@@ -47,8 +49,8 @@ class CardPageView extends Component {
                 && tickets.filter(tick => tick.user_id === user._id).map((ticket, id) => (
                   <Block key={id} >
                     <Time>
-                      {moment(ticket.start).format("DD/MM/YY hh:mm")} - 
-                      {moment(ticket.end).format("DD/MM/YY hh:mm")}
+                      {moment(ticket.start).format("DD/MM/YY hh:mm:ss")} - 
+                      {moment(ticket.end).format("DD/MM/YY hh:mm:ss")}
                     </Time>
                     <Button onClick={() => deleteTicket(ticket._id)}>Delete</Button> 
                   </Block> 

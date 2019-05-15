@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Wrapper, Section, CardBlock, Title, Item, Content } from './styled';
+import { Wrapper, Section, CardBlock, Title, Item, Content, Img } from './styled';
 
 class MainView extends Component {
   render() {
     const { rooms } = this.props;
+    
     return (
       <Wrapper>
         <Item>Please click on the room</Item>
