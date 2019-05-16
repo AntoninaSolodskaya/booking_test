@@ -25,7 +25,34 @@ class CardPage extends Component {
     return true;
   };
 
-  resizeEvent = ({ event, start, end }) => {
+  formatTicketDate = (ticket) => {
+    const editedTicket = ticket;
+
+    editedTicket.start = moment(ticket.from).toDate();
+    editedTicket.end = moment(ticket.to).toDate();
+    return editedTicket;
+  };
+
+  handleCreateTicket = (ticket) => {
+    
+    const {user} = this.props;
+    const hallId = this.props.match.params.id;
+
+    let newTicket = {
+      hall_id: hallId,
+      title: ticket.title || "room is ordered",
+      from: new Date(ticket.start).getTime(),
+      to: new Date(ticket.end).getTime(),
+      user_id: user._id
+    };
+ 
+    api.addTicket(newTicket)
+      .then(response => {
+        this.setState({ tickets: [...this.state.tickets, this.formatTicketDate(response)] });
+      })
+  };
+
+  resizeTicket = ({ event, start, end }) => {
 
     if (!this.isCanEdit(event)) {
       return 
@@ -33,10 +60,10 @@ class CardPage extends Component {
 
     const { tickets } = this.state
 
-    const nextEvents = tickets.map(existingEvent => {
-      return existingEvent._id === event._id
-        ? { ...existingEvent, start, end }
-        : existingEvent
+    const nextTickets = tickets.map(existingTicket => {
+      return existingTicket._id === event._id
+        ? { ...existingTicket, start, end }
+        : existingTicket
     });
 
     const orderTicket = {
@@ -47,48 +74,13 @@ class CardPage extends Component {
 
     api.changeTicket(event._id, orderTicket)
     this.setState({
-      tickets: nextEvents,
+      tickets: nextTickets,
     })
-  };
-
-
-  formatTicketDate = (ticket) => {
-    const editedTicket = ticket;
-
-    editedTicket.start = moment(ticket.from).toDate();
-    editedTicket.end = moment(ticket.to).toDate();
-    return editedTicket;
-  };
-
-  handleCreateTicket = (ticket) => {
-    if (ticket.user_id !== this.props.user._id) {
-      console.log("Not this user");
-      this.props.history.push('/modal');
-    };
-    
-    const {user} = this.props;
-    const hallId = this.props.match.params.id;
-    
-    let newTicket = {
-      hall_id: hallId,
-      title: ticket.title || "room is ordered",
-      // from: moment(ticket.start).unix(),
-      // to: moment(ticket.end).subtract(-1, 'seconds').unix(),
-      from: new Date(ticket.start).getTime(),
-      to: new Date(ticket.end).getTime(),
-      user_id: user._id
-    };
-
-    api.addTicket(newTicket)
-      .then(response => {
-        this.setState({ tickets: [...this.state.tickets, this.formatTicketDate(response)] });
-      })
   };
 
   loadData = () => {
     api.getTickets()
       .then(result => {
-        console.log(result);
         this.setState({
           tickets: result
             .filter(ticket => ticket.hall_id === this.props.match.params.id)
@@ -125,7 +117,7 @@ class CardPage extends Component {
         onEventResize={this.onEventResize}
         closeCalendar={this.closeCalendar}
         isError={isError}
-        resizeEvent={this.resizeEvent}
+        resizeTicket={this.resizeTicket}
       /> 
     );
   }

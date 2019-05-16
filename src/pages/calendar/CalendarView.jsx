@@ -18,7 +18,7 @@ class CardPageView extends Component {
       deleteTicket,
       handleCreateTicket,
       closeCalendar,
-      resizeEvent,
+      resizeTicket,
       isError
     } = this.props; 
 
@@ -31,12 +31,10 @@ class CardPageView extends Component {
             localizer={localizer}
             events={tickets}
             defaultView="month"
-            // startAccessor="start"
-            // endAccessor="end"
             titleAccessor="title"
-            defaultDate={new Date(2019, 4, 14)}
-            onEventResize={event => resizeEvent(event)}
-            onEventDrop={event => resizeEvent(event)}
+            defaultDate={new Date(2019, 4, 15)}
+            onEventResize={event => resizeTicket(event)}
+            onEventDrop={event => resizeTicket(event)}
             onSelectSlot={(ticket) => handleCreateTicket(ticket)}
             resizable
             selectable

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Wrapper, Section, CardBlock, Title, Item, Content, Img } from './styled';
+import { Wrapper, Section, CardBlock, Title, Item, Content } from './styled';
 
 class MainView extends Component {
   render() {

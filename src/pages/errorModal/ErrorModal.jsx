@@ -11,7 +11,7 @@ class ErrorModal extends Component {
     return (
       <ModalWrap onClick={this.closeModal}>
         <Modal>
-          <Title>Its not your order</Title>
+          <Title>This is not you ordered</Title>
         </Modal>
       </ModalWrap>
     )

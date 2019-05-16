@@ -18,9 +18,9 @@ const endpoint = 'http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/';
 
 const api = {
   
-  signIn: (email, password) => axios.post(`http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/signIn`, { email, password }),
+  signIn: (email, password) => axios.post(`${endpoint}signIn`, { email, password }),
 
-  signUp: (email, password) => axios.post(`http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/signUp`, 
+  signUp: (email, password) => axios.post(`${endpoint}signUp`, 
   {
     email: email.value,
     password: password.value

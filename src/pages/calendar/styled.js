@@ -45,6 +45,7 @@ export const Button = styled.button`
   max-width: 100px;
   max-height: 35px;
   font-size: 20px;
+  outline: none;
 `;
 
 export const Text = styled.p`
