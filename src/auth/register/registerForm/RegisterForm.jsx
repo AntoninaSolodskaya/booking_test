@@ -11,8 +11,30 @@ class RegisterForm extends Component {
     },
     password: {
       value: ''
-    }
+    },
+    errors: []
   };
+
+  validate = ( email, password ) => {
+   
+    const errors = [];
+  
+    if (email.value.length < 5) {
+      errors.push("Email should be at least 5 charcters long");
+    }
+    if (email.value.split("").filter(x => x === "@").length !== 1) {
+      errors.push("Email should contain a @");
+    }
+    if (email.value.indexOf(".") === -1) {
+      errors.push("Email should contain at least one dot");
+    }
+  
+    if (password.value.length < 6) {
+      errors.push("Password should be at least 6 characters long");
+    }
+  
+    return errors;
+  }
 
   handleChange = event => {
     event.persist();
@@ -23,11 +45,17 @@ class RegisterForm extends Component {
         value
       },
     }));
-  }
+  };
 
   handleSubmit = (event) => {
     event.preventDefault();
     const { email, password } = this.state;
+    const errors = this.validate(email, password);
+    if (errors.length > 0) {
+      this.setState({ errors });
+      return;
+    }
+    
     console.log('Login:', email.value, password.value);
     localStorage.setItem('email', JSON.stringify(email.value));
     localStorage.setItem('password', JSON.stringify(password.value));
@@ -36,7 +64,7 @@ class RegisterForm extends Component {
   };
   
   render() {
-    const { email, password } = this.state;
+    const { email, password, errors } = this.state;
     
     return (
       <RegisterFormView 
@@ -44,6 +72,7 @@ class RegisterForm extends Component {
         password={password} 
         handleSubmit={this.handleSubmit} 
         handleChange={this.handleChange}
+        errors={errors}
       />
     );
   }

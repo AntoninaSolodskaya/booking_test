@@ -14,7 +14,7 @@ axios.interceptors.response.use((response) => {
   return Promise.reject(res);
 });
 
-const endpoint = 'http://ec2-3-84-16-108.compute-1.amazonaws.com:4000/';
+const endpoint = 'http://ec2-35-175-143-145.compute-1.amazonaws.com:4000/';
 
 const api = {
   

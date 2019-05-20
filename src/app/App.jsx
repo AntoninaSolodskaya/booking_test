@@ -31,7 +31,7 @@ class App extends Component {
 
     this.setState({ 
       user: null,
-      email: null,
+      email: null
      });
   }
 

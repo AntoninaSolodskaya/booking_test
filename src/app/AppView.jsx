@@ -40,13 +40,14 @@ class AppView extends Component {
                       <Fragment>
                         <Route
                           path='/login'
-                          render={(props) => {
-                            if (isAuth === true) {
-                              return <LoginModal {...props} updateUser={updateUser} />;
-                            } else {
-                              return <Redirect from="/login" to={"/"} />;
-                            }
-                          }}
+                          render={(props) => 
+                            // if (isAuth === true) {
+                            //   return 
+                              <LoginModal {...props} updateUser={updateUser} />
+                            // } else {
+                            //   return <Redirect from="/login" to={"/"} />;
+                            // }
+                          }
                         /> 
                         <Route 
                           path="/register"

@@ -9,7 +9,7 @@ class CardPage extends Component {
   state = {
     tickets: [],
     isLoading: true,
-    isError: false,
+    isError: false
   };
 
   closeCalendar = () => {
@@ -30,25 +30,42 @@ class CardPage extends Component {
 
     editedTicket.start = moment(ticket.from).toDate();
     editedTicket.end = moment(ticket.to).toDate();
+
     return editedTicket;
+    
   };
 
+  
   handleCreateTicket = (ticket) => {
-    
+       
+    const title = window.prompt('New Event name');
     const {user} = this.props;
     const hallId = this.props.match.params.id;
-
+    
     let newTicket = {
       hall_id: hallId,
-      title: ticket.title || "room is ordered",
+      title: title,
       from: new Date(ticket.start).getTime(),
       to: new Date(ticket.end).getTime(),
       user_id: user._id
     };
- 
+    
+    if(newTicket.from > newTicket.to) {
+      console.log(newTicket.from, newTicket.to);
+    } 
+    
     api.addTicket(newTicket)
       .then(response => {
-        this.setState({ tickets: [...this.state.tickets, this.formatTicketDate(response)] });
+        this.setState({ tickets: [...this.state.tickets, this.formatTicketDate(response)] })
+      })
+      .catch(error => {
+        if (error.status === 400) {
+          console.clear();
+          console.log('its not your order');
+          this.props.history.push('/modal');
+          return false;
+        }
+        return true;
       })
   };
 

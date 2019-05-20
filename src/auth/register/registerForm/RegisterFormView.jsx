@@ -7,16 +7,20 @@ import {
   Label, 
   Input, 
   ButtonWrap, 
-  Button 
+  Button,
+  ErrorText
 } from './styled';
 
 class RegisterFormView extends Component {
   render() {
-    const { handleSubmit, handleChange, email, password } = this.props;
+    const { handleSubmit, handleChange, email, password, errors } = this.props;
     return (
       <Block>
         <Form onSubmit={handleSubmit}>
           <Container>
+          {errors && errors.map(error => (
+            <ErrorText key={error}>Error: {error}</ErrorText>
+          ))}
             <Section className="form-group">
               <Label>Email:</Label>
               <Input
@@ -25,7 +29,6 @@ class RegisterFormView extends Component {
                 placeholder="Your Email"
                 value={email.value}
                 onChange={handleChange}
-                required
               />
             </Section>
             <Section>
@@ -36,7 +39,6 @@ class RegisterFormView extends Component {
                 placeholder="Your Password"
                 value={password.value}
                 onChange={handleChange}
-                required
               />
             </Section>
             <ButtonWrap>
@@ -45,8 +47,8 @@ class RegisterFormView extends Component {
           </Container>
         </Form> 
       </Block>
-    )
+    );
   }
-}
+};
 
 export default RegisterFormView;

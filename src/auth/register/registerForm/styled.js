@@ -60,3 +60,11 @@ export const Button = styled.button`
   max-width: 125px;
   font-size: 20px;
 `;
+
+export const ErrorText = styled.p`
+  display: flex;
+  justify-content: flex-start;
+  margin: 0;
+  padding-left: 30px;
+  color: red;
+`;
