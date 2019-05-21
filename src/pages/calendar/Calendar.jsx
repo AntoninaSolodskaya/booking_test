@@ -18,7 +18,6 @@ class CardPage extends Component {
   };
   
   isCanEdit = (event) => {
-
     if (event.user_id !== this.props.user._id) {
       swal({
         title: "Not you order!",
@@ -26,7 +25,6 @@ class CardPage extends Component {
       });
       return false;
     }
-   
     return true;
   };
 
@@ -36,28 +34,39 @@ class CardPage extends Component {
     editedTicket.start = moment(ticket.from).toDate();
     editedTicket.end = moment(ticket.to).toDate();
 
-    return editedTicket;
-    
+    return editedTicket;  
   };
-  
-  handleCreateTicket = (ticket) => {
-   
-    const date = new Date();
-    const title = window.prompt('New Event name');
-    const {user} = this.props;
-    const hallId = this.props.match.params.id;
 
-    if(ticket.start < date) {
+  isOldDate = (startDate) => {
+    const date = new Date();
+    if(startDate < date) {
       swal({
         title: "Old Date!",
         icon: "warning"
       });
-      return 
+      return true; 
     }
+    return false;
+  };
+   
+  handleCreateTicket = (ticket) => {
+   
+    if(this.isOldDate(ticket.start)) {
+      return;
+    };
 
+    swal("Write something here:", {
+      content: "input",
+    })
+    .then((value) => {
+      swal(`You typed: ${value}`);
+
+    const {user} = this.props;
+    const hallId = this.props.match.params.id;
+   
     let newTicket = {
       hall_id: hallId,
-      title: title,
+      title: value,
       from: new Date(ticket.start).getTime(),
       to: new Date(ticket.end).getTime(),
       user_id: user._id
@@ -69,7 +78,6 @@ class CardPage extends Component {
       })
       .catch(error => {
         if (error.status === 400) {
-          console.clear();
           swal({
             title: "Not you order!",
             icon: "warning"
@@ -78,21 +86,18 @@ class CardPage extends Component {
         }
         return true;  
       })  
+      console.log(value)
+    });
   };
 
   resizeTicket = ({ event, start, end }) => {
-    const date = new Date();
-    if(start < date) {
-      swal({
-        title: "Old Date!",
-        icon: "warning"
-      }); 
-      return 
-    }
+    if(this.isOldDate(start)) {
+      return;
+    };
 
     if (!this.isCanEdit(event)) {
       return 
-    }
+    };
 
     const nextTickets = this.state.tickets.map(existingTicket => {
       return existingTicket._id === event._id
@@ -109,12 +114,8 @@ class CardPage extends Component {
     api.changeTicket(event._id, orderTicket)
     this.setState({
       tickets: nextTickets,
-    })
-    console.log(nextTickets);
+    });
   };
-
-  
-  
 
   loadData = () => {
     api.getTickets()
