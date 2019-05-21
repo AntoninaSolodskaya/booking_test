@@ -1,18 +1,17 @@
 import React, { Component, Fragment } from 'react';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Container, Text } from './styled';
 import NavBar from '../components/nav/NavBar';
 import Main from '../pages/main/Main';
 import Calendar from '../pages/calendar/Calendar';
 import LoginModal from '../auth/login/loginModal/LoginModal';
 import RegisterModal from '../auth/register/registerModal/RegisterModal';
-import ErrorModal from '../pages/errorModal/ErrorModal';
 import ScrollToTop from '../utils/ScrollToTop';
 
 class AppView extends Component {
   render() {
 
-    const { user, email, deleteUser, updateUser, isError, isAuth } = this.props;
+    const { user, email, deleteUser, updateUser, isError } = this.props;
     
     return ( 
       <Fragment>
@@ -25,7 +24,6 @@ class AppView extends Component {
                   <Switch>
                     {user ? (
                       <Fragment>
-                        <Route path='/modal' component={ErrorModal} />
                         <Route
                           path='/calendar/:id'
                           render={(props) => <Calendar {...props} user={user} />}
@@ -34,21 +32,13 @@ class AppView extends Component {
                           exact path="/" 
                           component={() => <Main user={user} />}
                         />
-                        <Route path='/modal' component={ErrorModal} />
                       </Fragment>  
                     ) : (
                       <Fragment>
                         <Route
                           path='/login'
-                          render={(props) => 
-                            // if (isAuth === true) {
-                            //   return 
-                              <LoginModal {...props} updateUser={updateUser} />
-                            // } else {
-                            //   return <Redirect from="/login" to={"/"} />;
-                            // }
-                          }
-                        /> 
+                          render={(props) => <LoginModal {...props} updateUser={updateUser} /> }
+                        />  
                         <Route 
                           path="/register"
                           render={(props) => <RegisterModal {...props} /> }       

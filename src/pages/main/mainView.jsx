@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Wrapper, Section, CardBlock, Title, Item, Content } from './styled';
+import { Wrapper, Section, CardBlock, Content, Title, Img, ImgWrap } from './styled';
 
 class MainView extends Component {
   render() {
@@ -7,7 +7,6 @@ class MainView extends Component {
     
     return (
       <Wrapper>
-        <Item>Please click on the room</Item>
         <Section>
           {rooms && rooms.map((room, index) => (
             <CardBlock 
@@ -15,8 +14,11 @@ class MainView extends Component {
               key={index} 
               room={room}
             >
+              <ImgWrap>
+                <Img src={room.imageURL} />
+              </ImgWrap> 
               <Title>{room.title}</Title>
-              <Content>{room.description}</Content> 
+              <Content>{room.description}</Content>
             </CardBlock>
           ))}
         </Section>

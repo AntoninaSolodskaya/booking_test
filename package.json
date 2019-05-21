@@ -8,12 +8,15 @@
     "eslint": "^5.16.0",
     "moment": "^2.24.0",
     "react": "^16.8.4",
+    "react-alert": "^5.5.0",
+    "react-alert-template-basic": "^1.0.0",
     "react-big-calendar": "^0.20.4",
     "react-dom": "^16.8.4",
     "react-loader-spinner": "^2.3.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "sweetalert": "^2.1.2"
   },
   "scripts": {
     "start": "react-scripts start",

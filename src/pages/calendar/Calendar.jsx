@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CalendarView from './CalendarView';
 import moment from 'moment';
+import swal from 'sweetalert';
 
 import api from '../../utils/api';
 
@@ -17,11 +18,15 @@ class CardPage extends Component {
   };
   
   isCanEdit = (event) => {
+
     if (event.user_id !== this.props.user._id) {
-      console.log("Not this user");
-      this.props.history.push('/modal');
+      swal({
+        title: "Not you order!",
+        icon: "warning"
+      });
       return false;
     }
+   
     return true;
   };
 
@@ -34,14 +39,22 @@ class CardPage extends Component {
     return editedTicket;
     
   };
-
   
   handleCreateTicket = (ticket) => {
-       
+   
+    const date = new Date();
     const title = window.prompt('New Event name');
     const {user} = this.props;
     const hallId = this.props.match.params.id;
-    
+
+    if(ticket.start < date) {
+      swal({
+        title: "Old Date!",
+        icon: "warning"
+      });
+      return 
+    }
+
     let newTicket = {
       hall_id: hallId,
       title: title,
@@ -49,11 +62,7 @@ class CardPage extends Component {
       to: new Date(ticket.end).getTime(),
       user_id: user._id
     };
-    
-    if(newTicket.from > newTicket.to) {
-      console.log(newTicket.from, newTicket.to);
-    } 
-    
+
     api.addTicket(newTicket)
       .then(response => {
         this.setState({ tickets: [...this.state.tickets, this.formatTicketDate(response)] })
@@ -61,23 +70,31 @@ class CardPage extends Component {
       .catch(error => {
         if (error.status === 400) {
           console.clear();
-          console.log('its not your order');
-          this.props.history.push('/modal');
+          swal({
+            title: "Not you order!",
+            icon: "warning"
+          });
           return false;
         }
-        return true;
-      })
+        return true;  
+      })  
   };
 
   resizeTicket = ({ event, start, end }) => {
+    const date = new Date();
+    if(start < date) {
+      swal({
+        title: "Old Date!",
+        icon: "warning"
+      }); 
+      return 
+    }
 
     if (!this.isCanEdit(event)) {
       return 
     }
 
-    const { tickets } = this.state
-
-    const nextTickets = tickets.map(existingTicket => {
+    const nextTickets = this.state.tickets.map(existingTicket => {
       return existingTicket._id === event._id
         ? { ...existingTicket, start, end }
         : existingTicket
@@ -86,14 +103,18 @@ class CardPage extends Component {
     const orderTicket = {
       from: new Date(event.start).getTime(),
       to: new Date(event.end).getTime(),
-      title: "room is ordered"
+      title: event.title || "room is ordered"
     };
 
     api.changeTicket(event._id, orderTicket)
     this.setState({
       tickets: nextTickets,
     })
+    console.log(nextTickets);
   };
+
+  
+  
 
   loadData = () => {
     api.getTickets()

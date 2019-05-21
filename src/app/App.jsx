@@ -7,16 +7,14 @@ class App extends Component {
   state = {
     user: null,
     isError: false,
-    email: null,
-    isAuth: false
+    email: null
   };
 
   updateUser = (user, afterUpdate) => {
     const email = localStorage.getItem('email');
     this.setState({ 
       user, 
-      email: email,
-      isAuth: true
+      email: email
     });
    
     localStorage.setItem('user', JSON.stringify(user));
@@ -43,15 +41,14 @@ class App extends Component {
       axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
       this.setState({ 
         email: email,
-        user: JSON.parse(user),
-        isAuth: true
+        user: JSON.parse(user)
       });
     } 
   };
 
   render() {
 
-    const { user, isError, email, isAuth } = this.state;
+    const { user, isError, email } = this.state;
    
     return (
       <AppView 
@@ -60,7 +57,6 @@ class App extends Component {
         deleteUser={this.deleteUser} 
         updateUser={this.updateUser} 
         isError={isError} 
-        isAuth={isAuth}
       /> 
     );
   }
