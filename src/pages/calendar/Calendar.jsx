@@ -12,7 +12,7 @@ class CardPage extends Component {
     isLoading: true,
     isError: false
   };
-
+  
   closeCalendar = () => {
     this.props.history.goBack()
   };

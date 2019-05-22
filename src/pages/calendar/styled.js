@@ -4,7 +4,7 @@ export const Title = styled.p`
   display: flex;
   justify-content: center;
   padding: 5px 20px;
-  color:  #ADD8E6;
+  color: #00CED1;
   font-size: 30px;
 `;
 
@@ -48,6 +48,25 @@ export const Button = styled.button`
   outline: none;
 `;
 
+export const Icon = styled.button`
+  justify-content: center;
+  display: flex
+  background-color: initial;
+  color: #ffffff;
+  border-radius: 5px;
+  border: none;
+  max-width: 100px;
+  max-height: 35px;
+  font-size: 20px;
+  outline: none;
+  @media(max-width: 850px) {
+    margin-bottom: 15px;
+  }
+  @media(max-width: 450px) {
+    margin-bottom: 15px;
+  }
+`;
+
 export const Text = styled.p`
   color: #000000;
   font-size: 15px;
@@ -68,16 +87,15 @@ export const Time = styled.p`
 
 export const Block = styled.div`
   display: flex;
+  flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center; 
   padding: 10px 20px;
   @media(max-width: 850px) {
-    flex-direction: column;
     justify-content: center;
     align-items: center;
   }
   @media(max-width: 450px) {
-    flex-direction: column;
     justify-content: center;
     align-items: center;
   }

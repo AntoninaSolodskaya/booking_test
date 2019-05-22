@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
-import { Title, Container, ButtonWrap, Button, Wrap, Time, Block, Text } from './styled';
+import { Title, Container, ButtonWrap, Button, Icon, Wrap, Time, Block, Text } from './styled';
+import { Delete } from '../../icons';
 import BigCalendar from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -50,7 +51,7 @@ class CardPageView extends Component {
                       {moment(ticket.start).format("DD/MM/YY hh:mm:ss")} - 
                       {moment(ticket.end).format("DD/MM/YY hh:mm:ss")}
                     </Time>
-                    <Button onClick={() => deleteTicket(ticket._id)}>Delete</Button> 
+                    <Icon onClick={() => deleteTicket(ticket._id)}>{Delete}</Icon> 
                   </Block> 
               ))}
             </Wrap>

@@ -47,12 +47,31 @@ input{
 
   .rbc-toolbar {
     max-width: 955px;
+    min-width: 300px;
   }
   .rbc-calendar {
     width: 100%;
-    min-height: 500px ;
+    min-height: 600px ;
   }
 
   .rbc-btn-group {
     padding-bottom: 15px;
+  }
+
+  .rbc-event {
+    background-color: #00CED1!important;
+  }
+
+  .rbc-day-slot .rbc-event {
+    border: 1px solid #00CED1!important; 
+  }
+
+  .rbc-agenda-view table.rbc-agenda-table tbody > tr > td {
+    color: #00CED1!important;
+  }
+
+  .rbc-agenda-view table.rbc-agenda-table thead > tr > th {
+    color: 	#0000FF!important;
+    padding: 13px 5px;
+    font-size: 18px;
   }

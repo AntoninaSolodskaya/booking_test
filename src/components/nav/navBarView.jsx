@@ -19,39 +19,39 @@ class NavBarView extends Component {
     const { user, deleteUser, email } = this.props;
     return (
       <Header>
-      <Container>
-        <Logo>Rooms</Logo>
-        <Nav>
-          <Input type="checkbox" name="menu" id="btn-menu" />
-          <Label htmlFor="btn-menu">
-            <Span></Span>
-            <Span></Span>
-            <Span></Span>
-          </Label>
-          <NavList>
-            <List>
-              <StyledLink to="/">Home</StyledLink>
-            </List> 
-            {user &&
-              <SignSection>
-                <SpanName style={{marginLeft: "18px"}}>{email}</SpanName>
-                <List>
-                  <StyledLink to="/" onClick={deleteUser}>Sign Out</StyledLink>
-                </List>  
-              </SignSection>}
-            {!user &&
-              <SignSection>
-                <List>
-                  <StyledLink to="/register">Sign Up</StyledLink>
-                </List>   
-                <List>
-                  <StyledLink to="/login">Sign In</StyledLink>
-                </List>  
-              </SignSection>}
-          </NavList>
-        </Nav>
-      </Container>
-    </Header>
+        <Container>
+          <Logo>Rooms</Logo>
+          <Nav>
+            <Input type="checkbox" name="menu" id="btn-menu" />
+            <Label htmlFor="btn-menu">
+              <Span></Span>
+              <Span></Span>
+              <Span></Span>
+            </Label>
+            <NavList>
+              <List>
+                <StyledLink to="/">Home</StyledLink>
+              </List> 
+              {user &&
+                <SignSection>
+                  <SpanName style={{marginLeft: "18px"}}>{email}</SpanName>
+                  <List>
+                    <StyledLink to="/" onClick={deleteUser}>Sign Out</StyledLink>
+                  </List>  
+                </SignSection>}
+              {!user &&
+                <SignSection>
+                  <List>
+                    <StyledLink to="/register">Sign Up</StyledLink>
+                  </List>   
+                  <List>
+                    <StyledLink to="/login">Sign In</StyledLink>
+                  </List>  
+                </SignSection>}
+            </NavList>
+          </Nav>
+        </Container>
+      </Header>
     );
   }
 };
