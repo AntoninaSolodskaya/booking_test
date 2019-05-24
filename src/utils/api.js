@@ -14,16 +14,16 @@ axios.interceptors.response.use((response) => {
   return Promise.reject(res);
 });
 
-const endpoint = 'http://ec2-35-175-143-145.compute-1.amazonaws.com:4000/';
+const endpoint = 'https://web-ninjas.net/';
 
 const api = {
   
   signIn: (email, password) => axios.post(`${endpoint}signIn`, { email, password }),
 
-  signUp: (email, password) => axios.post(`${endpoint}signUp`, 
+  signUp: (values) => axios.post(`${endpoint}signUp`, 
   {
-    email: email.value,
-    password: password.value
+    email: values.email,
+    password: values.password
   }),
 
   getHalls: () => axios.get(`${endpoint}halls`),

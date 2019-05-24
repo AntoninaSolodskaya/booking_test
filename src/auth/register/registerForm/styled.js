@@ -12,12 +12,6 @@ export const Container = styled.div`
   height: 100%;
 `;
 
-export const Form = styled.form`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
 export const Section = styled.div`
   display: flex;
   flex-direction: column;
@@ -29,17 +23,6 @@ export const Label = styled.label`
   color: #311e1e;
   font-size: 16px;
   padding-bottom: 6px;
-`;
-
-export const Input = styled.input`
-  min-height: 35px;
-  width: 65%;
-  padding: 0 15px;
-  border-radius: 4px;
-  background-color: transparent;
-  border: 1px solid hsl(0, 14%, 11%);
-  font: normal 16px/2 "varela-round", Helvetica, sans-serif;
-  color:#311e1e;
 `;
 
 export const ButtonWrap = styled.div`
@@ -59,12 +42,4 @@ export const Button = styled.button`
   padding: 7px 25px;
   max-width: 125px;
   font-size: 20px;
-`;
-
-export const ErrorText = styled.p`
-  display: flex;
-  justify-content: flex-start;
-  margin: 0;
-  padding-left: 30px;
-  color: red;
 `;

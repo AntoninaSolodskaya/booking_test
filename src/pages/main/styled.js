@@ -17,10 +17,12 @@ export const Section = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  max-width: 980px;
+  margin: 0 auto;
 `;
 
 export const CardBlock = styled(Link)`
-  width: calc(33% - 16px);
+  width: calc(50% - 16px);
   margin: 0 8px 28px 8px;
   min-height: 180px;
   max-height: 500px
@@ -89,4 +91,10 @@ export const Img = styled.img`
     -ms-transform: scale(1.05);
     transform: scale(1.05);
   }
+`;
+
+export const Block = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;

@@ -75,3 +75,9 @@ input{
     padding: 13px 5px;
     font-size: 18px;
   }
+
+  .mixed-chart {
+    min-width: 380px;
+    max-width: 900px;
+    margin: 0 auto;
+  }

@@ -1,81 +1,63 @@
-import React, { Component } from 'react';
-import { withRouter } from "react-router";
-import RegisterFormView from './RegisterFormView';
+import React from 'react';
+import { Block, Container, Section, Label, Button, ButtonWrap } from './styled'
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+
 import api from '../../../utils/api';
 
-class RegisterForm extends Component {
+  const RegisterForm = () => (
+    <Block>
+      <Formik
+          initialValues={{ email: '', password: '' }}
+          validate={values => {
+            let errors = {};
+            if (!values.email) {
+              errors.email = 'Required';
+            } else if (
+              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+            ) {
+              errors.email = 'Invalid email address';
+            }
+            if (!values.password) {
+              errors.password = 'Required';
+            } else if (
+              values.password.length < 6 
+            ) {
+              errors.password = "Password should be at least 6 characters long";
+            }
+            return errors;
+          }}
+          onSubmit={(values, { setSubmitting }) => {
+            setTimeout(() => {
+              localStorage.setItem('user', JSON.stringify(values));
+              api.signUp(values)
+              setSubmitting(false);
+            }, 400);
+          }}
+        >
+        {({ isSubmitting }) => (
+          <Form style={{ width: '100%',display: 'flex',flexDirection: 'column'}}>
+            <Container>
+              <Section>
+                <Label>Email:</Label>
+                <Field type="email" name="email" />
+                <ErrorMessage style={{ color: 'red', marginTop: '5px' }} name="email" component="div" />
+              </Section>
+              <Section>
+                <Label>Password:</Label>
+                <Field type="password" name="password" />
+                <ErrorMessage style={{ color: 'red', marginTop: '5px' }} name="password" component="div" />
+              </Section>
+              <ButtonWrap>
+                 <Button type="submit" disabled={isSubmitting}>
+                  Submit
+                </Button>
+              </ButtonWrap>
+            </Container> 
+          </Form>
+        )}
+      </Formik>
+    </Block>
+  );
 
-  state = {
-    email: {
-      value: ''
-    },
-    password: {
-      value: ''
-    },
-    errors: []
-  };
+ export default RegisterForm;
 
-  validate = ( email, password ) => {
-   
-    const errors = [];
-  
-    if (email.value.length < 5) {
-      errors.push("Email should be at least 5 charcters long");
-    }
-    if (email.value.split("").filter(x => x === "@").length !== 1) {
-      errors.push("Email should contain a @");
-    }
-    if (email.value.indexOf(".") === -1) {
-      errors.push("Email should contain at least one dot");
-    }
-  
-    if (password.value.length < 6) {
-      errors.push("Password should be at least 6 characters long");
-    }
-  
-    return errors;
-  }
-
-  handleChange = event => {
-    event.persist();
-    const { name, value } = event.target;
-    this.setState(prevState => ({
-      [name]: {
-        ...prevState,
-        value
-      },
-    }));
-  };
-
-  handleSubmit = (event) => {
-    event.preventDefault();
-    const { email, password } = this.state;
-    const errors = this.validate(email, password);
-    if (errors.length > 0) {
-      this.setState({ errors });
-      return;
-    }
-    
-    console.log('Login:', email.value, password.value);
-    localStorage.setItem('email', JSON.stringify(email.value));
-    localStorage.setItem('password', JSON.stringify(password.value));
-    api.signUp(email, password)
-    .then(this.props.setRegistered())
-  };
-  
-  render() {
-    const { email, password, errors } = this.state;
-    
-    return (
-      <RegisterFormView 
-        email={email} 
-        password={password} 
-        handleSubmit={this.handleSubmit} 
-        handleChange={this.handleChange}
-        errors={errors}
-      />
-    );
-  }
-};
-
-export default withRouter(RegisterForm);

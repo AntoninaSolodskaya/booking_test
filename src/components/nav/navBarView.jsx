@@ -32,6 +32,12 @@ class NavBarView extends Component {
               <List>
                 <StyledLink to="/">Home</StyledLink>
               </List> 
+              <List>
+                <StyledLink to="/test">Test</StyledLink>
+              </List> 
+              <List>
+                <StyledLink to="/charts">Charts</StyledLink>
+              </List> 
               {user &&
                 <SignSection>
                   <SpanName style={{marginLeft: "18px"}}>{email}</SpanName>

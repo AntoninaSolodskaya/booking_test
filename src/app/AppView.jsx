@@ -6,7 +6,9 @@ import Main from '../pages/main/Main';
 import Calendar from '../pages/calendar/Calendar';
 import LoginModal from '../auth/login/loginModal/LoginModal';
 import RegisterModal from '../auth/register/registerModal/RegisterModal';
+import TestComponent from '../test/TestComponent';
 import ScrollToTop from '../utils/ScrollToTop';
+import ChartPage from '../pages/charts/ChartPage';
 
 class AppView extends Component {
   render() {
@@ -31,6 +33,14 @@ class AppView extends Component {
                         <Route 
                           exact path="/" 
                           component={() => <Main user={user} />}
+                        />
+                        <Route 
+                          exact path="/test" 
+                          component={() => <TestComponent />}
+                        />
+                        <Route 
+                          exact path="/charts" 
+                          component={() => <ChartPage />}
                         />
                       </Fragment>  
                     ) : (
