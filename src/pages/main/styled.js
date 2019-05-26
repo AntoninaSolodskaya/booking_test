@@ -3,14 +3,11 @@ import styled from 'styled-components';
 import styleConsts from '../../utils/styleConsts';
 
 export const Wrapper = styled.div`
-  max-width: 1200px;
-  min-width: 350px;
-  margin: 0 auto;
+  width: 100%;
   padding-top: 20px;
   display: flex;
-  flex-wrap: wrap;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 export const Section = styled.div`
@@ -18,13 +15,13 @@ export const Section = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   max-width: 980px;
-  margin: 0 auto;
+  margin: 10px 10px;
 `;
 
 export const CardBlock = styled(Link)`
-  width: calc(50% - 16px);
+  width: 60%;
   margin: 0 8px 28px 8px;
-  min-height: 180px;
+  min-height: 280px;
   max-height: 500px
   display: flex;
   flex-wrap: wrap;
@@ -37,18 +34,14 @@ export const CardBlock = styled(Link)`
   overflow: hidden;
   transition: all 0.7s ease-in-out;
   text-decoration: none;
-  @media(max-width: 850px) {
-    width: calc(60% - 16px);
-  }
   @media(max-width: 450px) {
-    width: calc(100% - 16px);
+    width: 100%;
   }
 `;
 
 export const Title = styled.p`
   display: flex;
   justify-content: center;
-  margin: 0;
   padding: 10px 20px;
   color: #ffffff;
   font-size: 20px;
@@ -97,4 +90,5 @@ export const Block = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 `;

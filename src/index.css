@@ -81,3 +81,8 @@ input{
     max-width: 900px;
     margin: 0 auto;
   }
+
+  .css-1pcexqc-container {
+    max-width: 500px;
+    min-width: 350px;
+  }

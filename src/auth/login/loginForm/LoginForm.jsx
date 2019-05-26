@@ -43,7 +43,8 @@ class LoginForm extends Component {
               api.signIn(values.email, values.password)
               .then((user) => {
                 if (user) {
-                  this.props.updateUser(user, () => this.props.history.push('/'));
+                  // this.props.updateUser(user, () => this.props.history.push('/'));
+                  this.props.updateUser(user)
                 }  
               })
             console.log(values)

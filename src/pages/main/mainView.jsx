@@ -3,29 +3,29 @@ import { Wrapper, Section, CardBlock, Content, Title, Img, ImgWrap } from './sty
 
 class MainView extends Component {
   render() {
-    const { rooms } = this.props;
-    
+    const { selectedOption } = this.props;
+   
     return (
       <Wrapper>
         <Section>
-          {rooms && rooms.map((room, index) => (
+          {selectedOption && selectedOption.map((room, index) => (
             <CardBlock 
-              to={`/calendar/${room._id}`} 
+              to={`/calendar/${room.value}`} 
               key={index} 
               room={room}
             >
               <ImgWrap>
-                <Img src={room.imageURL} />
+                <Img src={room.imageUrl} />
               </ImgWrap> 
-              <Title>{room.title}</Title>
+              <Title>{room.label}</Title>
               <Content>{room.description}</Content>
             </CardBlock>
-          ))}
+          ))} 
         </Section>
       </Wrapper>
-    )
+    );
   }
-}
+};
 
 
 export default MainView;

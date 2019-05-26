@@ -17,9 +17,9 @@ class ChartPage extends Component {
         pan: 'Panning',
         reset: 'Reset Zoom',
       },
-      // fill: {
-      //   colors: ['#F44336', '#E91E63', '#9C27B0']
-      // },
+      fill: {
+        colors: ['#F44336', '#E91E63', '#9C27B0']
+      },
     },
       series: [
         {

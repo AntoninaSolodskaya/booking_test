@@ -126,6 +126,7 @@ class CardPage extends Component {
             .map(event => this.formatTicketDate(event)),
           isLoading: true
         });
+        console.log(this.state.tickets)
       })
   };;
 

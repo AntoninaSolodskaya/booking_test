@@ -1,55 +1,59 @@
 import React, { Component, Fragment } from 'react';
-import { Text } from './styled';
+import { Text, Block } from './styled';
 import MainView from './mainView';
 import LoadingComponent from '../../loader/LoadingComponent';
-import Select from 'react-select';
+import SelectHalls from './SelectHalls';
 
 import api from '../../utils/api';
 
-const options = [
-  { value: 'Hall-1', label: 'Hall-1' },
-  { value: 'Hall-2', label: 'Hall-2' },
-  { value: 'Hall-3', label: 'Hall-3' },
-  { value: 'Hall-4', label: 'Hall-4' }
-];
-
-
 class Main extends Component {
   state = {
-    rooms: [],
     isLoading: true,
     isError: false,
-    tickets: []
-  };
+    selectedOption: null,
+    clearable: true,
+    halls: []
+  };                                           
   
   loadData = () => {
     api.getHalls()
       .then(result => {
         this.setState({
-          rooms: result.halls,
+          halls: result.halls,
           isLoading: false
         });
+        console.log("halls", this.state.halls)
       })
-  }
+  };
+
+  handleChange = (selectedOption) => {
+    this.setState({ selectedOption });
+    console.log(`Option selected:`, selectedOption);
+    localStorage.setItem('options', JSON.stringify(selectedOption))
+  };
 
   componentDidMount() {
     this.loadData();
-    this.setState({ isLoading: false})
+    this.setState({ isLoading: false });
   };
 
   render() {
     const { user } = this.props; 
-    const { isError, rooms, isLoading } = this.state;
-
+    const { isError, isLoading, halls, selectedOption, clearable } = this.state;
     if (isLoading) return <LoadingComponent />
   
     return (
       <Fragment>
         {user && !isError &&  
-        <div>
-          <Select options={options} />
-          <MainView rooms={rooms} />
-        </div>}
+        <Block>
+          <SelectHalls 
+            halls={halls} 
+            selectedOption={selectedOption} 
+            clearable={clearable} 
+            handleChange={this.handleChange}
+          />
+          <MainView selectedOption={selectedOption} /> 
+        </Block>}
         {isError && (<Text>Error!!!</Text>)}
       </Fragment> 
     );
