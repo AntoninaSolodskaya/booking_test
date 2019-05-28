@@ -14,8 +14,11 @@ export const Section = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  max-width: 980px;
-  margin: 10px 10px;
+  width: 70%;
+  margin: 0 auto;
+  @media(max-width: 450px) {
+    width: 100%;
+  }
 `;
 
 export const CardBlock = styled(Link)`

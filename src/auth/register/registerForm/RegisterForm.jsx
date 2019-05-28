@@ -1,5 +1,6 @@
 import React from 'react';
-import { Block, Container, Section, Label, Button, ButtonWrap } from './styled'
+import { withRouter } from 'react-router-dom';
+import { Block, Container, Section, Label, Button, ButtonWrap } from './styled';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 import api from '../../../utils/api';
@@ -59,5 +60,5 @@ import api from '../../../utils/api';
     </Block>
   );
 
- export default RegisterForm;
+ export default withRouter(RegisterForm);
 

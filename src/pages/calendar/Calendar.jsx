@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import CalendarView from './CalendarView';
 import moment from 'moment';
 import swal from 'sweetalert';
@@ -128,7 +128,7 @@ class CardPage extends Component {
         });
         console.log(this.state.tickets)
       })
-  };;
+  };
 
   deleteTicket = (ticketId) => {
     api.deleteTicket(ticketId)
@@ -149,16 +149,18 @@ class CardPage extends Component {
     const { tickets, isError } = this.state;
     const { user } = this.props;
     return (
-      <CalendarView 
-        tickets={tickets} 
-        user={user}  
-        deleteTicket={this.deleteTicket} 
-        handleCreateTicket={this.handleCreateTicket}
-        onEventResize={this.onEventResize}
-        closeCalendar={this.closeCalendar}
-        isError={isError}
-        resizeTicket={this.resizeTicket}
-      /> 
+      <Fragment>
+        <CalendarView 
+          tickets={tickets} 
+          user={user}  
+          deleteTicket={this.deleteTicket} 
+          handleCreateTicket={this.handleCreateTicket}
+          onEventResize={this.onEventResize}
+          closeCalendar={this.closeCalendar}
+          isError={isError}
+          resizeTicket={this.resizeTicket}
+        /> 
+      </Fragment>
     );
   }
 };

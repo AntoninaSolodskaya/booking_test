@@ -34,7 +34,9 @@ const api = {
 
   changeTicket: (ticketId, orderTicket) => axios.put(`${endpoint}ticket/${ticketId}`, orderTicket),
 
-  deleteTicket: (ticketId) => axios.delete(`${endpoint}tickets/${ticketId}`)
+  deleteTicket: (ticketId) => axios.delete(`${endpoint}tickets/${ticketId}`),
+
+  getTimeTicket: (from, to) => axios.get(`${endpoint}ticketsparams/${from}/${to}`)
 };
 
 export default api;

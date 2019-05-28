@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { Container, Text } from './styled';
 import NavBar from '../components/nav/NavBar';
 import Main from '../pages/main/Main';
@@ -17,50 +17,48 @@ class AppView extends Component {
     
     return ( 
       <Fragment>
-        <BrowserRouter>
-          <ScrollToTop>
-            <Fragment>
-              <NavBar user={user} email={email} deleteUser={deleteUser} />
-              {!isError && 
-                <Container className="main">
-                  <Switch>
-                    {user ? (
-                      <Fragment>
-                        <Route
-                          path='/calendar/:id'
-                          render={(props) => <Calendar {...props} user={user} />}
-                        />
-                        <Route 
-                          exact path="/" 
-                          component={() => <Main user={user} />}
-                        />
-                        <Route 
-                          exact path="/test" 
-                          component={() => <TestComponent />}
-                        />
-                        <Route 
-                          exact path="/charts" 
-                          component={() => <ChartPage />}
-                        />
-                      </Fragment>  
-                    ) : (
-                      <Fragment>
-                        <Route
-                          path='/login'
-                          render={(props) => <LoginModal {...props} updateUser={updateUser} /> }
-                        />  
-                        <Route 
-                          path="/register"
-                          render={(props) => <RegisterModal {...props} /> }       
-                        /> 
-                      </Fragment> 
-                    )}
-                  </Switch>
-                </Container>}
-            </Fragment>
-          </ScrollToTop>
-          {isError && (<Text>Error!!!</Text>)} 
-        </BrowserRouter>
+        <ScrollToTop>
+          <Fragment>
+            <NavBar user={user} email={email} deleteUser={deleteUser} />
+            {!isError && 
+              <Container className="main">
+                <Switch>
+                  {user ? (
+                    <Fragment>
+                      <Route
+                        path='/calendar/:id'
+                        render={(props) => <Calendar {...props} user={user} />}
+                      />
+                      <Route 
+                        exact path="/" 
+                        component={() => <Main user={user} />}
+                      />
+                      <Route 
+                        exact path="/test" 
+                        component={() => <TestComponent />}
+                      />
+                      <Route 
+                        exact path="/charts" 
+                        component={() => <ChartPage />}
+                      />
+                    </Fragment>  
+                  ) : (
+                    <Fragment>
+                      <Route
+                        path='/login'
+                        render={(props) => <LoginModal {...props} updateUser={updateUser} /> }
+                      />  
+                      <Route 
+                        path="/register"
+                        render={(props) => <RegisterModal {...props} /> }       
+                      /> 
+                    </Fragment> 
+                  )}
+                </Switch>
+              </Container>}
+          </Fragment>
+        </ScrollToTop>
+        {isError && (<Text>Error!!!</Text>)} 
       </Fragment>
     );
   }

@@ -1,32 +1,71 @@
 import React, { Component } from "react";
 import { Wrap, Block } from './styled';
 import Chart from "react-apexcharts";
+import api from "../../utils/api";
 
 class ChartPage extends Component {
+ 
   state = {
-    options: {
-      shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-      days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      shortDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      toolbar: {
-        download: 'Download SVG',
-        selection: 'Selection',
-        selectionZoom: 'Selection Zoom',
-        zoomIn: 'Zoom In',
-        zoomOut: 'Zoom Out',
-        pan: 'Panning',
-        reset: 'Reset Zoom',
-      },
-      fill: {
-        colors: ['#F44336', '#E91E63', '#9C27B0']
-      },
-    },
-      series: [
-        {
-          name: "tickets",
-          data: [30, 40, 21, 50, 36]
+    options: {},
+    series: [{ data: [] }],
+    isLoading: false,
+    tickets: [],
+    halls: []
+  };
+
+  getHallTitle = () => {
+    api.getHalls()
+    .then(result => {
+      this.setState({
+        options: {
+          chart: {
+            id: result.halls.map(hall => hall._id)
+          },
+          xaxis: {
+            categories: result.halls.map(hall => hall.title)
+          }
+        },
+          isLoading: false, 
+          halls: result.halls
+        });  
+      console.log("categories", this.state.options)
+      console.log("halls",this.state.halls)
+    });
+  };
+
+  getTicketData = () => {
+    api.getTickets()
+      .then(result => {
+        let hallsCounter = [0, 0, 0, 0]
+
+        for (let j = 0; j < this.state.halls.length; j++) {
+          hallsCounter[j] = 0
+          for (let i = 0; i < result.length; i++) {
+            if (result[i].hall_id === this.state.halls[j]._id) {
+              hallsCounter[j]++
+              console.log (`hall ${j} `, hallsCounter[j])
+            }
+          } 
+          console.log('hall tickets number', hallsCounter[j])
         }
-      ]
+
+        console.log('COUNTER', hallsCounter)
+
+        this.setState({
+          series: [{
+            data: hallsCounter
+          }],
+          isLoading: true, 
+          tickets: result
+        }); 
+        console.log('series', this.state.series)
+        console.log("tickets", this.state.tickets.length)
+      });
+  };
+
+  componentDidMount() {
+    this.getHallTitle();
+    this.getTicketData();
   };
 
   render() {
@@ -34,18 +73,18 @@ class ChartPage extends Component {
       <Wrap>
         <Block>
           <div className="mixed-chart">
-            <Chart
+            <Chart 
               options={this.state.options}
               series={this.state.series}
               type="bar"
               max-width="900px"
               min-width="300px"
-            />
+            /> 
           </div>
         </Block>
       </Wrap>
     );
   }
-}
+};
 
 export default ChartPage;

@@ -22,7 +22,6 @@ class Main extends Component {
           halls: result.halls,
           isLoading: false
         });
-        console.log("halls", this.state.halls)
       })
   };
 

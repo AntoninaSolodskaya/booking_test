@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import { Block, Container, Section, Label, Button, ButtonWrap } from './styled'
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { Block, Container, Section, Label, Button, ButtonWrap } from './styled';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 import api from '../../../utils/api';
@@ -43,8 +44,7 @@ class LoginForm extends Component {
               api.signIn(values.email, values.password)
               .then((user) => {
                 if (user) {
-                  // this.props.updateUser(user, () => this.props.history.push('/'));
-                  this.props.updateUser(user)
+                  this.props.updateUser(user, () => this.props.history.push('/'));
                 }  
               })
             console.log(values)
@@ -79,4 +79,4 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+export default withRouter(LoginForm);
