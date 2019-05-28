@@ -7,6 +7,7 @@
     "apexcharts": "^3.6.12",
     "axios": "^0.18.0",
     "babel-eslint": "^10.0.1",
+    "chart.js": "^2.8.0",
     "eslint": "^5.16.0",
     "formik": "^1.5.7",
     "gh-pages": "^2.0.1",

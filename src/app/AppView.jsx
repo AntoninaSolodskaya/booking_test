@@ -9,8 +9,10 @@ import RegisterModal from '../auth/register/registerModal/RegisterModal';
 import TestComponent from '../test/TestComponent';
 import ScrollToTop from '../utils/ScrollToTop';
 import ChartPage from '../pages/charts/ChartPage';
+import TestChart from '../pages/charts/testChart';
 
 class AppView extends Component {
+  
   render() {
 
     const { user, email, deleteUser, updateUser, isError } = this.props;
@@ -40,6 +42,10 @@ class AppView extends Component {
                       <Route 
                         exact path="/charts" 
                         component={() => <ChartPage />}
+                      />
+                       <Route 
+                        exact path="/testCharts" 
+                        component={() => <TestChart />}
                       />
                     </Fragment>  
                   ) : (
