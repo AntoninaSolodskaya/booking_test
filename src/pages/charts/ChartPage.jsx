@@ -23,7 +23,10 @@ class ChartPage extends Component {
           },
           xaxis: {
             categories: result.halls.map(hall => hall.title)
-          }
+          },
+          fill: {
+            colors: ['#F44336']
+          },
         },
           isLoading: false, 
           halls: result.halls
@@ -60,7 +63,7 @@ class ChartPage extends Component {
         }); 
         console.log('series', this.state.series)
         console.log("tickets", this.state.tickets.length)
-      });
+      })
   };
 
   componentDidMount() {

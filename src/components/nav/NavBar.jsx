@@ -2,14 +2,11 @@ import React, { Component } from 'react';
 import NavBarView from './navBarView';
 
 class NavBar extends Component {
-
   render() {
-
-    const { user, deleteUser, email } = this.props;
-
+    const { userId, deleteUser, email } = this.props;
     return (
       <NavBarView 
-        user={user} 
+        userId={userId} 
         deleteUser={deleteUser} 
         email={email} 
       />

@@ -15,25 +15,26 @@ class AppView extends Component {
   
   render() {
 
-    const { user, email, deleteUser, updateUser, isError } = this.props;
+    const { userId, email, deleteUser, updateUser, isError } = this.props;
     
     return ( 
       <Fragment>
         <ScrollToTop>
           <Fragment>
-            <NavBar user={user} email={email} deleteUser={deleteUser} />
+            <NavBar userId={userId} email={email} deleteUser={deleteUser} />
             {!isError && 
               <Container className="main">
                 <Switch>
-                  {user ? (
+                  {userId ? (
                     <Fragment>
                       <Route
                         path='/calendar/:id'
-                        render={(props) => <Calendar {...props} user={user} />}
+                        render={(props) => <Calendar {...props} userId={userId} />}
                       />
                       <Route 
                         exact path="/" 
-                        component={() => <Main user={user} />}
+                        render={(props) => <Main {...props} userId={userId} /> }
+                        // component={() => <Main userId={userId} />}
                       />
                       <Route 
                         exact path="/test" 

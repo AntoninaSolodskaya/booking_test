@@ -43,3 +43,15 @@ export const Button = styled.button`
   max-width: 125px;
   font-size: 20px;
 `;
+export const Input = styled.input``;
+
+export const ErrorMessage = styled.span`
+  color: red;
+  marginTop: 5px;
+`;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;

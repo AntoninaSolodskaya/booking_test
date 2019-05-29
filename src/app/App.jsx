@@ -1,58 +1,40 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import AppView from './AppView';
 
+const mapState = state => ({
+  userId: state.login.userId,
+  email: state.login.email,
+  token: state.login.token
+});
+
 class App extends Component {
 
-  state = {
-    user: null,
-    isError: false,
-    email: null
-  };
+  // deleteUser = () => {
+  //   localStorage.clear();
 
-  updateUser = (user, afterUpdate) => {
-    const email = localStorage.getItem('email');
-    this.setState({ 
-      user, 
-      email: email
-    });
-   
-    localStorage.setItem('user', JSON.stringify(user));
-    afterUpdate();
-   
-    localStorage.setItem("token", user.token);
-    localStorage.setItem("userId", user._id);
-  };
-
-  deleteUser = () => {
-    localStorage.clear();
-
-    this.setState({ 
-      user: null,
-      email: null
-     });
-  }
+  //   this.setState({ 
+  //     user: null,
+  //     email: null
+  //    });
+  // }
 
   componentDidMount() {
-    const user = localStorage.getItem('user');
-    const email = localStorage.getItem('email');
-   
-    if (user) {
-      axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
-      this.setState({ 
-        email: email,
-        user: JSON.parse(user)
-      });
+
+
+    if (this.props.userId) {
+      axios.defaults.headers.common['Authorization'] = this.props.token;
     } 
   };
 
   render() {
 
-    const { user, isError, email } = this.state;
+    const { userId, isError, email } = this.props;
    
     return (
       <AppView 
-        user={user} 
+        userId={userId} 
         email={email}
         deleteUser={this.deleteUser} 
         updateUser={this.updateUser} 
@@ -62,4 +44,4 @@ class App extends Component {
   }
 };
 
-export default App;
+export default connect(mapState, null)(App);

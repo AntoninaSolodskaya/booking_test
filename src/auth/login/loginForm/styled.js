@@ -18,19 +18,6 @@ export const Form = styled.form`
   flex-direction: column;
 `; 
 
-export const Section = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px 5px;
-`;
-
-export const Label = styled.label`
-  color: #311e1e;
-  font-size: 16px;
-  padding-bottom: 6px;
-`;
-
 export const Input = styled.input`
   min-height: 35px;
   width: 65%;

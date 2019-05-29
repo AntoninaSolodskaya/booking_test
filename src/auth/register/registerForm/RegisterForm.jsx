@@ -1,64 +1,58 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Block, Container, Section, Label, Button, ButtonWrap } from './styled';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Block, Form, Container, Button, ButtonWrap } from './styled';
+import { Field, reduxForm } from 'redux-form';
+import { customInput } from '../CustomInput';
+import { register } from './authActions';
 
-import api from '../../../utils/api';
+  const actions = {
+    register
+  };
 
-  const RegisterForm = () => (
+  const validate = values => {
+    const errors = {};
+  
+    if (!values.email) {
+      errors.email = 'Required';
+    } else if (!/^.+@.+$/i.test(values.email)) {
+      errors.email = 'Invalid email address';
+    }
+  
+    if (!values.password) {
+      errors.password = 'Required';
+    } else if (
+      values.password.length < 6 
+    ) {
+      errors.password = "Password should be at least 6 characters long";
+    }
+    return errors;
+  };
+  
+  const RegisterForm = ({ register, handleSubmit, pristine, submitting}) => (
     <Block>
-      <Formik
-          initialValues={{ email: '', password: '' }}
-          validate={values => {
-            let errors = {};
-            if (!values.email) {
-              errors.email = 'Required';
-            } else if (
-              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-            ) {
-              errors.email = 'Invalid email address';
-            }
-            if (!values.password) {
-              errors.password = 'Required';
-            } else if (
-              values.password.length < 6 
-            ) {
-              errors.password = "Password should be at least 6 characters long";
-            }
-            return errors;
-          }}
-          onSubmit={(values, { setSubmitting }) => {
-            setTimeout(() => {
-              localStorage.setItem('user', JSON.stringify(values));
-              api.signUp(values)
-              setSubmitting(false);
-            }, 400);
-          }}
-        >
-        {({ isSubmitting }) => (
-          <Form style={{ width: '100%',display: 'flex',flexDirection: 'column'}}>
-            <Container>
-              <Section>
-                <Label>Email:</Label>
-                <Field type="email" name="email" />
-                <ErrorMessage style={{ color: 'red', marginTop: '5px' }} name="email" component="div" />
-              </Section>
-              <Section>
-                <Label>Password:</Label>
-                <Field type="password" name="password" />
-                <ErrorMessage style={{ color: 'red', marginTop: '5px' }} name="password" component="div" />
-              </Section>
-              <ButtonWrap>
-                 <Button type="submit" disabled={isSubmitting}>
-                  Submit
-                </Button>
-              </ButtonWrap>
-            </Container> 
-          </Form>
-        )}
-      </Formik>
+      <Form onSubmit={handleSubmit(register)}>
+        <Container>
+          <Field
+            name="email"
+            type="email"
+            label="Email:"
+            placeholder="Email"
+            component={customInput}
+          /> 
+          <Field
+            name="password"
+            type="password"
+            label="Password:"
+            placeholder="Password"
+            component={customInput}
+          />
+          <ButtonWrap>
+            <Button type="submit" disabled={pristine || submitting}>Register</Button>
+          </ButtonWrap>
+        </Container>
+      </Form>
     </Block>
-  );
+  )
 
- export default withRouter(RegisterForm);
-
+export default withRouter(connect(null, actions)(reduxForm({ form: 'signUp', validate })(RegisterForm)))

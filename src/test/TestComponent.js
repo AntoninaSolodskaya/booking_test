@@ -22,7 +22,7 @@ class TestComponent extends Component {
         <h3>The answer is: {data}</h3>
         <button onClick={incrementCounter} style={{backgroundColor: "green"}}>Increment</button>
         <button onClick={decrementCounter} style={{backgroundColor: "red"}}>Decrement</button>
-        <button onClick={() => openModal('TestModal', {data: 43})} style={{backgroundColor: "blue"}}>Modal</button>
+        <button onClick={() => openModal()} style={{backgroundColor: "blue"}}>Modal</button>
       </div>
     );
   }

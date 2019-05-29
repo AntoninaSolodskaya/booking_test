@@ -12,6 +12,7 @@ class RegisterModal extends React.Component {
     this.props.history.goBack()
   };
 
+  
   setRegistered = () => this.setState({ isRegister: true });
 
   render() {

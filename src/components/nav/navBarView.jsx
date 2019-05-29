@@ -16,7 +16,7 @@ import {
 
 class NavBarView extends Component {
   render() {
-    const { user, deleteUser, email } = this.props;
+    const { userId, deleteUser, email } = this.props;
     return (
       <Header>
         <Container>
@@ -41,14 +41,14 @@ class NavBarView extends Component {
               <List>
                 <StyledLink to="/testCharts">TestCharts</StyledLink>
               </List> 
-              {user &&
+              {userId &&
                 <SignSection>
                   <SpanName style={{marginLeft: "18px"}}>{email}</SpanName>
                   <List>
                     <StyledLink to="/" onClick={deleteUser}>Sign Out</StyledLink>
                   </List>  
                 </SignSection>}
-              {!user &&
+              {!userId &&
                 <SignSection>
                   <List>
                     <StyledLink to="/register">Sign Up</StyledLink>
