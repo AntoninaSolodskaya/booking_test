@@ -1,3 +1,3 @@
-export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const AUTH_FAIL = 'AUTH_FAIL';
+export const REGISTER_USER = 'REGISTER_USER';
+export const LOGIN_USER = 'LOGIN_USER';
+export const SIGN_OUT_USER = 'SIGN_OUT_USER';

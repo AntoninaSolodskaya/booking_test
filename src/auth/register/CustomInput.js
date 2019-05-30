@@ -3,7 +3,7 @@ import { Section, Label, Input, ErrorMessage } from '../register/registerForm/st
 
 export const customInput = ({ input, label, type, placeholder, meta: { touched, error } }) => (
   <Fragment>
-    <Section>
+    <Section >
       <Label>{label}</Label>
       <Input {...input} placeholder={placeholder} type={type} />
     </Section>  

@@ -1,36 +1,28 @@
-import { REGISTER_SUCCESS, LOGIN_SUCCESS, AUTH_FAIL } from './authConstants';
+import { createReducer } from '../../../utils/reducerUtil';
+import { LOGIN_USER, SIGN_OUT_USER } from './authConstants';
 
 const initialState = {
-  email: null,
-  token: null,
+  currentUser: {}
 };
 
-export const authReducer = (state = initialState, action) => {
-  switch (action.type) {
-
-    case REGISTER_SUCCESS:
-      return {
-        ...state,
-        email: action.email,
-        userId: action._id
-      };
-
-    case LOGIN_SUCCESS:
-      return {
-        ...state,
-        email: action.email,
-        token: action.token,
-        userId: action._id
-      };
-
-    case AUTH_FAIL:
-      return {
-        ...state
-      };
-
-    default:
-      return state;
+export const loginUser = (state, payload) => {
+  return {
+    ...state,
+    authenticated: true,
+    currentUser: payload.values.email,
+    isErr: false
   }
 };
 
-export default authReducer;
+export const signOutUser = (state, payload) => {
+  return {
+    ...state,
+    authenticated: false,
+    currentUser: {}
+  }
+};
+
+export default createReducer(initialState, {
+  [LOGIN_USER]: loginUser,
+  [SIGN_OUT_USER]: signOutUser
+});

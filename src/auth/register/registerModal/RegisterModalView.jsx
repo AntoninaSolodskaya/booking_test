@@ -12,14 +12,14 @@ class RegisterFormView extends Component {
             <Button onClick={closeModal}>X</Button>
           </Wrap>
           <Title>Register</Title>
-          {isRegister ? (
+          {/* {isRegister ? (
             <Text>you are registered! Please Log in.</Text>
-          ) : (
+          ) : ( */}
             <RegisterForm 
-              setRegistered={setRegistered} 
-              isRegister={isRegister} 
+              // setRegistered={setRegistered} 
+              // isRegister={isRegister} 
             />
-          )}
+         
         </Modal>
       </ModalWrap>
     )

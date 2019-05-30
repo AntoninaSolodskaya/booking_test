@@ -15,26 +15,25 @@ class AppView extends Component {
   
   render() {
 
-    const { userId, email, deleteUser, updateUser, isError } = this.props;
-    
+    const { isError, auth, isErr } = this.props;
+    const authenticated = auth.authenticated;
     return ( 
       <Fragment>
         <ScrollToTop>
           <Fragment>
-            <NavBar userId={userId} email={email} deleteUser={deleteUser} />
+            <NavBar />
             {!isError && 
               <Container className="main">
                 <Switch>
-                  {userId ? (
+                  {authenticated ? ( 
                     <Fragment>
                       <Route
                         path='/calendar/:id'
-                        render={(props) => <Calendar {...props} userId={userId} />}
+                        render={(props) => <Calendar {...props} />}
                       />
                       <Route 
-                        exact path="/" 
-                        render={(props) => <Main {...props} userId={userId} /> }
-                        // component={() => <Main userId={userId} />}
+                        exact path="/"  
+                        component={() => <Main />}
                       />
                       <Route 
                         exact path="/test" 
@@ -49,18 +48,18 @@ class AppView extends Component {
                         component={() => <TestChart />}
                       />
                     </Fragment>  
-                  ) : (
+                  ) : ( 
                     <Fragment>
                       <Route
-                        path='/login'
-                        render={(props) => <LoginModal {...props} updateUser={updateUser} /> }
+                        exact path='/login'
+                        render={(props) => <LoginModal {...props} isErr={isErr} /> }
                       />  
                       <Route 
-                        path="/register"
+                        exact path="/register"
                         render={(props) => <RegisterModal {...props} /> }       
                       /> 
-                    </Fragment> 
-                  )}
+                    </Fragment>  
+                  )} 
                 </Switch>
               </Container>}
           </Fragment>

@@ -8,20 +8,18 @@ class LoginModal extends React.Component {
   };
 
   closeModal = () => {
-    this.props.history.push('/')
+    this.props.history.goBack();
     this.setState({ isOpen: false })
   };
 
   render() {
     const { isOpen } = this.state;
-    const { updateUser, user } = this.props;
-
+    const { isErr } = this.props;
     return (
       <LoginModalView 
         isOpen={isOpen} 
         closeModal={this.closeModal} 
-        updateUser={updateUser}
-        user={user}
+        isErr={isErr}
       />
     );
   }

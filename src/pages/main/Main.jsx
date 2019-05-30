@@ -43,7 +43,7 @@ class Main extends Component {
   
     return (
       <Fragment>
-        {user && !isError &&  
+        {/* {user && !isError &&   */}
         <Block>
           <SelectHalls 
             halls={halls} 
@@ -52,7 +52,7 @@ class Main extends Component {
             handleChange={this.handleChange}
           />
           <MainView selectedOption={selectedOption} /> 
-        </Block>}
+        </Block>
         {isError && (<Text>Error!!!</Text>)}
       </Fragment> 
     );

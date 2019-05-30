@@ -1,48 +1,44 @@
-import { REGISTER_SUCCESS, LOGIN_SUCCESS, AUTH_FAIL } from './authConstants';
+import history from '../../../history';
+import { SubmissionError } from 'redux-form';
+import { REGISTER_USER, LOGIN_USER, SIGN_OUT_USER } from './authConstants';
 
 import api from '../../../utils/api';
 
-
-export const register = (values, ownProps) => {
-  return dispatch => {
-    api.signUp(values.email,values.password)
-      .then(res => { 
-        dispatch(signUpSuccess(res.email, res._id, ownProps));
-        ownProps.history.push('/');
-      })
-  };
+export const login = values => {
+  return async (dispatch) => {
+    dispatch({type: LOGIN_USER,payload: {values}})
+    try {
+      await api.signIn(values.email, values.password)
+        .then((user) => {
+          localStorage.setItem('user', JSON.stringify(user));
+          localStorage.setItem("token", user.token);
+          localStorage.setItem("userId", user._id);
+          history.push('/')
+        }) 
+      } catch (error) {
+        console.log(error);
+      }
+    }
 };
 
-export const signUpSuccess = (email, _id) => {
+
+export const register = values => {
+  return async (dispatch) => {
+    dispatch({type: REGISTER_USER,payload: {values}})
+    try {
+      await api.signUp(values.email, values.password)
+        .then((user) => {
+          localStorage.setItem('email', user.email);
+          history.push('/')
+        })  
+    } catch (error) {
+      console.log(error);
+    } 
+  }
+};
+
+export const logout = () => {
   return {
-    type: REGISTER_SUCCESS,
-    email,
-    _id
-  };
-};
-
-
-export const authFail = (error) => {
-  return {
-    type: AUTH_FAIL,
-    error
-  };
-};
-
-export const login = (values, ownProps) => {
-  return dispatch => {
-    api.signIn(values.email, values.password)
-      .then(res => {
-        dispatch(loginSuccess(res.token, res._id, values.email, ownProps));
-      })
-  };
-};
-
-export const loginSuccess = (token, _id, email) => {
-  return {
-    type: LOGIN_SUCCESS,
-    token,
-    _id,
-    email
-  };
+    type: SIGN_OUT_USER
+  }
 };

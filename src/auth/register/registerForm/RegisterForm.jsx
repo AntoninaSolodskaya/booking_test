@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import { Block, Form, Container, Button, ButtonWrap } from './styled';
 import { Field, reduxForm } from 'redux-form';
 import { customInput } from '../CustomInput';
@@ -28,31 +28,37 @@ import { register } from './authActions';
     }
     return errors;
   };
-  
-  const RegisterForm = ({ register, handleSubmit, pristine, submitting}) => (
-    <Block>
-      <Form onSubmit={handleSubmit(register)}>
-        <Container>
-          <Field
-            name="email"
-            type="email"
-            label="Email:"
-            placeholder="Email"
-            component={customInput}
-          /> 
-          <Field
-            name="password"
-            type="password"
-            label="Password:"
-            placeholder="Password"
-            component={customInput}
-          />
-          <ButtonWrap>
-            <Button type="submit" disabled={pristine || submitting}>Register</Button>
-          </ButtonWrap>
-        </Container>
-      </Form>
-    </Block>
-  )
 
-export default withRouter(connect(null, actions)(reduxForm({ form: 'signUp', validate })(RegisterForm)))
+ class RegisterForm extends Component {
+
+  render() {
+    const { register, pristine, handleSubmit, submitting } = this.props;
+    return (
+      <Block>
+        <Form onSubmit={handleSubmit(register)}>
+          <Container>
+            <Field
+              name="email"
+              type="email"
+              label="Email:"
+              placeholder="Email"
+              component={customInput}
+            /> 
+            <Field
+              name="password"
+              type="password"
+              label="Password:"
+              placeholder="Password"
+              component={customInput}
+            />
+            <ButtonWrap>
+              <Button type="submit" disabled={pristine || submitting}>Register</Button>
+            </ButtonWrap>
+          </Container>
+        </Form>
+      </Block>
+    );
+  }
+};
+
+export default withRouter(connect(null, actions)(reduxForm({ form: 'signUp', validate })(RegisterForm)));

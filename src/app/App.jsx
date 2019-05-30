@@ -1,44 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import AppView from './AppView';
 
 const mapState = state => ({
-  userId: state.login.userId,
-  email: state.login.email,
-  token: state.login.token
+  auth: state.auth
 });
 
 class App extends Component {
-
-  // deleteUser = () => {
-  //   localStorage.clear();
-
-  //   this.setState({ 
-  //     user: null,
-  //     email: null
-  //    });
-  // }
-
-  componentDidMount() {
-
-
-    if (this.props.userId) {
-      axios.defaults.headers.common['Authorization'] = this.props.token;
-    } 
+  state = {
+    isError: false
   };
 
   render() {
-
-    const { userId, isError, email } = this.props;
-   
+  const { isError } = this.state;
+  const { auth } = this.props;
+  const isErr = auth.isError
     return (
       <AppView 
-        userId={userId} 
-        email={email}
-        deleteUser={this.deleteUser} 
-        updateUser={this.updateUser} 
         isError={isError} 
+        auth={auth}
+        isErr={isErr}
       /> 
     );
   }

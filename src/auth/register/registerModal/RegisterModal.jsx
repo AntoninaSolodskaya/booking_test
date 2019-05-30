@@ -3,26 +3,26 @@ import RegisterModalView from './RegisterModalView';
 
 class RegisterModal extends React.Component {
 
-  state = {
-    isOpen: true,
-    isRegister: false
-  };
+  // state = {
+  //   isOpen: true,
+  //   // isRegister: false
+  // };
 
   closeModal = () => {
-    this.props.history.goBack()
+    this.props.history.push("/")
   };
 
   
-  setRegistered = () => this.setState({ isRegister: true });
+  // setRegistered = () => this.setState({ isRegister: true });
 
   render() {
-    const { isOpen, isRegister } = this.state;
+    // const { isOpen, isRegister } = this.state;
     return (
       <RegisterModalView 
-        isRegister={isRegister} 
+        // isRegister={isRegister} 
         closeModal={this.closeModal} 
-        setRegistered={this.setRegistered} 
-        isOpen={isOpen}
+        // setRegistered={this.setRegistered} 
+        // isOpen={isOpen}
       />
     );
   }

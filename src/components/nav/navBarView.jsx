@@ -16,7 +16,8 @@ import {
 
 class NavBarView extends Component {
   render() {
-    const { userId, deleteUser, email } = this.props;
+    const { authenticated, handleSignOut } = this.props;
+    const email = localStorage.getItem('email')
     return (
       <Header>
         <Container>
@@ -41,14 +42,14 @@ class NavBarView extends Component {
               <List>
                 <StyledLink to="/testCharts">TestCharts</StyledLink>
               </List> 
-              {userId &&
+              {authenticated && 
                 <SignSection>
                   <SpanName style={{marginLeft: "18px"}}>{email}</SpanName>
                   <List>
-                    <StyledLink to="/" onClick={deleteUser}>Sign Out</StyledLink>
+                    <StyledLink to="/" onClick={handleSignOut}>Sign Out</StyledLink>
                   </List>  
                 </SignSection>}
-              {!userId &&
+              {!authenticated && 
                 <SignSection>
                   <List>
                     <StyledLink to="/register">Sign Up</StyledLink>
