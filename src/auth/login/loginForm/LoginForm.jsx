@@ -4,8 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { Block, Container, Button, ButtonWrap, Form, Text } from './styled';
 import { Field, reduxForm } from 'redux-form';
 import { customInput } from '../../register/CustomInput';
-import { login } from '../../register/registerForm/authActions';
-import { SubmissionError } from 'redux-form'
+import { login } from '../../authActions/authActions';
 
   const actions = {
     login
@@ -31,20 +30,6 @@ import { SubmissionError } from 'redux-form'
   };
 
   class LoginForm extends Component {
-
-    // submit = (values) => {
-    //   const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
-    //   return sleep(1000) 
-    //     .then(() => {
-    //       if (!(values.email)) {
-    //         throw new SubmissionError({ email: 'User does not exist', _error: 'Login failed!' })
-    //       } else if (values.password !== password) {
-    //         throw new SubmissionError({ password: 'Wrong password', _error: 'Login failed!' })
-    //       } else {
-    //         window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
-    //       }
-    //     })
-    // }
    
     render() {
       const { login, pristine, handleSubmit, submitting, isErr } = this.props;

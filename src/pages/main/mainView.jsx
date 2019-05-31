@@ -4,7 +4,6 @@ import { Wrapper, Section, CardBlock, Content, Title, Img, ImgWrap } from './sty
 class MainView extends Component {
   render() {
     const { selectedOption } = this.props;
-   
     return (
       <Wrapper>
         <Section>

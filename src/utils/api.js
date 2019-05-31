@@ -21,10 +21,6 @@ const api = {
   signIn: (email, password) => axios.post(`${endpoint}signIn`, { email, password }),
 
   signUp: (email, password) => axios.post(`${endpoint}signUp`, { email, password }),
-  // {
-  //   email: values.email,
-  //   password: values.password
-  // }),
 
   getHalls: () => axios.get(`${endpoint}halls`),
 

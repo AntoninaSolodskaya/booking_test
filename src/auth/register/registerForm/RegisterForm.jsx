@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { Block, Form, Container, Button, ButtonWrap } from './styled';
 import { Field, reduxForm } from 'redux-form';
 import { customInput } from '../CustomInput';
-import { register } from './authActions';
+import { register } from '../../authActions/authActions';
 
   const actions = {
     register

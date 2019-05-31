@@ -1,8 +1,7 @@
-import history from '../../../history';
-import { SubmissionError } from 'redux-form';
+import history from '../../history';
 import { REGISTER_USER, LOGIN_USER, SIGN_OUT_USER } from './authConstants';
 
-import api from '../../../utils/api';
+import api from '../../utils/api';
 
 export const login = values => {
   return async (dispatch) => {
@@ -11,8 +10,9 @@ export const login = values => {
       await api.signIn(values.email, values.password)
         .then((user) => {
           localStorage.setItem('user', JSON.stringify(user));
-          localStorage.setItem("token", user.token);
+        //   localStorage.setItem("token", user.token);
           localStorage.setItem("userId", user._id);
+          localStorage.setItem('email', values.email);
           history.push('/')
         }) 
       } catch (error) {

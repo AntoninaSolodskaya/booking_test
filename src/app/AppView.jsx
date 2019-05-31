@@ -9,23 +9,21 @@ import RegisterModal from '../auth/register/registerModal/RegisterModal';
 import TestComponent from '../test/TestComponent';
 import ScrollToTop from '../utils/ScrollToTop';
 import ChartPage from '../pages/charts/ChartPage';
-import TestChart from '../pages/charts/testChart';
 
 class AppView extends Component {
   
   render() {
-
-    const { isError, auth, isErr } = this.props;
-    const authenticated = auth.authenticated;
+    const { isError, auth, isErr, handleSignOut } = this.props;
+    const user = localStorage.getItem('user');
     return ( 
       <Fragment>
         <ScrollToTop>
           <Fragment>
-            <NavBar />
+            <NavBar handleSignOut={handleSignOut} auth={auth} />
             {!isError && 
               <Container className="main">
                 <Switch>
-                  {authenticated ? ( 
+                  {user ? (  
                     <Fragment>
                       <Route
                         path='/calendar/:id'
@@ -43,13 +41,9 @@ class AppView extends Component {
                         exact path="/charts" 
                         component={() => <ChartPage />}
                       />
-                       <Route 
-                        exact path="/testCharts" 
-                        component={() => <TestChart />}
-                      />
-                    </Fragment>  
+                    </Fragment>   
                   ) : ( 
-                    <Fragment>
+                    <Fragment> 
                       <Route
                         exact path='/login'
                         render={(props) => <LoginModal {...props} isErr={isErr} /> }
@@ -59,7 +53,7 @@ class AppView extends Component {
                         render={(props) => <RegisterModal {...props} /> }       
                       /> 
                     </Fragment>  
-                  )} 
+                  )}   
                 </Switch>
               </Container>}
           </Fragment>

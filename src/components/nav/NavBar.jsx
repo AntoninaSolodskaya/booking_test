@@ -2,11 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import NavBarView from './navBarView';
-import { logout } from '../../auth/register/registerForm/authActions';
-
-const actions = {
-  logout
-};
 
 const mapState = state => ({
   auth: state.auth
@@ -14,24 +9,15 @@ const mapState = state => ({
 
 class NavBar extends Component {
 
-  handleSignOut = () => {
-    this.props.logout();
-    this.props.history.goBack();
-  }
-
   render() {
-    const { auth, updateUser } = this.props;
-    const authenticated = auth.authenticated;
-    const currentUser = auth.currentUser
+    const { auth, handleSignOut } = this.props;
     return (
       <NavBarView 
-        authenticated={authenticated}
-        handleSignOut={this.handleSignOut}
-        currentUser={currentUser}
-        updateUser={updateUser}
+        handleSignOut={handleSignOut}
+        auth={auth}
       />
     );
   }
 };
 
-export default withRouter(connect(mapState, actions)(NavBar));
+export default withRouter(connect(mapState, null)(NavBar));

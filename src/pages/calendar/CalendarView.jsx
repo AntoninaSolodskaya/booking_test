@@ -15,14 +15,13 @@ class CardPageView extends Component {
 
     const { 
       tickets,
-      user,
       deleteTicket,
       handleCreateTicket,
       closeCalendar,
       resizeTicket,
       isError
     } = this.props; 
-
+    const user = localStorage.getItem('user')
     return (
       <Fragment>
         {!isError &&
@@ -44,8 +43,8 @@ class CardPageView extends Component {
           <ButtonWrap>
             <Button onClick={closeCalendar}>Back</Button>
             <Wrap>
-              {tickets 
-                && tickets.filter(tick => tick.user_id === user._id).map((ticket, id) => (
+              {/* {tickets 
+                && tickets.filter(tick => tick.user_id === user._id).map((ticket, id) => ( 
                   <Block key={id} >
                     <Time>
                       {moment(ticket.start).format("DD/MM/YY hh:mm:ss")} - 
@@ -53,7 +52,7 @@ class CardPageView extends Component {
                     </Time>
                     <Icon onClick={() => deleteTicket(ticket._id)}>{Delete}</Icon> 
                   </Block> 
-              ))}
+              ))}  */}
             </Wrap>
           </ButtonWrap>
         </Container>}

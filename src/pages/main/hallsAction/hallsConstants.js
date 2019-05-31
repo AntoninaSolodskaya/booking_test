@@ -1,0 +1,1 @@
+export const LOAD_HALLS = "LOAD_HALLS";

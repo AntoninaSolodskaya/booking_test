@@ -39,23 +39,9 @@ class ChartPage extends Component {
         let hallsCounter = [];
 
         this.state.halls.forEach((hall, i) => {
-          hallsCounter[i] = tickets.filter((ticket) => ticket.hall_id === hall._id).length;
+          const filterHalls = tickets.filter((ticket) => ticket.hall_id === hall._id).length;
+          hallsCounter[i] = filterHalls;
         });
-
-
-//         // for (let j = 0; j < this.state.halls.length; j++) {
-//         //   //hallsCounter[j] = 0
-//         //   for (let i = 0; i < tickets.length; i++) {
-//         //     if (tickets[i].hall_id === this.state.halls[j]._id) {
-//         //       hallsCounter[j]++
-//         //       console.log (`hall ${j} `, hallsCounter[j])
-//         //     }
-//         //   } 
-//         //   console.log('hall tickets number', hallsCounter[j])
-//         // }
-
-        console.log('COUNTER', hallsCounter)
-
         this.setState({
           series: [{
             data: hallsCounter
@@ -68,8 +54,6 @@ class ChartPage extends Component {
         console.log("tickets", this.state.tickets.length)
       });;
   };
-
-  
 
   componentDidMount() {
     this.getHallTitle();
