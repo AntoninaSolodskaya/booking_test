@@ -14,7 +14,7 @@ class Main extends Component {
   state = {
     isError: false,
     selectedOption: null,
-    clearable: true,
+    clearable: true
   };                                           
 
   handleChange = (selectedOption) => {
@@ -22,6 +22,7 @@ class Main extends Component {
     console.log(`Option selected:`, selectedOption);
   };
 
+  
   render() {
     const { isError, selectedOption, clearable } = this.state;
     const { halls, loading } = this.props;

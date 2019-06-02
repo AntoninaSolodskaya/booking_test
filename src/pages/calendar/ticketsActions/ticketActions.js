@@ -1,11 +1,13 @@
-import { CREATE_TICKET, DELETE_TICKET, UPDATE_TICKET, LOAD_TICKETS } from './ticketConstants';
+import { LOAD_TICKETS } from './ticketConstants';
 import { asyncActionStart, asyncActionFinish, asyncActionError } from '../../../async/asyncActions';
 import api from '../../../utils/api';
 
 export const fetchTickets = tickets => {
   return {
     type: LOAD_TICKETS,
-    payload: tickets
+    payload: { 
+      tickets 
+    }
   }
 };
 
@@ -36,11 +38,14 @@ export const fetchTickets = tickets => {
 //   }
 // };
 
+
 export const loadAllTickets = () => {
+
   return async dispatch => {
     try {
       dispatch(asyncActionStart())
       let tickets = await api.getTickets()
+    
       dispatch(fetchTickets(tickets))
       dispatch(asyncActionFinish())
     } catch (error) {

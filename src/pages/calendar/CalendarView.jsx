@@ -14,7 +14,8 @@ class CardPageView extends Component {
   render() {
 
     const { 
-      tickets,
+      ticket,
+      fetchTickets,
       deleteTicket,
       handleCreateTicket,
       closeCalendar,
@@ -29,7 +30,7 @@ class CardPageView extends Component {
           <Title>Choose Your Date</Title>     
           <DraggableCalendar
             localizer={localizer}
-            events={tickets}
+            events={fetchTickets}
             defaultView="month"
             titleAccessor="title"
             defaultDate={new Date()}
@@ -43,8 +44,8 @@ class CardPageView extends Component {
           <ButtonWrap>
             <Button onClick={closeCalendar}>Back</Button>
             <Wrap>
-              {/* {tickets 
-                && tickets.filter(tick => tick.user_id === user._id).map((ticket, id) => ( 
+              {fetchTickets 
+                && fetchTickets.filter(tick => tick.user_id === user._id).map((ticket, id) => ( 
                   <Block key={id} >
                     <Time>
                       {moment(ticket.start).format("DD/MM/YY hh:mm:ss")} - 
@@ -52,7 +53,7 @@ class CardPageView extends Component {
                     </Time>
                     <Icon onClick={() => deleteTicket(ticket._id)}>{Delete}</Icon> 
                   </Block> 
-              ))}  */}
+              ))} 
             </Wrap>
           </ButtonWrap>
         </Container>}

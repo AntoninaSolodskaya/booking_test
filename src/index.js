@@ -13,6 +13,7 @@ import * as serviceWorker from './serviceWorker';
 
 const store = configureStore();
 store.dispatch(loadAllHalls());
+store.dispatch(loadAllTickets());
 
 ReactDOM.render(( 
   <Provider store={store}>

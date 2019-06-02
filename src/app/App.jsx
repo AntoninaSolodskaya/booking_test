@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import AppView from './AppView';
 import { logout, login } from '../auth/authActions/authActions';
+
 
 const mapState = state => ({
   auth: state.auth
@@ -20,6 +22,14 @@ class App extends Component {
   handleSignOut = () => {
     this.props.logout();
     localStorage.clear();
+  };
+  
+  componentDidMount() {
+    const user = localStorage.getItem('user');
+
+    if (user) {
+      axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
+    } 
   };
 
   render() {
