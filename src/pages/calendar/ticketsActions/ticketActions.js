@@ -21,11 +21,13 @@ export const postTicket = (ticket) => {
   }
 };
 
-export const updatedTicket = (event) => {
+export const updatedTicket = (ticketId, orderTicket) => {
   return {
     type: UPDATE_TICKET,
     payload: {
-      event
+      ticketId: {
+        ...orderTicket
+      }
     }
   }
 };
@@ -58,10 +60,10 @@ export const createTicket = (ticket) => {
   }
 };
 
-export const updateTicket = (event, orderTicket) => {
+export const updateTicket = (ticketId, orderTicket) => {
   return (dispatch) => {
-    api.changeTicket(event._id, orderTicket)
-    dispatch(updatedTicket(event))
+    api.changeTicket(ticketId, orderTicket)
+    dispatch(updatedTicket(ticketId))
   }
 };
 
@@ -72,6 +74,7 @@ export const deleteTicket = (ticketId) => {
     dispatch(deletedTicket(ticketId))
   }
 }
+
 
 
 export const loadAllTickets = () => {

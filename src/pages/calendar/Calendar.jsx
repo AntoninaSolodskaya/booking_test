@@ -24,15 +24,13 @@ import api from '../../utils/api';
   const actions = {
     deleteTicket,
     createTicket, 
-    updateTicket,
-    loadAllTickets
+    updateTicket
   };
 
 class Calendar extends Component {
 
   state = {
-    isError: false, 
-    event: []
+    isError: false
   };
   
   closeCalendar = () => {
@@ -114,28 +112,21 @@ class Calendar extends Component {
         : existingTicket
     });
 
+    console.log(nextTickets)
+
     const orderTicket = {
       from: new Date(event.start).getTime(),
       to: new Date(event.end).getTime(),
       title: event.title || "room is ordered"
     };
 
-    this.props.updateTicket(orderTicket)
-    // api.changeTicket(event._id, orderTicket)
-    this.setState({
-      event: nextTickets
-    })
-   
-    console.log(this.state.event)
+    this.props.updateTicket(event._id, orderTicket)
+    console.log(event)
   };
 
   deleteTicket = (ticketId) => {
     return this.props.deleteTicket(ticketId);
   };
-
-  componentDidMount() {
-    this.props.loadAllTickets()
-  }
 
   render() {
     const { isError } = this.state;
