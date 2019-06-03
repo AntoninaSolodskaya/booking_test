@@ -8,18 +8,14 @@ export const login = values => {
     dispatch({type: LOGIN_USER,payload: {values}})
     try {
       await api.signIn(values.email, values.password)
-        // .then((user) => {
-        //   localStorage.setItem('user', JSON.stringify(user));
-        //   localStorage.setItem("token", user.token);
-        //   localStorage.setItem("userId", user._id);
-        //   localStorage.setItem('email', values.email);
-        //   history.push('/')
-        // }) 
         .then(user => {
           if (user) {
             localStorage.setItem('user', JSON.stringify(user));
             localStorage.setItem("token", user.token);
             localStorage.setItem('email', values.email);
+            localStorage.setItem("userId", user._id);
+
+            history.push('/')
           }
         })
       } catch (error) {

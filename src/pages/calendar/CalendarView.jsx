@@ -14,7 +14,6 @@ class CardPageView extends Component {
   render() {
 
     const { 
-      ticket,
       fetchTickets,
       deleteTicket,
       handleCreateTicket,
@@ -22,7 +21,7 @@ class CardPageView extends Component {
       resizeTicket,
       isError
     } = this.props; 
-    const user = localStorage.getItem('user')
+    const user = localStorage.getItem('userId');
     return (
       <Fragment>
         {!isError &&
@@ -44,9 +43,9 @@ class CardPageView extends Component {
           <ButtonWrap>
             <Button onClick={closeCalendar}>Back</Button>
             <Wrap>
-              {fetchTickets 
-                && fetchTickets.filter(tick => tick.user_id === user._id).map((ticket, id) => ( 
-                  <Block key={id} >
+              {fetchTickets
+                && fetchTickets.filter(tick => tick.user_id === user).map((ticket, _id) => ( 
+                  <Block key={_id} >
                     <Time>
                       {moment(ticket.start).format("DD/MM/YY hh:mm:ss")} - 
                       {moment(ticket.end).format("DD/MM/YY hh:mm:ss")}
