@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import CalendarView from './CalendarView';
 import moment from 'moment';
 import swal from 'sweetalert';
-import { deleteTicket, createTicket, updateTicket, loadAllTickets } from '../calendar/ticketsActions/ticketActions';
+import { deleteTicket, createTicket, updateTicket } from '../calendar/ticketsActions/ticketActions';
 
 import api from '../../utils/api';
 
@@ -30,7 +30,8 @@ import api from '../../utils/api';
 class Calendar extends Component {
 
   state = {
-    isError: false
+    isError: false,
+    event: this.props.ticket
   };
   
   closeCalendar = () => {
@@ -93,7 +94,6 @@ class Calendar extends Component {
       user_id: user
     };
     this.props.createTicket(newTicket)
-      console.log(this.state.event)
     });
   };
 
@@ -110,18 +110,30 @@ class Calendar extends Component {
       return existingTicket._id === event._id
         ? { ...existingTicket, start, end }
         : existingTicket
+        
     });
+    console.log("id", event._id)
+    console.log("nextEvents", nextTickets)
 
-    console.log(nextTickets)
+    const hallId = this.props.match.params.id;
+    const user = localStorage.getItem('userId');
 
     const orderTicket = {
+      // hall_id: hallId,
       from: new Date(event.start).getTime(),
       to: new Date(event.end).getTime(),
-      title: event.title || "room is ordered"
+      title: event.title || "room is ordered",
+      // user_id: user,
+      // _id: event._id
     };
-
+    
     this.props.updateTicket(event._id, orderTicket)
-    console.log(event)
+    
+    console.log(orderTicket)
+    console.log('events', this.state.event)
+    this.setState({
+      event: nextTickets
+    })
   };
 
   deleteTicket = (ticketId) => {
@@ -131,6 +143,8 @@ class Calendar extends Component {
   render() {
     const { isError } = this.state;
     const { ticket } = this.props;
+    console.log("events", this.state.event)
+   
     const fetchTickets = ticket && ticket.map(ticket => this.formatTicketDate(ticket));
     return (
       <Fragment>

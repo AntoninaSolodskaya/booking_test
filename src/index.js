@@ -6,14 +6,12 @@ import { configureStore } from './store/configureStore';
 import history from '../src/history';
 import './index.css';
 import App from './app/App';
-import { loadAllHalls } from '../src/pages/main/hallsAction/hallsActions';
-import { loadAllTickets } from './pages/calendar/ticketsActions/ticketActions';
+// import { loadAllHalls } from '../src/pages/main/hallsAction/hallsActions';
 
 import * as serviceWorker from './serviceWorker';
 
 const store = configureStore();
-store.dispatch(loadAllHalls());
-store.dispatch(loadAllTickets());
+// store.dispatch(loadAllHalls());
 
 ReactDOM.render(( 
   <Provider store={store}>

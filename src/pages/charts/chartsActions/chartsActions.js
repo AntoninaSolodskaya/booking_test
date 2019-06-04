@@ -1,21 +1,18 @@
-import React, { Component } from "react";
-import { withRouter } from 'react-router-dom';
-import { Wrap, Block } from './styled';
-import Chart from "react-apexcharts";
-import api from "../../utils/api";
+import { LOAD_DATA } from './chartsConstants';
+import { loadAllTickets } from '../../calendar/ticketsActions/ticketActions';
+import { loadAllHalls } from '../../main/hallsAction/hallsActions';
+import api from '../../../utils/api';
 
-class ChartPage extends Component {
- 
-  state = {
-    options: {},
-    series: [{ data: [] }],
-    isLoading: false,
-    tickets: [],
-    halls: [],
-    isDataReady: false
-  };
+export const fetchData = data => {
+  return {
+    type: LOAD_DATA,
+    payload: { 
+      data
+    }
+  }
+};
 
-  getHallTitle = () => {
+export const getChartsData = () => {
     api.getHalls()
       .then(result => {
         this.setState({
@@ -55,30 +52,3 @@ class ChartPage extends Component {
         console.log("tickets", this.state.tickets.length)
       });;
   };
-
-  componentDidMount() {
-    this.getHallTitle();
-  };
-
-  render() {
-    return (
-      <Wrap>
-        <Block>
-          <div className="mixed-chart">
-            {this.state.isDataReady && (
-              <Chart 
-              options={this.state.options}
-              series={this.state.series}
-              type="bar"
-              max-width="900px"
-              min-width="300px"
-            /> 
-            )}  
-          </div>
-        </Block>
-      </Wrap>
-    );
-  }
-};
-
-export default withRouter(ChartPage);

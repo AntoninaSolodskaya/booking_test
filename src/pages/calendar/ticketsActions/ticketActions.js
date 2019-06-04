@@ -25,9 +25,10 @@ export const updatedTicket = (ticketId, orderTicket) => {
   return {
     type: UPDATE_TICKET,
     payload: {
-      ticketId: {
-        ...orderTicket
-      }
+      ticket: {
+        ticketId,
+        orderTicket
+      } 
     }
   }
 };
@@ -63,7 +64,7 @@ export const createTicket = (ticket) => {
 export const updateTicket = (ticketId, orderTicket) => {
   return (dispatch) => {
     api.changeTicket(ticketId, orderTicket)
-    dispatch(updatedTicket(ticketId))
+    dispatch(updatedTicket(ticketId, orderTicket))
   }
 };
 

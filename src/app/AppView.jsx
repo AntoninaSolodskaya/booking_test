@@ -13,8 +13,7 @@ import ChartPage from '../pages/charts/ChartPage';
 class AppView extends Component {
   
   render() {
-    const { isError, auth, isErr, handleSignOut } = this.props;
-    const user = localStorage.getItem('user');
+    const { isError, auth, isErr, handleSignOut, user } = this.props;
     return ( 
       <Fragment>
         <ScrollToTop>
@@ -22,24 +21,27 @@ class AppView extends Component {
             <NavBar handleSignOut={handleSignOut} auth={auth} />
             {!isError && 
               <Container className="main">
-                <Switch>
+                <Switch> 
                   {user ? (  
                     <Fragment>
                       <Route
-                        path='/calendar/:id'
-                        render={(props) => <Calendar {...props} />}
+                        exact path='/calendar/:id'
+                        render={(props) => <Calendar {...props} user={user} />}
                       />
                       <Route 
                         exact path="/"  
-                        component={() => <Main />}
+                        render={(props) => <Main {...props} /> }
+                        // component={(props) => <Main {...props} />}
                       />
                       <Route 
                         exact path="/test" 
-                        component={() => <TestComponent />}
+                        render={(props) => <TestComponent {...props} /> }
+                        // component={() => <TestComponent />}
                       />
                       <Route 
                         exact path="/charts" 
-                        component={() => <ChartPage />}
+                        render={(props) => <ChartPage {...props} /> }
+                        // component={(props) => <ChartPage {...props} />}
                       />
                     </Fragment>   
                   ) : ( 
@@ -54,7 +56,7 @@ class AppView extends Component {
                       /> 
                     </Fragment>  
                   )}   
-                </Switch>
+                </Switch> 
               </Container>}
           </Fragment>
         </ScrollToTop>

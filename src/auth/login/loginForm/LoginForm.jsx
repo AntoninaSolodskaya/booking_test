@@ -67,3 +67,40 @@ import { login } from '../../authActions/authActions';
   };
 
 export default withRouter(connect(null, actions)(reduxForm({ form: 'signIn', validate })(LoginForm)));
+
+
+// import React from 'react';
+// import { connect } from 'react-redux';
+// import { withFormik, Form, Field } from 'formik';
+//  const mapState = (state) => ({
+//    auth: state.auth
+//  })
+//   const App = ({
+//     values,
+//     handleSubmit
+//   }) => (
+    
+//     <Form>
+//       <Field type="email" name="email" placeholder="Email"/>
+//       <Field type="password" name="password" placeholder="Password"/>
+//       <button>Submit</button>
+//     </Form>
+//     )
+//   const LoginForm = withFormik({
+    
+//     mapPropsToValues({ email, password, currentUser, auth}) {
+//       const userEmail = auth.currentUser.email;
+//       const userPassword = auth.currentUser.password;
+//       console.log(userEmail)
+//       return {
+//         email: userEmail || '',
+//         password: userPassword || '',
+//       }
+//   },
+//     handleSubmit(values){
+//     console.log(values)
+   
+//     }
+//   })(App)
+  
+// export default connect(mapState)(LoginForm);

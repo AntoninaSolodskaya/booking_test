@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { incrementCounter, decrementCounter } from './testActions';
 
@@ -25,4 +26,4 @@ class TestComponent extends Component {
   }
 }
 
-export default connect(mapState, actions)(TestComponent);
+export default withRouter(connect(mapState, actions)(TestComponent));

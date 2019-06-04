@@ -4,9 +4,9 @@ import axios from 'axios';
 import AppView from './AppView';
 import { logout, login } from '../auth/authActions/authActions';
 
-
 const mapState = state => ({
-  auth: state.auth
+  auth: state.auth,
+  async: state.loading
 });
 
 const actions = {
@@ -25,8 +25,8 @@ class App extends Component {
   };
   
   componentDidMount() {
-    const user = localStorage.getItem('user');
-
+    const user = localStorage.getItem('user'); 
+    
     if (user) {
       axios.defaults.headers.common['Authorization'] = localStorage.getItem('token');
     } 
@@ -35,14 +35,16 @@ class App extends Component {
   render() {
   const { isError } = this.state;
   const { auth } = this.props;
-  const isErr = auth.isError
- 
+  const isErr = auth.isError;
+  const user = auth.currentUser;
+  console.log(user)
     return (
       <AppView 
         isError={isError} 
         auth={auth}
         isErr={isErr}
         handleSignOut={this.handleSignOut}
+        user={user}
       /> 
     );
   }
