@@ -18,10 +18,22 @@ export const createTicket = (state, payload) => {
 export const updateTicket = (state, payload) => {
  
   return [
-    ...state.filter(ticket => ticket._id !== payload.ticketId),
-    Object.assign({}, payload.orderTicket)
+    ...state.filter(ticket => ticket._id !== payload.ticket._id),
+    Object.assign({}, payload.ticket)
   ]
 };
+
+
+// const testReducer = (state = initialState, action) => {
+//   switch (action.type) {
+//     case INCREMENT_COUNTER:
+//       return { ...state, data: state.data + 1 };
+//     case DECREMENT_COUNTER:
+//       return { ...state, data: state.data - 1 };
+//     default:
+//       return state;
+//   }
+// };
 
 export const deleteTicket = (state, payload) => {
   return [

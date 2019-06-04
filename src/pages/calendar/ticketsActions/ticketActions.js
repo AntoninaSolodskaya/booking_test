@@ -21,17 +21,16 @@ export const postTicket = (ticket) => {
   }
 };
 
-export const updatedTicket = (ticketId, orderTicket) => {
+export const updatedTicket = (ticketId, ticket) => {
   return {
     type: UPDATE_TICKET,
     payload: {
-      ticket: {
-        ticketId,
-        orderTicket
-      } 
+      ticketId,
+      ticket
     }
   }
 };
+
 
 export const deletedTicket = (ticketId) => {
   return {
@@ -46,33 +45,41 @@ export const deletedTicket = (ticketId) => {
 export const createTicket = (ticket) => {
   return (dispatch) => {
     api.addTicket(ticket)
-
-    .catch(error => {
-      if (error.status === 400) {
-        swal({
-          title: "Not you order!",
-          icon: "warning"
-        });
-        return false;
-      }
-      return true;  
-    });  
-    dispatch(postTicket(ticket))
+      .then((newTicket) => {
+        dispatch(postTicket(newTicket))
+      })
+      .catch(error => {
+        if (error.status === 400) {
+          swal({
+            title: "Not you order!",
+            icon: "warning"
+          });
+          return false;
+        }
+        return true;  
+      });  
+    
   }
 };
 
-export const updateTicket = (ticketId, orderTicket) => {
+export const updateTicket = (ticketId, ticket) => {
   return (dispatch) => {
-    api.changeTicket(ticketId, orderTicket)
-    dispatch(updatedTicket(ticketId, orderTicket))
+    api.changeTicket(ticketId, ticket)
+      .then(updateTicket => {
+        dispatch(updatedTicket(updateTicket))
+      })
+    
+    console.log("ticketId", ticketId)
+    console.log("ticketPayload", ticket)
   }
 };
 
 export const deleteTicket = (ticketId) => {
   return (dispatch) => {
     api.deleteTicket(ticketId)
-      
-    dispatch(deletedTicket(ticketId))
+      .then(() => {
+        dispatch(deletedTicket(ticketId))
+      })
   }
 }
 

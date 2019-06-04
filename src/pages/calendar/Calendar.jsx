@@ -94,6 +94,7 @@ class Calendar extends Component {
       user_id: user
     };
     this.props.createTicket(newTicket)
+    console.log('newTicket', newTicket)
     });
   };
 
@@ -115,25 +116,21 @@ class Calendar extends Component {
     console.log("id", event._id)
     console.log("nextEvents", nextTickets)
 
-    const hallId = this.props.match.params.id;
-    const user = localStorage.getItem('userId');
-
     const orderTicket = {
-      // hall_id: hallId,
       from: new Date(event.start).getTime(),
       to: new Date(event.end).getTime(),
       title: event.title || "room is ordered",
-      // user_id: user,
-      // _id: event._id
     };
     
     this.props.updateTicket(event._id, orderTicket)
-    
-    console.log(orderTicket)
-    console.log('events', this.state.event)
+  
     this.setState({
       event: nextTickets
     })
+      
+    console.log(orderTicket)
+    console.log('events', this.state.event)
+    console.log("nextEvents", nextTickets)
   };
 
   deleteTicket = (ticketId) => {
