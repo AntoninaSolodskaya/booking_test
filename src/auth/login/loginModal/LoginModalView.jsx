@@ -4,7 +4,7 @@ import LoginForm from '../loginForm/LoginForm';
 
 class LoginModalView extends Component {
   render() {
-    const { closeModal, isErr } = this.props;
+    const { closeModal } = this.props;
     return (
       <ModalWrap>
         <Modal>
@@ -12,7 +12,7 @@ class LoginModalView extends Component {
             <Button onClick={closeModal}>X</Button>
           </Wrap>
           <Title>Login</Title>
-          <LoginForm isErr={isErr} />
+          <LoginForm  />
         </Modal>
       </ModalWrap>
     );

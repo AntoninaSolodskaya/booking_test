@@ -5,7 +5,7 @@
   "homepage": "https://antoninasolodskaya.github.io/booking_test",
   "dependencies": {
     "apexcharts": "^3.6.12",
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "babel-eslint": "^10.0.1",
     "cuid": "^2.1.6",
     "eslint": "^5.16.0",

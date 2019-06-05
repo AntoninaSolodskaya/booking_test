@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { ModalWrap, Modal, Wrap, Button, Title, Text } from './styled';
+import { ModalWrap, Modal, Wrap, Button, Title } from './styled';
 import RegisterForm from '../registerForm/RegisterForm';
 
 class RegisterFormView extends Component {
   render() {
-    const { closeModal, isRegister, setRegistered } = this.props;
+    const { closeModal } = this.props;
     return (
       <ModalWrap>
         <Modal>
@@ -12,18 +12,11 @@ class RegisterFormView extends Component {
             <Button onClick={closeModal}>X</Button>
           </Wrap>
           <Title>Register</Title>
-          {/* {isRegister ? (
-            <Text>you are registered! Please Log in.</Text>
-          ) : ( */}
-            <RegisterForm 
-              // setRegistered={setRegistered} 
-              // isRegister={isRegister} 
-            />
-         
+            <RegisterForm />
         </Modal>
       </ModalWrap>
-    )
+    );
   }
-}
+};
 
 export default RegisterFormView;

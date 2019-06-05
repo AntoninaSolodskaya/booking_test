@@ -1,6 +1,5 @@
 import { createReducer } from '../../../utils/reducerUtil';
 import { LOAD_TICKETS, CREATE_TICKET, UPDATE_TICKET, DELETE_TICKET } from './ticketConstants';
-import api from '../../../utils/api';
 
 const initialState = []
   
@@ -16,28 +15,15 @@ export const createTicket = (state, payload) => {
 };
 
 export const updateTicket = (state, payload) => {
- 
   return [
-    ...state.filter(ticket => ticket._id !== payload.ticket._id),
-    Object.assign({}, payload.ticket)
+    ...state.filter(ticket => ticket._id !== payload.ticketId),
+    Object.assign({}, payload.ticketId)
   ]
 };
 
-
-// const testReducer = (state = initialState, action) => {
-//   switch (action.type) {
-//     case INCREMENT_COUNTER:
-//       return { ...state, data: state.data + 1 };
-//     case DECREMENT_COUNTER:
-//       return { ...state, data: state.data - 1 };
-//     default:
-//       return state;
-//   }
-// };
-
 export const deleteTicket = (state, payload) => {
   return [
-     ...state.filter(ticket => ticket._id !== payload.ticketId)
+    ...state.filter(ticket => ticket._id !== payload.ticketId)
   ]
 };
 

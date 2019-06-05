@@ -30,7 +30,9 @@ export const Input = styled.input`
 `;
 
 export const Text = styled.p`
-  color: #FF0000
+  display: flex;
+  justify-content: center;
+  color: #FF0000;
 `;
 
 export const ButtonWrap = styled.div`

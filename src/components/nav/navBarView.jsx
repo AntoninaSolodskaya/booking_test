@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { 
   Header,
   Container, 
@@ -14,12 +15,16 @@ import {
   SignSection 
 } from './styled';
 
+const mapState = state => ({
+  auth: state.auth
+});
+
 class NavBarView extends Component {
   render() {
-    const { handleSignOut } = this.props;
-    const email = localStorage.getItem('email')
-    const user = localStorage.getItem('user');
-   
+    const { handleSignOut, auth } = this.props;
+    const email = auth.currentUser;
+    const authenticated = auth.authenticated;
+    
     return (
       <Header>
         <Container>
@@ -36,19 +41,16 @@ class NavBarView extends Component {
                 <StyledLink to="/">Home</StyledLink>
               </List> 
               <List>
-                <StyledLink to="/test">Test</StyledLink>
-              </List> 
-              <List>
                 <StyledLink to="/charts">Charts</StyledLink>
               </List> 
-              {user &&  
+              {authenticated &&   
                 <SignSection>
                   <SpanName style={{marginLeft: "18px"}}>{email}</SpanName> 
                   <List>
                     <StyledLink to="/" onClick={handleSignOut}>Sign Out</StyledLink>
                   </List>  
                 </SignSection>}
-              {!user && 
+              {!authenticated &&  
                 <SignSection>
                   <List>
                     <StyledLink to="/register">Sign Up</StyledLink>
@@ -65,4 +67,4 @@ class NavBarView extends Component {
   }
 };
 
-export default NavBarView;
+export default connect(mapState)(NavBarView);

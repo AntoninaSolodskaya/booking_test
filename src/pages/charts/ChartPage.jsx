@@ -1,8 +1,13 @@
 import React, { Component } from "react";
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Wrap, Block } from './styled';
 import Chart from "react-apexcharts";
-import api from "../../utils/api";
+
+const mapState = state => ({
+  halls: state.halls,
+  tickets: state.tickets
+});
 
 class ChartPage extends Component {
  
@@ -15,49 +20,38 @@ class ChartPage extends Component {
     isDataReady: false
   };
 
-  getHallTitle = () => {
-    api.getHalls()
-      .then(result => {
-        this.setState({
-          options: {
-            chart: {
-              id: result.halls.map(hall => hall._id)
-            },
-            xaxis: {
-              categories: result.halls.map(hall => hall.title)
-            }
-          },
-            halls: result.halls,
-            isLoading: true
-          });  
-        console.log("categories", this.state.options)
-        console.log("halls",this.state.halls)
-      })
-      .then(() => {
-        return api.getTickets()
-      })
-      .then(tickets => {
-        let hallsCounter = [];
+  displayChart = () => {
 
-        this.state.halls.forEach((hall, i) => {
-          const filterHalls = tickets.filter((ticket) => ticket.hall_id === hall._id).length;
-          hallsCounter[i] = filterHalls;
-        });
-        this.setState({
-          series: [{
-            data: hallsCounter
-          }],
-          isLoading: true, 
-          tickets: tickets,
-          isDataReady: true
-        }); 
-        console.log('series', this.state.series)
-        console.log("tickets", this.state.tickets.length)
-      });;
+    const { halls, tickets } = this.props;
+
+    let hallsCounter = [];
+
+    halls.forEach((hall, i) => {
+      const filterHalls = tickets.filter((ticket) => ticket.hall_id === hall._id).length;
+      hallsCounter[i] = filterHalls;
+    });
+
+    this.setState({
+      options: {
+        chart: {
+          id: halls.map(hall => hall._id)
+        },
+        xaxis: {
+          categories: halls.map(hall => hall.title)
+        }
+      },
+      halls: halls,
+      isLoading: true,
+      series: [{
+        data: hallsCounter
+      }],
+      tickets: tickets,
+      isDataReady: true
+    });  
   };
 
   componentDidMount() {
-    this.getHallTitle();
+    this.displayChart();
   };
 
   render() {
@@ -67,12 +61,12 @@ class ChartPage extends Component {
           <div className="mixed-chart">
             {this.state.isDataReady && (
               <Chart 
-              options={this.state.options}
-              series={this.state.series}
-              type="bar"
-              max-width="900px"
-              min-width="300px"
-            /> 
+                options={this.state.options}
+                series={this.state.series}
+                type="bar"
+                max-width="900px"
+                min-width="300px"
+              /> 
             )}  
           </div>
         </Block>
@@ -81,4 +75,4 @@ class ChartPage extends Component {
   }
 };
 
-export default withRouter(ChartPage);
+export default withRouter(connect(mapState)(ChartPage));

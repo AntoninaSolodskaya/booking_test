@@ -1,8 +1,8 @@
 import { createReducer } from '../../utils/reducerUtil';
-import { LOGIN_USER, SIGN_OUT_USER } from './authConstants';
+import { LOGIN_USER, SIGN_OUT_USER, LOGIN_ERROR } from './authConstants';
 
 const initialState = {
-  currentUser: {}
+  currentUser: null
 };
 
 export const loginUser = (state, payload) => {
@@ -14,15 +14,26 @@ export const loginUser = (state, payload) => {
   }
 };
 
+export const loginError = (state, payload) => {
+  return {
+    ...state,
+    authenticated: false,
+    currentUser: null,
+    isErr: true
+  }
+};
+
 export const signOutUser = (state, payload) => {
   return {
     ...state,
     authenticated: false,
-    currentUser: null
+    currentUser: null,
+    isErr: false
   }
 };
 
 export default createReducer(initialState, {
   [LOGIN_USER]: loginUser,
+  [LOGIN_ERROR]: loginError,
   [SIGN_OUT_USER]: signOutUser
 });

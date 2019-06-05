@@ -5,8 +5,6 @@ import moment from 'moment';
 import swal from 'sweetalert';
 import { deleteTicket, createTicket, updateTicket } from '../calendar/ticketsActions/ticketActions';
 
-import api from '../../utils/api';
-
   const mapState = (state, ownProps) => {
 
     const ticketId = ownProps.match.params.id;
@@ -30,8 +28,7 @@ import api from '../../utils/api';
 class Calendar extends Component {
 
   state = {
-    isError: false,
-    event: this.props.ticket
+    isError: false
   };
   
   closeCalendar = () => {
@@ -94,7 +91,6 @@ class Calendar extends Component {
       user_id: user
     };
     this.props.createTicket(newTicket)
-    console.log('newTicket', newTicket)
     });
   };
 
@@ -107,30 +103,12 @@ class Calendar extends Component {
       return 
     };
 
-    const nextTickets = this.props.ticket.map(existingTicket => {
-      return existingTicket._id === event._id
-        ? { ...existingTicket, start, end }
-        : existingTicket
-        
-    });
-    console.log("id", event._id)
-    console.log("nextEvents", nextTickets)
-
     const orderTicket = {
-      from: new Date(event.start).getTime(),
-      to: new Date(event.end).getTime(),
+      from: new Date(start).getTime(),
+      to: new Date(end).getTime(),
       title: event.title || "room is ordered",
     };
-    
-    this.props.updateTicket(event._id, orderTicket)
-  
-    this.setState({
-      event: nextTickets
-    })
-      
-    console.log(orderTicket)
-    console.log('events', this.state.event)
-    console.log("nextEvents", nextTickets)
+    return this.props.updateTicket(event._id, orderTicket)
   };
 
   deleteTicket = (ticketId) => {
@@ -140,13 +118,11 @@ class Calendar extends Component {
   render() {
     const { isError } = this.state;
     const { ticket } = this.props;
-    console.log("events", this.state.event)
    
     const fetchTickets = ticket && ticket.map(ticket => this.formatTicketDate(ticket));
     return (
       <Fragment>
         <CalendarView 
-          ticket={ticket} 
           fetchTickets={fetchTickets}
           deleteTicket={this.deleteTicket} 
           handleCreateTicket={this.handleCreateTicket}

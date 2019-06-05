@@ -14,12 +14,11 @@ class LoginModal extends React.Component {
 
   render() {
     const { isOpen } = this.state;
-    const { isErr } = this.props;
+    
     return (
       <LoginModalView 
         isOpen={isOpen} 
         closeModal={this.closeModal} 
-        isErr={isErr}
       />
     );
   }

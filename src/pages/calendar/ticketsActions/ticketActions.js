@@ -1,5 +1,6 @@
 import { LOAD_TICKETS, CREATE_TICKET, UPDATE_TICKET, DELETE_TICKET } from './ticketConstants';
 import { asyncActionStart, asyncActionFinish, asyncActionError } from '../../../async/asyncActions';
+import moment from 'moment';
 import api from '../../../utils/api';
 import swal from 'sweetalert';
 
@@ -25,7 +26,7 @@ export const updatedTicket = (ticketId, ticket) => {
   return {
     type: UPDATE_TICKET,
     payload: {
-      ticketId,
+      ticketId, 
       ticket
     }
   }
@@ -40,7 +41,6 @@ export const deletedTicket = (ticketId) => {
     }
   }
 };
-
 
 export const createTicket = (ticket) => {
   return (dispatch) => {
@@ -58,19 +58,16 @@ export const createTicket = (ticket) => {
         }
         return true;  
       });  
-    
+      console.log("createTicket", ticket)
   }
 };
 
 export const updateTicket = (ticketId, ticket) => {
   return (dispatch) => {
     api.changeTicket(ticketId, ticket)
-      .then(updateTicket => {
+      .then((updateTicket) => {
         dispatch(updatedTicket(updateTicket))
-      })
-    
-    console.log("ticketId", ticketId)
-    console.log("ticketPayload", ticket)
+      });
   }
 };
 
@@ -79,10 +76,9 @@ export const deleteTicket = (ticketId) => {
     api.deleteTicket(ticketId)
       .then(() => {
         dispatch(deletedTicket(ticketId))
-      })
+      });
   }
-}
-
+};
 
 
 export const loadAllTickets = () => {
@@ -90,12 +86,12 @@ export const loadAllTickets = () => {
   return async dispatch => {
     try {
       dispatch(asyncActionStart())
-      let tickets = await api.getTickets()
-           
-      dispatch(fetchTickets(tickets))
+      await api.getTickets()
+        .then(tickets => {
+          dispatch(fetchTickets(tickets))
+        })
       dispatch(asyncActionFinish())
     } catch (error) {
-      console.log(error);
       dispatch(asyncActionError());
     }
   }
