@@ -63,12 +63,12 @@ export const updateTicket = (ticket, ticketId) => {
   return (dispatch) => {
     api.changeTicket(ticket, ticketId)
       .then((orderTicket) => {
-        dispatch(updatedTicket(orderTicket))
+        dispatch(updatedTicket(orderTicket[0]))
         console.log("orderedTicket", orderTicket)
-    api.getTickets()   
-     .then(tickets => {
-        dispatch(fetchTickets(tickets))
-      }) 
+    // api.getTickets()   
+    //  .then(tickets => {
+    //     dispatch(fetchTickets(tickets))
+    //   }) 
     })
   }
 };

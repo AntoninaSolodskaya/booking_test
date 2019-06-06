@@ -16,8 +16,9 @@ export const createTicket = (state, payload) => {
 
 export const updateTicket = (state, payload) => {
   return [
-    ...state.filter(ticket => ticket._id !== payload.ticket),
-    Object.assign({}, payload.ticket),
+    ...state.filter(ticket => ticket._id !== payload.ticket._id),
+    // Object.assign({}, payload.ticket),
+    payload.ticket
   ]
 };
 
