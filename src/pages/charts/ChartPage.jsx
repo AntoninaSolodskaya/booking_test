@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Wrap, Block } from './styled';
 import Chart from "react-apexcharts";
+import DonutChart from './DonutChart';
+import LineChart from './LineChart';
 
 const mapState = state => ({
   halls: state.halls,
@@ -17,7 +19,7 @@ class ChartPage extends Component {
     isLoading: false,
     tickets: [],
     halls: [],
-    isDataReady: false
+    isDataReady: false,
   };
 
   displayChart = () => {
@@ -69,6 +71,8 @@ class ChartPage extends Component {
               /> 
             )}  
           </div>
+          <DonutChart />
+          <LineChart />
         </Block>
       </Wrap>
     );

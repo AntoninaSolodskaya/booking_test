@@ -1,6 +1,5 @@
 import { LOAD_TICKETS, CREATE_TICKET, UPDATE_TICKET, DELETE_TICKET } from './ticketConstants';
 import { asyncActionStart, asyncActionFinish, asyncActionError } from '../../../async/asyncActions';
-import moment from 'moment';
 import api from '../../../utils/api';
 import swal from 'sweetalert';
 
@@ -22,13 +21,12 @@ export const postTicket = (ticket) => {
   }
 };
 
-export const updatedTicket = (ticketId, ticket) => {
+export const updatedTicket = (ticket) => {
   return {
     type: UPDATE_TICKET,
     payload: {
-      ticketId, 
       ticket
-    }
+    }  
   }
 };
 
@@ -58,16 +56,20 @@ export const createTicket = (ticket) => {
         }
         return true;  
       });  
-      console.log("createTicket", ticket)
   }
 };
 
-export const updateTicket = (ticketId, ticket) => {
+export const updateTicket = (ticket, ticketId) => {
   return (dispatch) => {
-    api.changeTicket(ticketId, ticket)
-      .then((updateTicket) => {
-        dispatch(updatedTicket(updateTicket))
-      });
+    api.changeTicket(ticket, ticketId)
+      .then((orderTicket) => {
+        dispatch(updatedTicket(orderTicket))
+        console.log("orderedTicket", orderTicket)
+    api.getTickets()   
+     .then(tickets => {
+        dispatch(fetchTickets(tickets))
+      }) 
+    })
   }
 };
 

@@ -95,6 +95,7 @@ class Calendar extends Component {
   };
 
   resizeTicket = ({ event, start, end }) => {
+   
     if(this.isOldDate(start)) {
       return;
     };

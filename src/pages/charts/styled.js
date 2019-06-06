@@ -2,8 +2,14 @@ import styled from 'styled-components';
 
 export const Wrap = styled.div`
   display: flex;
-  justifyContent: center;
+  justify-content: center;
+  flex-direction: column;
   margin-top: 50px;
+`;
+
+export const Section = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 export const Block = styled.div`

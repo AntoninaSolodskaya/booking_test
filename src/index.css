@@ -87,7 +87,3 @@ input{
     min-width: 350px;
   }
 
-  .my-cool-select-top .Select-menu-outer {
-    top: auto;
-    bottom: 100%;
-  }

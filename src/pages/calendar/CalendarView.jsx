@@ -33,8 +33,8 @@ class CardPageView extends Component {
             defaultView="month"
             titleAccessor="title"
             defaultDate={new Date()}
-            onEventResize={event => resizeTicket(event)}
-            onEventDrop={event => resizeTicket(event)}
+            onEventResize={(event) => resizeTicket(event)}
+            onEventDrop={(event) => resizeTicket(event)}
             onSelectSlot={(ticket) => handleCreateTicket(ticket)}
             resizable
             selectable
