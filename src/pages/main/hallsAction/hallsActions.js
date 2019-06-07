@@ -10,7 +10,6 @@ export const fetchHalls = halls => {
 };
 
 export const loadAllHalls = () => {
-
   return async dispatch => {
     try {
       dispatch(asyncActionStart())

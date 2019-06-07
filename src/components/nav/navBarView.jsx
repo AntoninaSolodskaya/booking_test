@@ -21,6 +21,7 @@ const mapState = state => ({
 
 class NavBarView extends Component {
   render() {
+    
     const { handleSignOut, auth } = this.props;
     const email = auth.currentUser;
     const authenticated = auth.authenticated;

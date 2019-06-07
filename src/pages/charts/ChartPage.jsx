@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Wrap, Block } from './styled';
 import Chart from "react-apexcharts";
-import DonutChart from './DonutChart';
 import LineChart from './LineChart';
 
 const mapState = state => ({
@@ -71,7 +70,6 @@ class ChartPage extends Component {
               /> 
             )}  
           </div>
-          <DonutChart />
           <LineChart />
         </Block>
       </Wrap>

@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { Container, Text } from './styled';
 import NavBar from '../components/nav/NavBar';

@@ -5,11 +5,10 @@ export const Block = styled.div`
   height: 100%;
 `;
 
-export const Container = styled.div`
-  display: flex;
+export const Container = styled(Block)`
   flex-direction: column;
   justify-content: center;
-  height: 100%;
+ 
 `;
 
 export const Form = styled.form`

@@ -22,6 +22,7 @@ class CardPageView extends Component {
       isError
     } = this.props; 
     const user = localStorage.getItem('userId');
+    
     return (
       <Fragment>
         {!isError &&

@@ -50,11 +50,8 @@ export const Title = styled.p`
   font-size: 20px;
 `;
 
-export const Content = styled.p`
-  display: flex;
-  justify-content: center;
+export const Content = styled(Title)`
   padding: 5px 20px;
-  color: #ffffff;
   font-size: 10px;
   line-height: 20px;
 `;
@@ -77,12 +74,12 @@ export const ImgWrap = styled.div`
 export const Img = styled.img`
   display: block;
   height: 100%;
-  min-width: 100%;
+  width: 100%;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   vertical-align: middle;
   transition: all 0.5s ease-in-out;
-  :hover {
+    :hover {
     -webkit-transform: scale(1.05);
     -ms-transform: scale(1.05);
     transform: scale(1.05);

@@ -9,12 +9,13 @@ class MainView extends Component {
         <Section>
           {selectedOption && selectedOption.map((room, index) => (
             <CardBlock 
+            
               to={`/calendar/${room.value}`} 
               key={index} 
               room={room}
             >
               <ImgWrap>
-                <Img src={room.imageUrl} />
+                <Img style={{ background: `url(${room.imageUrl})no-repeat center/cover` }} />
               </ImgWrap> 
               <Title>{room.label}</Title>
               <Content>{room.description}</Content>

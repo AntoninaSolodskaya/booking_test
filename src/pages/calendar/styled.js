@@ -48,17 +48,8 @@ export const Button = styled.button`
   outline: none;
 `;
 
-export const Icon = styled.button`
-  justify-content: center;
-  display: flex
+export const Icon = styled(Button)`
   background-color: initial;
-  color: #ffffff;
-  border-radius: 5px;
-  border: none;
-  max-width: 100px;
-  max-height: 35px;
-  font-size: 20px;
-  outline: none;
   @media(max-width: 850px) {
     margin-bottom: 15px;
   }
@@ -83,20 +74,24 @@ export const Time = styled.p`
   font-size: 16px;
   padding: 10px 20px;
   color: #00CED1;
+  @media(max-width: 450px) {
+    padding: 0;
+  }
 `;
 
-export const Block = styled.div`
-  display: flex;
+export const Block = styled(ButtonWrap)`
   flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: center; 
   padding: 10px 20px;
   @media(max-width: 850px) {
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    flex-direction: row;
+    margin: 0;
   }
   @media(max-width: 450px) {
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    flex-direction: row;
+    margin: 0;
   }
 `;

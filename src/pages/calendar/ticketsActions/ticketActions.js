@@ -64,11 +64,6 @@ export const updateTicket = (ticket, ticketId) => {
     api.changeTicket(ticket, ticketId)
       .then((orderTicket) => {
         dispatch(updatedTicket(orderTicket[0]))
-        console.log("orderedTicket", orderTicket)
-    // api.getTickets()   
-    //  .then(tickets => {
-    //     dispatch(fetchTickets(tickets))
-    //   }) 
     })
   }
 };
@@ -84,7 +79,6 @@ export const deleteTicket = (ticketId) => {
 
 
 export const loadAllTickets = () => {
-
   return async dispatch => {
     try {
       dispatch(asyncActionStart())

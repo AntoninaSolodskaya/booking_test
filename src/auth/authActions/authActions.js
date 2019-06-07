@@ -27,7 +27,6 @@ export const login = values => {
     }
 };
 
-
 export const register = values => {
   return async (dispatch) => {
     dispatch({type: REGISTER_USER,payload: {values}})
