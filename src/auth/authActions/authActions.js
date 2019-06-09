@@ -15,7 +15,7 @@ export const login = values => {
             localStorage.setItem('email', values.email);
             localStorage.setItem("userId", user._id);
 
-            history.push('/')
+            history.goBack();
           }
         })
       } catch (error) {

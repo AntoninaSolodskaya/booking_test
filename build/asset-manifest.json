@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/booking_test/static/css/main.fe3fc510.chunk.css",
+    "main.js": "/booking_test/static/js/main.809b3ac7.chunk.js",
+    "main.js.map": "/booking_test/static/js/main.809b3ac7.chunk.js.map",
+    "runtime~main.js": "/booking_test/static/js/runtime~main.ce44fa32.js",
+    "runtime~main.js.map": "/booking_test/static/js/runtime~main.ce44fa32.js.map",
+    "static/css/2.a14de827.chunk.css": "/booking_test/static/css/2.a14de827.chunk.css",
+    "static/js/2.ae39cdf8.chunk.js": "/booking_test/static/js/2.ae39cdf8.chunk.js",
+    "static/js/2.ae39cdf8.chunk.js.map": "/booking_test/static/js/2.ae39cdf8.chunk.js.map",
+    "index.html": "/booking_test/index.html",
+    "precache-manifest.f6a1053fa25f9885b64590f4190987b9.js": "/booking_test/precache-manifest.f6a1053fa25f9885b64590f4190987b9.js",
+    "service-worker.js": "/booking_test/service-worker.js",
+    "static/css/2.a14de827.chunk.css.map": "/booking_test/static/css/2.a14de827.chunk.css.map",
+    "static/css/main.fe3fc510.chunk.css.map": "/booking_test/static/css/main.fe3fc510.chunk.css.map"
+  }
+}
