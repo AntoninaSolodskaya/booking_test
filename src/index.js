@@ -13,7 +13,7 @@ const store = configureStore();
 
 ReactDOM.render(( 
   <Provider store={store}>
-    <HashRouter basename='/booking_test/' history={history}>
+    <HashRouter basename='/' history={history}>
       <App /> 
     </HashRouter>
   </Provider>
