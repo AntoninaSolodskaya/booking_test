@@ -39,25 +39,25 @@ class NavBarView extends Component {
             </Label>
             <NavList>
               <List>
-                <StyledLink to="/booking_test/">Home</StyledLink>
+                <StyledLink to="/">Home</StyledLink>
               </List> 
               <List>
-                <StyledLink to="/booking_test/charts">Charts</StyledLink>
+                <StyledLink to="/charts">Charts</StyledLink>
               </List> 
               {authenticated &&   
                 <SignSection>
                   <SpanName style={{marginLeft: "18px"}}>{email}</SpanName> 
                   <List>
-                    <StyledLink to="/booking_test/" onClick={handleSignOut}>Sign Out</StyledLink>
+                    <StyledLink to="/" onClick={handleSignOut}>Sign Out</StyledLink>
                   </List>  
                 </SignSection>}
               {!authenticated &&  
                 <SignSection>
                   <List>
-                    <StyledLink to="/booking_test/register">Sign Up</StyledLink>
+                    <StyledLink to="/register">Sign Up</StyledLink>
                   </List>   
                   <List>
-                    <StyledLink to="/booking_test/login">Sign In</StyledLink>
+                    <StyledLink to="/login">Sign In</StyledLink>
                   </List>  
                 </SignSection>}
             </NavList>

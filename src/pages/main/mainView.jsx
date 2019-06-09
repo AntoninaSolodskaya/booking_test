@@ -10,7 +10,7 @@ class MainView extends Component {
           {selectedOption && selectedOption.map((room, index) => (
             <CardBlock 
             
-              to={`/booking_test/calendar/${room.value}`} 
+              to={`/calendar/${room.value}`} 
               key={index} 
               room={room}
             >

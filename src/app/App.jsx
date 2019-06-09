@@ -63,26 +63,26 @@ class App extends Component {
                   {authenticated ? ( 
                     <Fragment>
                       <Route
-                        exact path='/booking_test/calendar/:id'
+                        exact path='/calendar/:id'
                         render={(props) => <Calendar {...props} />}
                       />
                       <Route 
-                        exact path="/booking_test/"  
+                        exact path="/"  
                         render={(props) => <Main {...props} /> } 
                       />
                       <Route 
-                        exact path="/booking_test/charts" 
+                        exact path="/charts" 
                         render={(props) => <ChartPage {...props} /> }
                       />
                     </Fragment>   
                    ) : (  
                     <Fragment> 
                       <Route
-                        exact path='/booking_test/login'
+                        exact path='/login'
                         render={(props) => <LoginModal {...props} /> }
                       />  
                       <Route 
-                        exact path="/booking_test/register"
+                        exact path="/register"
                         render={(props) => <RegisterModal {...props} /> }       
                       /> 
                     </Fragment>  

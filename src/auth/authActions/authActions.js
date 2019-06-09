@@ -15,7 +15,7 @@ export const login = values => {
             localStorage.setItem('email', values.email);
             localStorage.setItem("userId", user._id);
 
-            history.push('/booking_test/')
+            history.push('/')
           }
         })
       } catch (error) {
@@ -34,7 +34,7 @@ export const register = values => {
       await api.signUp(values.email, values.password)
         .then((user) => {
           localStorage.setItem('email', user.email);
-          history.push('/booking_test/login')
+          history.push('/login')
         })  
     } catch (error) {
       console.log(error);
