@@ -15,7 +15,7 @@ export const login = values => {
             localStorage.setItem('email', values.email);
             localStorage.setItem("userId", user._id);
 
-            history.push('/')
+            history.push('/booking_test/')
           }
         })
       } catch (error) {
@@ -34,7 +34,7 @@ export const register = values => {
       await api.signUp(values.email, values.password)
         .then((user) => {
           localStorage.setItem('email', user.email);
-          history.push('/login')
+          history.push('/booking_test/login')
         })  
     } catch (error) {
       console.log(error);
@@ -42,7 +42,7 @@ export const register = values => {
   }
 };
 
-export const logout = () => {
+export const logout = () => { 
   return {
     type: SIGN_OUT_USER
   }
