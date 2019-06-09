@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router } from 'react-router';
+import { HashRouter, Router } from 'react-router';
 import { Provider } from 'react-redux';
 import { configureStore } from './store/configureStore';
 import history from '../src/history';
@@ -13,9 +13,11 @@ const store = configureStore();
 
 ReactDOM.render(( 
   <Provider store={store}>
-    <Router history={history}>
+    <HashRouter basename='/booking_test/' history={history}>
+    {/* <Router history={history} > */}
       <App /> 
-    </Router> 
+    {/* </Router>  */}
+    </HashRouter>
   </Provider>
 ), document.getElementById('root'))
 
