@@ -74,7 +74,7 @@ class App extends Component {
                         exact path="/charts" 
                         render={(props) => <ChartPage {...props} /> }
                       />
-                    </Fragment>   
+                    </Fragment>  
                    ) : (  
                     <Fragment> 
                       <Route
@@ -82,7 +82,7 @@ class App extends Component {
                         render={(props) => <LoginModal {...props} /> }
                       />  
                       <Route 
-                        exact path="/register"
+                        path='/register'
                         render={(props) => <RegisterModal {...props} /> }       
                       /> 
                     </Fragment>  

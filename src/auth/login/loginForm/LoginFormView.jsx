@@ -29,7 +29,7 @@ class LoginFormView extends Component {
                 onChange={handleChange}
               />
               {submitted && !email && 
-                 <Text>Please enter your email</Text>
+                <Text>Please enter your email</Text>
               }
             </Section>
             <Section  className={'form-group' + (submitted && !password ? ' has-error' : '')}>

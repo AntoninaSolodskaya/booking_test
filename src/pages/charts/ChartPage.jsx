@@ -16,8 +16,6 @@ class ChartPage extends Component {
     options: {},
     series: [{ data: [] }],
     isLoading: false,
-    tickets: [],
-    halls: [],
     isDataReady: false,
   };
 
@@ -40,13 +38,11 @@ class ChartPage extends Component {
         xaxis: {
           categories: halls.map(hall => hall.title)
         }
-      },
-      halls: halls,
+      },  
       isLoading: true,
       series: [{
         data: hallsCounter
       }],
-      tickets: tickets,
       isDataReady: true
     });  
   };

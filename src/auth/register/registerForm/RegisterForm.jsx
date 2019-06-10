@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router';
 import { Block, Form, Container, Button, ButtonWrap } from './styled';
 import { Field, reduxForm } from 'redux-form';
 import { customInput } from '../CustomInput';
@@ -61,4 +60,4 @@ import { register } from '../../authActions/authActions';
   }
 };
 
-export default withRouter(connect(null, actions)(reduxForm({ form: 'signUp', validate })(RegisterForm)));
+export default connect(null,actions)(reduxForm({ form: 'signUp', validate })(RegisterForm));

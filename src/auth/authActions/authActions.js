@@ -34,7 +34,8 @@ export const register = values => {
       await api.signUp(values.email, values.password)
         .then((user) => {
           localStorage.setItem('email', user.email);
-          history.push('/login')
+          history.goBack();
+
         })  
     } catch (error) {
       console.log(error);
