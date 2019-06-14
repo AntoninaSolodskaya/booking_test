@@ -2,7 +2,7 @@ import { createReducer } from '../../../utils/reducerUtil';
 import { LOAD_TICKETS, CREATE_TICKET, UPDATE_TICKET, DELETE_TICKET } from './ticketConstants';
 
 const initialState = []
-  
+
 export const loadTickets = (state, payload) => {
   return payload.tickets
 };

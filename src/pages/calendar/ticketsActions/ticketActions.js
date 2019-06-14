@@ -6,13 +6,13 @@ import swal from 'sweetalert';
 export const fetchTickets = tickets => {
   return {
     type: LOAD_TICKETS,
-    payload: { 
-      tickets 
+    payload: {
+      tickets
     }
   }
 };
 
-export const postTicket = (ticket) => {
+export const postTicket = ticket => {
   return {
     type: CREATE_TICKET,
     payload: {
@@ -21,17 +21,17 @@ export const postTicket = (ticket) => {
   }
 };
 
-export const updatedTicket = (ticket) => {
+export const updatedTicket = ticket => {
   return {
     type: UPDATE_TICKET,
     payload: {
       ticket
-    }  
+    }
   }
 };
 
 
-export const deletedTicket = (ticketId) => {
+export const deletedTicket = ticketId => {
   return {
     type: DELETE_TICKET,
     payload: {
@@ -40,7 +40,7 @@ export const deletedTicket = (ticketId) => {
   }
 };
 
-export const createTicket = (ticket) => {
+export const createTicket = ticket => {
   return (dispatch) => {
     api.addTicket(ticket)
       .then((newTicket) => {
@@ -54,8 +54,8 @@ export const createTicket = (ticket) => {
           });
           return false;
         }
-        return true;  
-      });  
+        return true;
+      });
   }
 };
 
@@ -64,11 +64,11 @@ export const updateTicket = (ticket, ticketId) => {
     api.changeTicket(ticket, ticketId)
       .then((orderTicket) => {
         dispatch(updatedTicket(orderTicket[0]))
-    })
+      })
   }
 };
 
-export const deleteTicket = (ticketId) => {
+export const deleteTicket = ticketId => {
   return (dispatch) => {
     api.deleteTicket(ticketId)
       .then(() => {
