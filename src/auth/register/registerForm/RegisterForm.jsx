@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Block, Form, Container, Button, ButtonWrap } from './styled';
+import { Block, Form, Container, Button, ButtonWrap, Text } from './styled';
 import { Field, reduxForm } from 'redux-form';
 import { customInput } from '../CustomInput';
 import { register } from '../../authActions/authActions';
+
+  const mapState = state => ({
+    auth: state.auth
+  });
 
   const actions = {
     register
@@ -31,7 +35,8 @@ import { register } from '../../authActions/authActions';
  class RegisterForm extends Component {
 
   render() {
-    const { register, pristine, handleSubmit, submitting } = this.props;
+    const { register, pristine, handleSubmit, submitting, auth } = this.props;
+    const isErr = auth.isErr
     return (
       <Block>
         <Form onSubmit={handleSubmit(register)}>
@@ -50,6 +55,9 @@ import { register } from '../../authActions/authActions';
               placeholder="Password"
               component={customInput}
             />
+            {isErr &&
+              <Text>It's password or email already exists</Text>
+            }  
             <ButtonWrap>
               <Button type="submit" disabled={pristine || submitting}>Register</Button>
             </ButtonWrap>
@@ -60,4 +68,4 @@ import { register } from '../../authActions/authActions';
   }
 };
 
-export default connect(null,actions)(reduxForm({ form: 'signUp', validate })(RegisterForm));
+export default connect(mapState,actions)(reduxForm({ form: 'signUp', validate })(RegisterForm));

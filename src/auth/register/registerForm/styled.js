@@ -50,6 +50,12 @@ export const ErrorMessage = styled.span`
   marginTop: 5px;
 `;
 
+export const Text = styled.p`
+  display: flex;
+  justify-content: center;
+  color: #FF0000;
+`;
+
 export const Form = styled.form`
   display: flex;
   flex-direction: column;

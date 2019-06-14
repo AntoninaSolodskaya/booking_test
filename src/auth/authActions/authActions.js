@@ -1,5 +1,5 @@
 import history from '../../history';
-import { REGISTER_USER, LOGIN_USER, LOGIN_ERROR, SIGN_OUT_USER } from './authConstants';
+import { REGISTER_USER, LOGIN_USER, LOGIN_ERROR, REGISTER_ERROR, SIGN_OUT_USER } from './authConstants';
 
 import api from '../../utils/api';
 
@@ -39,6 +39,9 @@ export const register = values => {
         })  
     } catch (error) {
       console.log(error);
+      if (error.status === 500) {
+        dispatch({type: REGISTER_ERROR})
+      } 
     } 
   }
 };
