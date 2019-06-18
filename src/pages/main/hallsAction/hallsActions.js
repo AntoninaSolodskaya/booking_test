@@ -1,6 +1,6 @@
 import { LOAD_HALLS } from './hallsConstants';
 import { asyncActionStart, asyncActionFinish, asyncActionError } from '../../../async/asyncActions';
-import api from '../../../utils/api';
+import instance from '../../../utils/api';
 
 export const fetchHalls = halls => {
   return {
@@ -13,7 +13,7 @@ export const loadAllHalls = () => {
   return async dispatch => {
     try {
       dispatch(asyncActionStart())
-      await api.getHalls()
+      await instance.get(`halls`)
         .then(halls => {
           dispatch(fetchHalls(halls))
         })

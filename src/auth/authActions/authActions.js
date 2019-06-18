@@ -7,22 +7,23 @@ import {
   SIGN_OUT_USER
 } from "./authConstants";
 
-import api from "../../utils/api";
+import instance from "../../utils/api";
 
 export const login = values => {
   return async dispatch => {
     dispatch({ type: LOGIN_USER, payload: { values } });
     try {
-      await api.signIn(values.email, values.password).then(user => {
-        if (user) {
-          localStorage.setItem("user", JSON.stringify(user));
-          localStorage.setItem("token", user.token);
-          localStorage.setItem("email", values.email);
-          localStorage.setItem("userId", user._id);
+      await instance.post(`/signIn`, values)
+        .then(user => {
+          if (user) {
+            localStorage.setItem("user", JSON.stringify(user));
+            localStorage.setItem("token", user.token);
+            localStorage.setItem("email", values.email);
+            localStorage.setItem("userId", user._id);
 
-          history.goBack();
-        }
-      });
+            history.goBack();
+          }
+        });
     } catch (error) {
       console.log(error);
       if (error.data.message === "Incorrect password or email") {
@@ -36,10 +37,11 @@ export const register = values => {
   return async dispatch => {
     dispatch({ type: REGISTER_USER, payload: { values } });
     try {
-      await api.signUp(values.email, values.password).then(user => {
-        localStorage.setItem("email", user.email);
-        history.goBack();
-      });
+      await instance.post(`/signUp`, values)
+        .then(user => {
+          localStorage.setItem("email", user.email);
+          history.goBack();
+        });
     } catch (error) {
       console.log(error);
       if (error.status === 500) {

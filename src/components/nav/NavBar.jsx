@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import NavBarView from './navBarView';
 
 class NavBar extends Component {

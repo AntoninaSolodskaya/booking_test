@@ -1,6 +1,12 @@
 import axios from 'axios';
 
-axios.interceptors.response.use((response) => {
+const instance = axios.create({
+  baseURL: 'https://web-ninjas.net/'
+});
+
+instance.defaults.headers.common['Authorization'] = localStorage.getItem("token")
+
+instance.interceptors.response.use((response) => {
   return (response.data ? response.data : response);
 }, (error) => {
   const res = error.response;
@@ -14,25 +20,4 @@ axios.interceptors.response.use((response) => {
   return Promise.reject(res);
 });
 
-const endpoint = 'https://web-ninjas.net/';
-
-const api = {
-  
-  signIn: (email, password) => axios.post(`${endpoint}signIn`, { email, password }),
-
-  signUp: (email, password) => axios.post(`${endpoint}signUp`, { email, password }),
-
-  getHalls: () => axios.get(`${endpoint}halls`),
-
-  getTickets: () => axios.get(`${endpoint}tickets`),
-
-  addTicket: (newTicket) => axios.post(`${endpoint}tickets`, newTicket),
-
-  changeTicket: (ticketId, orderTicket) => axios.put(`${endpoint}ticket/${ticketId}`, orderTicket),
-
-  deleteTicket: (ticketId) => axios.delete(`${endpoint}tickets/${ticketId}`),
-
-  getTimeTicket: (from, to) => axios.get(`${endpoint}ticketsparams/${from}/${to}`)
-};
-
-export default api;
+export default instance;

@@ -23,7 +23,7 @@ class ChartPage extends Component {
 
     let hallsCounter = [];
 
-    halls.forEach((hall, i) => {
+    halls.map((hall, i) => {
       const filterHalls = tickets.filter(ticket => ticket.hall_id === hall._id)
         .length;
       hallsCounter[i] = filterHalls;

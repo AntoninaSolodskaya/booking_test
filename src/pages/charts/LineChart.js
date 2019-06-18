@@ -48,32 +48,29 @@ class LineChart extends Component {
     }]
   };
 
-  displayChart = (monthIndex) => {
+  displayChart = monthIndex => {
 
     const { halls, tickets } = this.props;
     let hallsCounter = [];
     let monthes = [];
 
-    tickets.forEach((ticket) => {
+    tickets.map(ticket => {
       const monthNumberFrom = moment(ticket.from);
-      const monthNumberTo = moment(ticket.to);
      
       if (monthes.indexOf(monthNumberFrom.format('YYYY-MM')) < 0 ) {
         monthes.push(monthNumberFrom.format('YYYY-MM'));
       }
-      if (monthes.indexOf(monthNumberTo.format('YYYY-MM')) < 0 ) {
-        monthes.push(monthNumberTo.format('YYYY-MM'));
-      }
+    
     });
 
     if (monthes.length === 0) return; 
 
     this.setState({ monthes });
 
-    halls.forEach((hall) => {
+    halls.map(hall => {
       const filterHalls = tickets
-        .filter((ticket) => ticket.hall_id === hall._id)
-        .filter((ticket) => moment(ticket.from).format('YYYY-MM') === monthes[monthIndex]);
+        .filter(ticket => ticket.hall_id === hall._id)
+        .filter(ticket => moment(ticket.from).format('YYYY-MM') === monthes[monthIndex]);
       
       let dataByDays = [];
      
@@ -81,7 +78,7 @@ class LineChart extends Component {
 
       for (let i = 1; i < moment(monthes[monthIndex], "YYYY-MM").daysInMonth(); i++) {
 
-        const ticketsInDay = filterHalls.filter((ticket) => {
+        const ticketsInDay = filterHalls.filter(ticket => {
 
           return moment(ticket.from).format('D') == i;
         });

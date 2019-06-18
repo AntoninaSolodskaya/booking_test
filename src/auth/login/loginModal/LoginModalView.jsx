@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { ModalWrap, Modal, Wrap, Button, Title } from './styled';
-import LoginForm from '../loginForm/LoginForm';
+import React, { Component } from "react";
+import { ModalWrap, Modal, Wrap, Button, Title } from "./styled";
+import LoginForm from "../loginForm/LoginForm";
 
 class LoginModalView extends Component {
   render() {
@@ -12,11 +12,11 @@ class LoginModalView extends Component {
             <Button onClick={closeModal}>X</Button>
           </Wrap>
           <Title>Login</Title>
-          <LoginForm  />
+          <LoginForm />
         </Modal>
       </ModalWrap>
     );
   }
-};
+}
 
 export default LoginModalView;

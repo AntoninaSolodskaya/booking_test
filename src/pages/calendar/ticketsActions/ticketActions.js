@@ -1,6 +1,6 @@
 import { LOAD_TICKETS, CREATE_TICKET, UPDATE_TICKET, DELETE_TICKET } from './ticketConstants';
 import { asyncActionStart, asyncActionFinish, asyncActionError } from '../../../async/asyncActions';
-import api from '../../../utils/api';
+import instance from '../../../utils/api';
 import swal from 'sweetalert';
 
 export const fetchTickets = tickets => {
@@ -42,7 +42,7 @@ export const deletedTicket = ticketId => {
 
 export const createTicket = ticket => {
   return (dispatch) => {
-    api.addTicket(ticket)
+    instance.post(`/tickets`, ticket )
       .then((newTicket) => {
         dispatch(postTicket(newTicket))
       })
@@ -59,30 +59,29 @@ export const createTicket = ticket => {
   }
 };
 
-export const updateTicket = (ticket, ticketId) => {
+export const updateTicket = (ticketId, ticket) => {
   return (dispatch) => {
-    api.changeTicket(ticket, ticketId)
+    instance.put(`/ticket/${ticketId}`, ticket)
       .then((orderTicket) => {
         dispatch(updatedTicket(orderTicket[0]))
-      })
+    })
   }
 };
 
 export const deleteTicket = ticketId => {
   return (dispatch) => {
-    api.deleteTicket(ticketId)
+    instance.delete(`/tickets/${ticketId}`)
       .then(() => {
         dispatch(deletedTicket(ticketId))
       });
   }
 };
 
-
 export const loadAllTickets = () => {
   return async dispatch => {
     try {
       dispatch(asyncActionStart())
-      await api.getTickets()
+      await instance.get(`/tickets`)
         .then(tickets => {
           dispatch(fetchTickets(tickets))
         })

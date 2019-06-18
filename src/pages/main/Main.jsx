@@ -4,11 +4,12 @@ import { connect } from "react-redux";
 import { Text, Block } from "./styled";
 import MainView from "./mainView";
 import LoadingComponent from "../../loader/LoadingComponent";
-import SelectHalls from "./SelectHalls";
+import Select from "react-select";
 import axios from "axios";
 
 const mapState = state => ({
-  loading: state.async.loading
+  loading: state.async.loading,
+  halls: state.halls
 });
 
 class Main extends Component {
@@ -34,7 +35,15 @@ class Main extends Component {
 
   render() {
     const { isError, selectedOption, clearable } = this.state;
-    const { loading } = this.props;
+    const { loading, halls } = this.props;
+    let options = halls.map(hall => {
+      return {
+        value: hall._id,
+        label: hall.title,
+        description: hall.description,
+        imageUrl: hall.imageURL
+      };
+    });
 
     if (loading) {
       return <LoadingComponent />;
@@ -43,10 +52,15 @@ class Main extends Component {
         <Fragment>
           {!isError && (
             <Block>
-              <SelectHalls
-                selectedOption={selectedOption}
+              <Select
+                isMulti
+                name="category"
+                value={selectedOption}
                 clearable={clearable}
-                handleChange={this.handleChange}
+                options={options}
+                labelKey="title"
+                valueKey="title"
+                onChange={this.handleChange}
               />
               <MainView selectedOption={selectedOption} />
             </Block>
